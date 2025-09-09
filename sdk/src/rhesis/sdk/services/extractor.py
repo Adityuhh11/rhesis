@@ -57,8 +57,11 @@ class DocumentExtractor:
 
         for document in documents:
             name = document.get("name")
+            description = document.get("description")
             if not name:
                 raise ValueError("Document must have a 'name' field")
+            if not description:
+                raise ValueError("Document must have a 'description' field")
 
             content = document.get("content", "")
             path = document.get("path", "")
