@@ -313,8 +313,8 @@ async def extract_document_content(request: ExtractDocumentRequest) -> ExtractDo
                 f"Supported formats: {', '.join(extractor.supported_extensions)}",
             )
 
-        # Prepare document for extraction
-        document = {"name": "document", "path": request.path}
+        # Prepare document for extraction using placeholder names and descriptions
+        document = {"name": "document", "description": "description", "path": request.path}
 
         # Extract content
         extracted_texts = extractor.extract([document])
