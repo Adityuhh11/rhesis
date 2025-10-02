@@ -1,0 +1,1344 @@
+
+> rhesis-app@0.2.4 lint
+> next lint
+
+
+./src/actions/auth.ts
+11:3  Warning: Unexpected console statement.  no-console
+17:5  Warning: Unexpected console statement.  no-console
+22:5  Warning: Unexpected console statement.  no-console
+24:5  Warning: Unexpected console statement.  no-console
+28:3  Warning: Unexpected console statement.  no-console
+
+./src/actions/endpoints/create.ts
+31:5  Warning: Unexpected console statement.  no-console
+
+./src/actions/endpoints/invoke.ts
+8:10  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+14:14  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+34:5  Warning: Unexpected console statement.  no-console
+
+./src/actions/endpoints/update.ts
+35:5  Warning: Unexpected console statement.  no-console
+
+./src/app/(protected)/dashboard/components/DashboardCharts.tsx
+14:10  Warning: 'format' is defined but never used.  @typescript-eslint/no-unused-vars
+14:18  Warning: 'subMonths' is defined but never used.  @typescript-eslint/no-unused-vars
+18:3  Warning: 'Typography' is defined but never used.  @typescript-eslint/no-unused-vars
+23:10  Warning: 'pieChartUtils' is defined but never used.  @typescript-eslint/no-unused-vars
+49:11  Warning: 'ChartDataItem' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/app/(protected)/dashboard/components/LatestTestRunsGrid.tsx
+58:9  Warning: 'fetchAndCacheUsers' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+75:20  Warning: 'e' is defined but never used.  @typescript-eslint/no-unused-vars
+111:14  Warning: 'err' is defined but never used.  @typescript-eslint/no-unused-vars
+172:18  Warning: 'e' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/app/(protected)/dashboard/components/RecentActivitiesGrid.tsx
+5:40  Warning: 'Typography' is defined but never used.  @typescript-eslint/no-unused-vars
+9:10  Warning: 'formatDistanceToNow' is defined but never used.  @typescript-eslint/no-unused-vars
+95:14  Warning: 'err' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/app/(protected)/dashboard/components/RecentTestSetsGrid.tsx
+9:10  Warning: 'formatDistanceToNow' is defined but never used.  @typescript-eslint/no-unused-vars
+9:31  Warning: 'parseISO' is defined but never used.  @typescript-eslint/no-unused-vars
+9:41  Warning: 'format' is defined but never used.  @typescript-eslint/no-unused-vars
+22:10  Warning: 'organizations' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+22:25  Warning: 'setOrganizations' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+25:10  Warning: 'validOrgIds' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+25:23  Warning: 'setValidOrgIds' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+53:7  Warning: Unexpected console statement.  no-console
+
+./src/app/(protected)/dashboard/components/RecentTestsGrid.tsx
+4:10  Warning: 'Typography' is defined but never used.  @typescript-eslint/no-unused-vars
+9:10  Warning: 'formatDistanceToNow' is defined but never used.  @typescript-eslint/no-unused-vars
+9:31  Warning: 'parseISO' is defined but never used.  @typescript-eslint/no-unused-vars
+9:41  Warning: 'format' is defined but never used.  @typescript-eslint/no-unused-vars
+45:14  Warning: 'err' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/app/(protected)/dashboard/page.tsx
+5:8  Warning: 'Box' is defined but never used.  @typescript-eslint/no-unused-vars
+33:11  Warning: 'SessionUser' is defined but never used.  @typescript-eslint/no-unused-vars
+47:11  Warning: 'user' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+
+./src/app/(protected)/endpoints/[identifier]/page.tsx
+17:48  Warning: 'searchParams' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/app/(protected)/endpoints/components/EndpointDetail.tsx
+21:3  Warning: 'Alert' is defined but never used.  @typescript-eslint/no-unused-vars
+22:3  Warning: 'Snackbar' is defined but never used.  @typescript-eslint/no-unused-vars
+102:3  Warning: 'environment' is defined but never used.  @typescript-eslint/no-unused-vars
+178:10  Warning: 'notification' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+178:24  Warning: 'setNotification' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+227:9  Warning: Unexpected console statement.  no-console
+268:7  Warning: Unexpected console statement.  no-console
+278:55  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+286:14  Warning: 'error' is defined but never used.  @typescript-eslint/no-unused-vars
+292:9  Warning: 'handleCloseNotification' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+711:30  Warning: 'error' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/app/(protected)/endpoints/components/EndpointForm.tsx
+9:3  Warning: 'CardContent' is defined but never used.  @typescript-eslint/no-unused-vars
+20:3  Warning: 'SelectChangeEvent' is defined but never used.  @typescript-eslint/no-unused-vars
+24:3  Warning: 'Avatar' is defined but never used.  @typescript-eslint/no-unused-vars
+113:7  Warning: 'RESPONSE_FORMATS' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+178:20  Warning: 'setUrlError' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+216:9  Warning: Unexpected console statement.  no-console
+240:55  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+255:14  Warning: 'err' is defined but never used.  @typescript-eslint/no-unused-vars
+287:33  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+289:13  Warning: Unexpected console statement.  no-console
+290:40  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+293:38  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+298:34  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+302:36  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+307:7  Warning: Unexpected console statement.  no-console
+312:7  Warning: Unexpected console statement.  no-console
+
+./src/app/(protected)/endpoints/components/EndpointsGrid.tsx
+10:3  Warning: 'Dialog' is defined but never used.  @typescript-eslint/no-unused-vars
+11:3  Warning: 'DialogTitle' is defined but never used.  @typescript-eslint/no-unused-vars
+12:3  Warning: 'DialogContent' is defined but never used.  @typescript-eslint/no-unused-vars
+13:3  Warning: 'DialogContentText' is defined but never used.  @typescript-eslint/no-unused-vars
+14:3  Warning: 'DialogActions' is defined but never used.  @typescript-eslint/no-unused-vars
+83:5  Warning: Unexpected console statement.  no-console
+87:3  Warning: Unexpected console statement.  no-console
+88:3  Warning: Unexpected console statement.  no-console
+92:5  Warning: Unexpected console statement.  no-console
+97:3  Warning: Unexpected console statement.  no-console
+123:9  Warning: 'router' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+150:11  Warning: Unexpected console statement.  no-console
+151:11  Warning: Unexpected console statement.  no-console
+156:17  Warning: Unexpected console statement.  no-console
+161:13  Warning: Unexpected console statement.  no-console
+164:11  Warning: Unexpected console statement.  no-console
+168:9  Warning: Unexpected console statement.  no-console
+209:7  Warning: Unexpected console statement.  no-console
+
+./src/app/(protected)/endpoints/components/SwaggerEndpointForm.tsx
+124:13  Warning: Unexpected console statement.  no-console
+139:9  Warning: Unexpected console statement.  no-console
+149:47  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./src/app/(protected)/endpoints/new/page.tsx
+4:10  Warning: 'Box' is defined but never used.  @typescript-eslint/no-unused-vars
+4:15  Warning: 'Typography' is defined but never used.  @typescript-eslint/no-unused-vars
+4:27  Warning: 'Breadcrumbs' is defined but never used.  @typescript-eslint/no-unused-vars
+5:8  Warning: 'Link' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/app/(protected)/integrations/applications/page.tsx
+7:9  Warning: 'handleAddApplication' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+9:5  Warning: Unexpected console statement.  no-console
+
+./src/app/(protected)/integrations/layout.tsx
+13:10  Warning: 'TabPanel' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/app/(protected)/integrations/llm-providers/page.tsx
+18:3  Warning: 'ListItem' is defined but never used.  @typescript-eslint/no-unused-vars
+27:3  Warning: 'SiAmazon' is defined but never used.  @typescript-eslint/no-unused-vars
+37:31  Warning: 'CloudIcon' is defined but never used.  @typescript-eslint/no-unused-vars
+221:46  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+519:9  Warning: Unexpected console statement.  no-console
+527:11  Warning: Unexpected console statement.  no-console
+530:9  Warning: Unexpected console statement.  no-console
+543:5  Warning: Unexpected console statement.  no-console
+
+./src/app/(protected)/integrations/tools/page.tsx
+7:9  Warning: 'handleAddTool' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+9:5  Warning: Unexpected console statement.  no-console
+
+./src/app/(protected)/layout.tsx
+5:10  Warning: 'PageContainer' is defined but never used.  @typescript-eslint/no-unused-vars
+8:10  Warning: 'UUID' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/app/(protected)/metrics/[identifier]/page.tsx
+3:38  Warning: 'useMemo' is defined but never used.  @typescript-eslint/no-unused-vars
+60:11  Warning: 'PageProps' is defined but never used.  @typescript-eslint/no-unused-vars
+77:10  Warning: 'statuses' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+78:10  Warning: 'users' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+122:9  Warning: Unexpected console statement.  no-console
+204:12  Warning: 'newTags' is defined but never used.  @typescript-eslint/no-unused-vars
+213:56  Warning: Forbidden non-null assertion.  @typescript-eslint/no-non-null-assertion
+220:13  Warning: Unexpected console statement.  no-console
+257:19  Warning: Forbidden non-null assertion.  @typescript-eslint/no-non-null-assertion
+266:17  Warning: Unexpected console statement.  no-console
+306:25  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+350:7  Warning: Unexpected console statement.  no-console
+
+./src/app/(protected)/metrics/components/DimensionDrawer.tsx
+3:3  Warning: 'Box' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/app/(protected)/metrics/components/MetricTypeDialog.tsx
+11:8  Warning: 'GradingIcon' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/app/(protected)/metrics/components/MetricsClient.tsx
+4:8  Warning: 'Typography' is defined but never used.  @typescript-eslint/no-unused-vars
+20:29  Warning: 'MetricType' is defined but never used.  @typescript-eslint/no-unused-vars
+87:31  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+155:9  Warning: Unexpected console statement.  no-console
+161:7  Warning: Unexpected console statement.  no-console
+173:9  Warning: Unexpected console statement.  no-console
+180:9  Warning: Unexpected console statement.  no-console
+187:9  Warning: Unexpected console statement.  no-console
+205:9  Warning: Unexpected console statement.  no-console
+225:9  Warning: Unexpected console statement.  no-console
+283:9  Warning: Unexpected console statement.  no-console
+291:9  Warning: Unexpected console statement.  no-console
+295:9  Warning: Unexpected console statement.  no-console
+304:9  Warning: Unexpected console statement.  no-console
+315:5  Warning: Unexpected console statement.  no-console
+
+./src/app/(protected)/metrics/components/MetricsDirectoryTab.tsx
+21:8  Warning: 'CloseIcon' is defined but never used.  @typescript-eslint/no-unused-vars
+57:31  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+168:3  Warning: 'organizationId' is defined but never used.  @typescript-eslint/no-unused-vars
+175:3  Warning: 'onRefresh' is defined but never used.  @typescript-eslint/no-unused-vars
+180:3  Warning: 'onTabChange' is defined but never used.  @typescript-eslint/no-unused-vars
+336:74  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+348:7  Warning: Unexpected console statement.  no-console
+357:9  Warning: 'handleRemoveMetricFromBehavior' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+421:7  Warning: Unexpected console statement.  no-console
+461:7  Warning: Unexpected console statement.  no-console
+
+./src/app/(protected)/metrics/components/SelectedMetricsTab.tsx
+30:31  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+71:3  Warning: 'onRefresh' is defined but never used.  @typescript-eslint/no-unused-vars
+132:31  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+183:7  Warning: Unexpected console statement.  no-console
+211:13  Warning: Unexpected console statement.  no-console
+243:9  Warning: Unexpected console statement.  no-console
+291:65  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+301:7  Warning: Unexpected console statement.  no-console
+
+./src/app/(protected)/metrics/new/page.tsx
+25:10  Warning: 'EntityType' is defined but never used.  @typescript-eslint/no-unused-vars
+29:10  Warning: 'TypeLookupClient' is defined but never used.  @typescript-eslint/no-unused-vars
+30:10  Warning: 'TypeLookupsQueryParams' is defined but never used.  @typescript-eslint/no-unused-vars
+113:9  Warning: Unexpected console statement.  no-console
+174:7  Warning: Unexpected console statement.  no-console
+243:7  Warning: Unexpected console statement.  no-console
+
+./src/app/(protected)/onboarding/components/InviteTeamStep.tsx
+6:3  Warning: 'Typography' is defined but never used.  @typescript-eslint/no-unused-vars
+77:37  Warning: 'index' is defined but never used.  @typescript-eslint/no-unused-vars
+126:7  Warning: Unexpected console statement.  no-console
+
+./src/app/(protected)/onboarding/components/OnboardingPageClient.tsx
+5:22  Warning: 'getCsrfToken' is defined but never used.  @typescript-eslint/no-unused-vars
+14:3  Warning: 'Stack' is defined but never used.  @typescript-eslint/no-unused-vars
+22:22  Warning: 'UserCreate' is defined but never used.  @typescript-eslint/no-unused-vars
+50:9  Warning: 'router' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+51:17  Warning: 'session' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+51:26  Warning: 'update' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+100:9  Warning: Unexpected console statement.  no-console
+101:26  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+103:9  Warning: Unexpected console statement.  no-console
+123:27  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+125:9  Warning: Unexpected console statement.  no-console
+171:31  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+183:17  Warning: Unexpected console statement.  no-console
+234:25  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+236:11  Warning: Unexpected console statement.  no-console
+263:29  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+265:11  Warning: Unexpected console statement.  no-console
+276:21  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+278:7  Warning: Unexpected console statement.  no-console
+
+./src/app/(protected)/onboarding/components/OrganizationDetailsStep.tsx
+6:3  Warning: 'Typography' is defined but never used.  @typescript-eslint/no-unused-vars
+65:9  Warning: Unexpected console statement.  no-console
+80:13  Warning: Unexpected console statement.  no-console
+87:15  Warning: Unexpected console statement.  no-console
+90:13  Warning: Unexpected console statement.  no-console
+102:13  Warning: Unexpected console statement.  no-console
+109:15  Warning: Unexpected console statement.  no-console
+112:13  Warning: Unexpected console statement.  no-console
+127:9  Warning: Unexpected console statement.  no-console
+176:9  Warning: Unexpected console statement.  no-console
+185:7  Warning: Unexpected console statement.  no-console
+
+./src/app/(protected)/onboarding/page.tsx
+1:10  Warning: 'Box' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/app/(protected)/organizations/[identifier]/page.tsx
+7:58  Warning: 'params' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/app/(protected)/organizations/new/page.tsx
+7:58  Warning: 'params' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/app/(protected)/organizations/page.tsx
+7:58  Warning: 'params' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/app/(protected)/organizations/team/components/TeamInviteForm.tsx
+75:37  Warning: 'index' is defined but never used.  @typescript-eslint/no-unused-vars
+163:25  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+193:11  Warning: Unexpected console statement.  no-console
+286:7  Warning: Unexpected console statement.  no-console
+
+./src/app/(protected)/organizations/team/components/TeamMembersGrid.tsx
+10:3  Warning: 'Dialog' is defined but never used.  @typescript-eslint/no-unused-vars
+11:3  Warning: 'DialogTitle' is defined but never used.  @typescript-eslint/no-unused-vars
+12:3  Warning: 'DialogContent' is defined but never used.  @typescript-eslint/no-unused-vars
+13:3  Warning: 'DialogContentText' is defined but never used.  @typescript-eslint/no-unused-vars
+14:3  Warning: 'DialogActions' is defined but never used.  @typescript-eslint/no-unused-vars
+15:3  Warning: 'Button' is defined but never used.  @typescript-eslint/no-unused-vars
+69:9  Warning: Unexpected console statement.  no-console
+73:9  Warning: Unexpected console statement.  no-console
+149:7  Warning: Unexpected console statement.  no-console
+197:15  Warning: 'status' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+
+./src/app/(protected)/organizations/team/page.tsx
+4:10  Warning: 'Box' is defined but never used.  @typescript-eslint/no-unused-vars
+4:15  Warning: 'Typography' is defined but never used.  @typescript-eslint/no-unused-vars
+4:34  Warning: 'Container' is defined but never used.  @typescript-eslint/no-unused-vars
+12:17  Warning: 'session' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+16:5  Warning: Unexpected console statement.  no-console
+
+./src/app/(protected)/projects/[identifier]/client-components.tsx
+12:3  Warning: 'Button' is defined but never used.  @typescript-eslint/no-unused-vars
+14:3  Warning: 'IconButton' is defined but never used.  @typescript-eslint/no-unused-vars
+18:8  Warning: 'EditIcon' is defined but never used.  @typescript-eslint/no-unused-vars
+149:9  Warning: 'theme' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+
+./src/app/(protected)/projects/[identifier]/client-wrapper.tsx
+7:3  Warning: 'Breadcrumbs' is defined but never used.  @typescript-eslint/no-unused-vars
+8:3  Warning: 'Typography' is defined but never used.  @typescript-eslint/no-unused-vars
+9:3  Warning: 'Alert' is defined but never used.  @typescript-eslint/no-unused-vars
+10:3  Warning: 'Dialog' is defined but never used.  @typescript-eslint/no-unused-vars
+11:3  Warning: 'DialogActions' is defined but never used.  @typescript-eslint/no-unused-vars
+12:3  Warning: 'DialogContent' is defined but never used.  @typescript-eslint/no-unused-vars
+13:3  Warning: 'DialogContentText' is defined but never used.  @typescript-eslint/no-unused-vars
+14:3  Warning: 'DialogTitle' is defined but never used.  @typescript-eslint/no-unused-vars
+16:8  Warning: 'Link' is defined but never used.  @typescript-eslint/no-unused-vars
+17:10  Warning: 'ArrowBackIcon' is defined but never used.  @typescript-eslint/no-unused-vars
+25:8  Warning: 'invariant' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/app/(protected)/projects/[identifier]/edit-drawer.tsx
+20:3  Warning: 'ToggleButton' is defined but never used.  @typescript-eslint/no-unused-vars
+21:3  Warning: 'ToggleButtonGroup' is defined but never used.  @typescript-eslint/no-unused-vars
+22:3  Warning: 'Paper' is defined but never used.  @typescript-eslint/no-unused-vars
+176:9  Warning: Unexpected console statement.  no-console
+308:7  Warning: Unexpected console statement.  no-console
+
+./src/app/(protected)/projects/components/ProjectCard.tsx
+20:3  Warning: 'Stack' is defined but never used.  @typescript-eslint/no-unused-vars
+28:8  Warning: 'EditIcon' is defined but never used.  @typescript-eslint/no-unused-vars
+29:8  Warning: 'FolderIcon' is defined but never used.  @typescript-eslint/no-unused-vars
+31:8  Warning: 'PersonIcon' is defined but never used.  @typescript-eslint/no-unused-vars
+162:11  Warning: 'titleRef' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+179:15  Warning: Unexpected console statement.  no-console
+208:11  Warning: 'handleEditClick' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+
+./src/app/(protected)/projects/components/ProjectContent.tsx
+111:9  Warning: 'theme' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+
+./src/app/(protected)/projects/components/ProjectEditDrawer.tsx
+160:9  Warning: Unexpected console statement.  no-console
+199:7  Warning: Unexpected console statement.  no-console
+
+./src/app/(protected)/projects/components/ProjectsClientWrapper.tsx
+16:6  Warning: 'AlertSeverity' is defined but never used.  @typescript-eslint/no-unused-vars
+67:20  Warning: 'setProjects' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+68:9  Warning: 'notifications' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+
+./src/app/(protected)/projects/create-new/components/CreateProjectClient.tsx
+107:7  Warning: Unexpected console statement.  no-console
+111:9  Warning: Unexpected console statement.  no-console
+116:9  Warning: Unexpected console statement.  no-console
+137:7  Warning: Unexpected console statement.  no-console
+
+./src/app/(protected)/projects/create-new/components/FinishStep.tsx
+67:7  Warning: 'ICON_LABELS' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+128:9  Warning: Unexpected console statement.  no-console
+156:5  Warning: Unexpected console statement.  no-console
+
+./src/app/(protected)/projects/create-new/components/ProjectDetailsStep.tsx
+10:3  Warning: 'Paper' is defined but never used.  @typescript-eslint/no-unused-vars
+11:3  Warning: 'ToggleButton' is defined but never used.  @typescript-eslint/no-unused-vars
+12:3  Warning: 'ToggleButtonGroup' is defined but never used.  @typescript-eslint/no-unused-vars
+143:3  Warning: 'userName' is defined but never used.  @typescript-eslint/no-unused-vars
+144:3  Warning: 'userImage' is defined but never used.  @typescript-eslint/no-unused-vars
+174:9  Warning: Unexpected console statement.  no-console
+204:9  Warning: Unexpected console statement.  no-console
+
+./src/app/(protected)/projects/create-new/page.tsx
+11:3  Warning: Unexpected console statement.  no-console
+31:7  Warning: Unexpected console statement.  no-console
+34:7  Warning: Unexpected console statement.  no-console
+38:3  Warning: Unexpected console statement.  no-console
+
+./src/app/(protected)/projects/page.tsx
+6:10  Warning: 'Box' is defined but never used.  @typescript-eslint/no-unused-vars
+6:15  Warning: 'Typography' is defined but never used.  @typescript-eslint/no-unused-vars
+40:5  Warning: Unexpected console statement.  no-console
+
+./src/app/(protected)/tasks/[identifier]/page.tsx
+68:44  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+69:48  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+154:5  Warning: React Hook useCallback has a missing dependency: 'hasInitialLoad'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+449:51  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+477:14  Warning: 'error' is defined but never used.  @typescript-eslint/no-unused-vars
+517:19  Warning: Unexpected console statement.  no-console
+656:36  Warning: 'value' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/app/(protected)/tasks/components/TasksCharts.tsx
+60:9  Warning: Unexpected console statement.  no-console
+
+./src/app/(protected)/tasks/components/TasksGrid.tsx
+71:9  Warning: Unexpected console statement.  no-console
+165:7  Warning: Unexpected console statement.  no-console
+178:14  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+262:63  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./src/app/(protected)/tasks/create/page.tsx
+22:10  Warning: 'ArrowBackIcon' is defined but never used.  @typescript-eslint/no-unused-vars
+29:3  Warning: 'getStatusByName' is defined but never used.  @typescript-eslint/no-unused-vars
+30:3  Warning: 'getPriorityByName' is defined but never used.  @typescript-eslint/no-unused-vars
+50:44  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+51:48  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+198:51  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./src/app/(protected)/test-results/components/DimensionRadarChart.tsx
+12:3  Warning: 'Legend' is defined but never used.  @typescript-eslint/no-unused-vars
+68:63  Warning: 'rest' is defined but never used.  @typescript-eslint/no-unused-vars
+68:71  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./src/app/(protected)/test-results/components/LatestResultsPieChart.tsx
+92:9  Warning: 'getContextInfo' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+
+./src/app/(protected)/test-results/components/LatestTestRunsChart.tsx
+114:9  Warning: Unexpected console statement.  no-console
+115:9  Warning: Unexpected console statement.  no-console
+136:5  Warning: Unexpected console statement.  no-console
+138:5  Warning: Unexpected console statement.  no-console
+143:5  Warning: Unexpected console statement.  no-console
+147:9  Warning: 'getContextInfo' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+288:34  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+288:39  Warning: 'name' is defined but never used.  @typescript-eslint/no-unused-vars
+288:53  Warning: 'props' is defined but never used.  @typescript-eslint/no-unused-vars
+288:60  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+292:47  Warning: 'payload' is defined but never used.  @typescript-eslint/no-unused-vars
+292:56  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./src/app/(protected)/test-results/components/MetricTimelineChart.tsx
+18:30  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./src/app/(protected)/test-results/components/MetricTimelineChartsGrid.tsx
+10:3  Warning: 'Paper' is defined but never used.  @typescript-eslint/no-unused-vars
+26:14  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+27:30  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+69:9  Warning: Unexpected console statement.  no-console
+70:9  Warning: Unexpected console statement.  no-console
+
+./src/app/(protected)/test-results/components/PassRateTimelineChart.tsx
+38:9  Warning: Unexpected console statement.  no-console
+39:9  Warning: Unexpected console statement.  no-console
+
+./src/app/(protected)/test-results/components/TestResultsCharts.tsx
+4:10  Warning: 'BaseChartsGrid' is defined but never used.  @typescript-eslint/no-unused-vars
+6:26  Warning: 'Paper' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/app/(protected)/test-results/components/TestResultsFilters.tsx
+14:3  Warning: 'IconButton' is defined but never used.  @typescript-eslint/no-unused-vars
+74:7  Warning: Unexpected console statement.  no-console
+102:9  Warning: Unexpected console statement.  no-console
+
+./src/app/(protected)/test-results/components/TestResultsSummary.tsx
+28:3  Warning: 'TestRunSummaryItem' is defined but never used.  @typescript-eslint/no-unused-vars
+136:9  Warning: 'totalFailed' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+153:24  Warning: Forbidden non-null assertion.  @typescript-eslint/no-non-null-assertion
+154:24  Warning: Forbidden non-null assertion.  @typescript-eslint/no-non-null-assertion
+
+./src/app/(protected)/test-results/components/timelineUtils.ts
+96:10  Warning: Forbidden non-null assertion.  @typescript-eslint/no-non-null-assertion
+97:24  Warning: Forbidden non-null assertion.  @typescript-eslint/no-non-null-assertion
+97:47  Warning: Forbidden non-null assertion.  @typescript-eslint/no-non-null-assertion
+
+./src/app/(protected)/test-results/page.tsx
+3:8  Warning: 'Box' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/app/(protected)/test-runs/[identifier]/components/DetailedTestRunGrid.tsx
+193:31  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./src/app/(protected)/test-runs/[identifier]/components/TestRunDetailCharts.tsx
+18:3  Warning: 'Cell' is defined but never used.  @typescript-eslint/no-unused-vars
+101:36  Warning: 'index' is defined but never used.  @typescript-eslint/no-unused-vars
+106:35  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+123:13  Warning: Unexpected console statement.  no-console
+303:9  Warning: Unexpected console statement.  no-console
+399:50  Warning: 'label' is defined but never used.  @typescript-eslint/no-unused-vars
+476:34  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+492:40  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+544:59  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+570:59  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+593:59  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./src/app/(protected)/test-runs/[identifier]/components/TestRunDetailsSection.tsx
+22:7  Warning: 'ListItem' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+26:7  Warning: 'ChipContainer' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+68:11  Warning: Unexpected console statement.  no-console
+111:7  Warning: Unexpected console statement.  no-console
+
+./src/app/(protected)/test-runs/[identifier]/components/TestRunTestsGrid.tsx
+4:32  Warning: 'Typography' is defined but never used.  @typescript-eslint/no-unused-vars
+87:7  Warning: Unexpected console statement.  no-console
+
+./src/app/(protected)/test-runs/[identifier]/components/TestRunWorkflowSection.tsx
+13:14  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+14:11  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+25:3  Warning: 'owner' is defined but never used.  @typescript-eslint/no-unused-vars
+28:3  Warning: 'testConfigurationId' is defined but never used.  @typescript-eslint/no-unused-vars
+52:7  Warning: Unexpected console statement.  no-console
+
+./src/app/(protected)/test-runs/[identifier]/hooks/useTestRunData.ts
+75:43  Warning: Forbidden non-null assertion.  @typescript-eslint/no-non-null-assertion
+103:33  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+110:13  Warning: Unexpected console statement.  no-console
+131:7  Warning: Unexpected console statement.  no-console
+
+./src/app/(protected)/test-runs/[identifier]/page.tsx
+1:28  Warning: 'Typography' is defined but never used.  @typescript-eslint/no-unused-vars
+9:8  Warning: 'CommentsWrapper' is defined but never used.  @typescript-eslint/no-unused-vars
+12:11  Warning: 'PageProps' is defined but never used.  @typescript-eslint/no-unused-vars
+38:11  Warning: 'testRun' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+48:12  Warning: 'error' is defined but never used.  @typescript-eslint/no-unused-vars
+55:65  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./src/app/(protected)/test-runs/components/TestRunCharts.tsx
+103:9  Warning: Unexpected console statement.  no-console
+
+./src/app/(protected)/test-runs/components/TestRunDrawer.tsx
+3:17  Warning: 'useRef' is defined but never used.  @typescript-eslint/no-unused-vars
+69:7  Warning: Unexpected console statement.  no-console
+104:11  Warning: Unexpected console statement.  no-console
+117:13  Warning: Unexpected console statement.  no-console
+121:13  Warning: Unexpected console statement.  no-console
+123:13  Warning: Unexpected console statement.  no-console
+134:11  Warning: Unexpected console statement.  no-console
+161:11  Warning: Unexpected console statement.  no-console
+171:9  Warning: Unexpected console statement.  no-console
+241:7  Warning: Unexpected console statement.  no-console
+362:25  Warning: 'key' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+
+./src/app/(protected)/test-runs/components/TestRunsGrid.tsx
+11:8  Warning: 'PlayArrowIcon' is defined but never used.  @typescript-eslint/no-unused-vars
+23:3  Warning: 'CircularProgress' is defined but never used.  @typescript-eslint/no-unused-vars
+26:3  Warning: 'Button' is defined but never used.  @typescript-eslint/no-unused-vars
+34:10  Warning: 'TestSet' is defined but never used.  @typescript-eslint/no-unused-vars
+110:19  Warning: Unexpected console statement.  no-console
+137:9  Warning: Unexpected console statement.  no-console
+316:14  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+397:9  Warning: Unexpected console statement.  no-console
+
+./src/app/(protected)/test-sets/[identifier]/components/ExecuteTestSetDrawer.tsx
+23:10  Warning: 'Endpoint' is defined but never used.  @typescript-eslint/no-unused-vars
+99:11  Warning: Unexpected console statement.  no-console
+127:11  Warning: Unexpected console statement.  no-console
+131:9  Warning: Unexpected console statement.  no-console
+280:25  Warning: 'key' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+
+./src/app/(protected)/test-sets/[identifier]/components/TestSetDetailCharts.tsx
+8:3  Warning: 'useChartColors' is defined but never used.  @typescript-eslint/no-unused-vars
+15:3  Warning: 'Typography' is defined but never used.  @typescript-eslint/no-unused-vars
+61:7  Warning: 'truncateName' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+270:61  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./src/app/(protected)/test-sets/[identifier]/components/TestSetDetailsSection.tsx
+8:3  Warning: 'Tooltip' is defined but never used.  @typescript-eslint/no-unused-vars
+16:20  Warning: 'useEffect' is defined but never used.  @typescript-eslint/no-unused-vars
+122:7  Warning: Unexpected console statement.  no-console
+150:7  Warning: Unexpected console statement.  no-console
+284:35  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./src/app/(protected)/test-sets/[identifier]/components/TestSetTags.tsx
+20:9  Warning: 'theme' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+
+./src/app/(protected)/test-sets/[identifier]/components/TestSetTestsGrid.tsx
+10:34  Warning: 'Button' is defined but never used.  @typescript-eslint/no-unused-vars
+67:7  Warning: Unexpected console statement.  no-console
+161:14  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+176:9  Warning: 'handleTestSaved' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+206:7  Warning: Unexpected console statement.  no-console
+
+./src/app/(protected)/test-sets/[identifier]/components/TestSetWorkflowSection.tsx
+3:10  Warning: 'useState' is defined but never used.  @typescript-eslint/no-unused-vars
+13:14  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+14:11  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+45:9  Warning: 'id' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+46:9  Warning: 'status_details' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+47:9  Warning: 'user' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+48:9  Warning: 'owner' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+49:9  Warning: 'assignee' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+50:9  Warning: 'organization' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+64:7  Warning: Unexpected console statement.  no-console
+
+./src/app/(protected)/test-sets/[identifier]/page.tsx
+4:8  Warning: 'CommentsWrapper' is defined but never used.  @typescript-eslint/no-unused-vars
+8:28  Warning: 'Typography' is defined but never used.  @typescript-eslint/no-unused-vars
+8:40  Warning: 'Button' is defined but never used.  @typescript-eslint/no-unused-vars
+8:48  Warning: 'TextField' is defined but never used.  @typescript-eslint/no-unused-vars
+11:8  Warning: 'PlayArrowIcon' is defined but never used.  @typescript-eslint/no-unused-vars
+12:8  Warning: 'DownloadIcon' is defined but never used.  @typescript-eslint/no-unused-vars
+13:8  Warning: 'BaseFreesoloAutocomplete' is defined but never used.  @typescript-eslint/no-unused-vars
+20:11  Warning: 'PageProps' is defined but never used.  @typescript-eslint/no-unused-vars
+64:12  Warning: 'error' is defined but never used.  @typescript-eslint/no-unused-vars
+71:65  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+95:3  Warning: Unexpected console statement.  no-console
+
+./src/app/(protected)/test-sets/components/CreateTestRun.tsx
+15:10  Warning: 'EntityType' is defined but never used.  @typescript-eslint/no-unused-vars
+122:10  Warning: 'loading' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+141:9  Warning: Unexpected console statement.  no-console
+167:9  Warning: Unexpected console statement.  no-console
+205:7  Warning: Unexpected console statement.  no-console
+
+./src/app/(protected)/test-sets/components/TestRunDrawer.tsx
+30:7  Warning: Unexpected console statement.  no-console
+
+./src/app/(protected)/test-sets/components/TestSetDrawer.tsx
+3:17  Warning: 'useRef' is defined but never used.  @typescript-eslint/no-unused-vars
+3:25  Warning: 'useCallback' is defined but never used.  @typescript-eslint/no-unused-vars
+98:13  Warning: Unexpected console statement.  no-console
+135:9  Warning: Unexpected console statement.  no-console
+175:7  Warning: Unexpected console statement.  no-console
+
+./src/app/(protected)/test-sets/components/TestSetsCharts.tsx
+13:10  Warning: 'useChartColors' is defined but never used.  @typescript-eslint/no-unused-vars
+113:9  Warning: Unexpected console statement.  no-console
+
+./src/app/(protected)/test-sets/components/TestSetsGrid.tsx
+16:3  Warning: 'FormControl' is defined but never used.  @typescript-eslint/no-unused-vars
+17:3  Warning: 'InputLabel' is defined but never used.  @typescript-eslint/no-unused-vars
+18:3  Warning: 'Select' is defined but never used.  @typescript-eslint/no-unused-vars
+19:3  Warning: 'MenuItem' is defined but never used.  @typescript-eslint/no-unused-vars
+20:3  Warning: 'SelectChangeEvent' is defined but never used.  @typescript-eslint/no-unused-vars
+160:10  Warning: 'filteredTestSets' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+160:28  Warning: 'setFilteredTestSets' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+193:50  Warning: Forbidden non-null assertion.  @typescript-eslint/no-non-null-assertion
+211:7  Warning: Unexpected console statement.  no-console
+344:35  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+383:50  Warning: Forbidden non-null assertion.  @typescript-eslint/no-non-null-assertion
+401:7  Warning: Unexpected console statement.  no-console
+
+./src/app/(protected)/test-sets/page.tsx
+44:13  Warning: Unexpected console statement.  no-console
+
+./src/app/(protected)/tests/[identifier]/components/TestDetailCharts.tsx
+10:3  Warning: 'Box' is defined but never used.  @typescript-eslint/no-unused-vars
+11:3  Warning: 'CircularProgress' is defined but never used.  @typescript-eslint/no-unused-vars
+12:3  Warning: 'Typography' is defined but never used.  @typescript-eslint/no-unused-vars
+13:3  Warning: 'Alert' is defined but never used.  @typescript-eslint/no-unused-vars
+31:3  Warning: 'testId' is defined but never used.  @typescript-eslint/no-unused-vars
+32:3  Warning: 'sessionToken' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/app/(protected)/tests/[identifier]/components/TestDetailData.tsx
+10:22  Warning: 'TypeLookup' is defined but never used.  @typescript-eslint/no-unused-vars
+74:9  Warning: Unexpected console statement.  no-console
+129:7  Warning: Unexpected console statement.  no-console
+145:43  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+151:9  Warning: Unexpected console statement.  no-console
+189:7  Warning: Unexpected console statement.  no-console
+345:54  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./src/app/(protected)/tests/[identifier]/components/TestExecutableField.tsx
+7:3  Warning: 'Paper' is defined but never used.  @typescript-eslint/no-unused-vars
+29:3  Warning: 'testId' is defined but never used.  @typescript-eslint/no-unused-vars
+35:9  Warning: 'theme' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+81:7  Warning: Unexpected console statement.  no-console
+
+./src/app/(protected)/tests/[identifier]/components/TestToTestSet.tsx
+4:23  Warning: 'Tooltip' is defined but never used.  @typescript-eslint/no-unused-vars
+6:8  Warning: 'ScienceIcon' is defined but never used.  @typescript-eslint/no-unused-vars
+46:7  Warning: Unexpected console statement.  no-console
+
+./src/app/(protected)/tests/[identifier]/components/TestWorkflowSection.tsx
+3:10  Warning: 'useState' is defined but never used.  @typescript-eslint/no-unused-vars
+3:20  Warning: 'useEffect' is defined but never used.  @typescript-eslint/no-unused-vars
+3:31  Warning: 'useRef' is defined but never used.  @typescript-eslint/no-unused-vars
+13:14  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+14:11  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+60:7  Warning: Unexpected console statement.  no-console
+
+./src/app/(protected)/tests/[identifier]/layout.tsx
+2:10  Warning: 'Box' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/app/(protected)/tests/[identifier]/page.tsx
+14:8  Warning: 'CommentsWrapper' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/app/(protected)/tests/components/CreateTest.tsx
+6:3  Warning: 'FormHelperText' is defined but never used.  @typescript-eslint/no-unused-vars
+12:3  Warning: 'ListItemAvatar' is defined but never used.  @typescript-eslint/no-unused-vars
+13:3  Warning: 'ListItemText' is defined but never used.  @typescript-eslint/no-unused-vars
+80:10  Warning: 'loading' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+430:19  Warning: 'key' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+474:19  Warning: 'key' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+
+./src/app/(protected)/tests/components/TestCharts.tsx
+7:45  Warning: 'Alert' is defined but never used.  @typescript-eslint/no-unused-vars
+74:16  Warning: 'err' is defined but never used.  @typescript-eslint/no-unused-vars
+101:14  Warning: 'error' is defined but never used.  @typescript-eslint/no-unused-vars
+118:14  Warning: 'error' is defined but never used.  @typescript-eslint/no-unused-vars
+135:14  Warning: 'error' is defined but never used.  @typescript-eslint/no-unused-vars
+152:14  Warning: 'error' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/app/(protected)/tests/components/TestDrawer.tsx
+42:7  Warning: Unexpected console statement.  no-console
+53:7  Warning: Unexpected console statement.  no-console
+
+./src/app/(protected)/tests/components/TestSetSelectionDialog.tsx
+134:9  Warning: Unexpected console statement.  no-console
+
+./src/app/(protected)/tests/components/TestsGrid.tsx
+89:7  Warning: Unexpected console statement.  no-console
+95:7  Warning: Unexpected console statement.  no-console
+269:14  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+311:16  Warning: 'error' is defined but never used.  @typescript-eslint/no-unused-vars
+351:7  Warning: Unexpected console statement.  no-console
+
+./src/app/(protected)/tests/components/TrialDrawer.tsx
+10:3  Warning: 'CircularProgress' is defined but never used.  @typescript-eslint/no-unused-vars
+12:3  Warning: 'Divider' is defined but never used.  @typescript-eslint/no-unused-vars
+21:10  Warning: 'Endpoint' is defined but never used.  @typescript-eslint/no-unused-vars
+50:3  Warning: 'onSuccess' is defined but never used.  @typescript-eslint/no-unused-vars
+63:54  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+65:10  Warning: 'trialCompleted' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+97:13  Warning: Unexpected console statement.  no-console
+111:11  Warning: Unexpected console statement.  no-console
+118:13  Warning: Unexpected console statement.  no-console
+122:13  Warning: Unexpected console statement.  no-console
+124:13  Warning: Unexpected console statement.  no-console
+131:11  Warning: Unexpected console statement.  no-console
+134:11  Warning: Unexpected console statement.  no-console
+151:11  Warning: Unexpected console statement.  no-console
+163:13  Warning: Unexpected console statement.  no-console
+166:13  Warning: Unexpected console statement.  no-console
+173:11  Warning: Unexpected console statement.  no-console
+181:9  Warning: Unexpected console statement.  no-console
+236:7  Warning: Unexpected console statement.  no-console
+237:7  Warning: Unexpected console statement.  no-console
+241:7  Warning: Unexpected console statement.  no-console
+264:15  Warning: Unexpected console statement.  no-console
+308:23  Warning: 'key' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+
+./src/app/(protected)/tests/components/UpdateTest.tsx
+6:3  Warning: 'FormHelperText' is defined but never used.  @typescript-eslint/no-unused-vars
+12:3  Warning: 'ListItemAvatar' is defined but never used.  @typescript-eslint/no-unused-vars
+13:3  Warning: 'ListItemText' is defined but never used.  @typescript-eslint/no-unused-vars
+15:3  Warning: 'CircularProgress' is defined but never used.  @typescript-eslint/no-unused-vars
+21:3  Warning: 'TestBulkCreateRequest' is defined but never used.  @typescript-eslint/no-unused-vars
+76:10  Warning: 'loading' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+97:5  Warning: Unexpected console statement.  no-console
+116:9  Warning: Unexpected console statement.  no-console
+173:9  Warning: Unexpected console statement.  no-console
+513:13  Warning: Unexpected console statement.  no-console
+565:19  Warning: 'key' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+609:19  Warning: 'key' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+
+./src/app/(protected)/tests/new-generated/components/GenerateTestsStepper.tsx
+29:3  Warning: 'LinearProgress' is defined but never used.  @typescript-eslint/no-unused-vars
+127:7  Warning: 'isFileTypeSupported' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+195:11  Warning: Unexpected console statement.  no-console
+230:38  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+533:9  Warning: Unexpected console statement.  no-console
+606:9  Warning: 'canProceed' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+831:7  Warning: Unexpected console statement.  no-console
+851:9  Warning: Unexpected console statement.  no-console
+852:9  Warning: Unexpected console statement.  no-console
+884:9  Warning: Unexpected console statement.  no-console
+1089:3  Warning: 'behaviors' is defined but never used.  @typescript-eslint/no-unused-vars
+1194:9  Warning: 'theme' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+1224:9  Warning: Unexpected console statement.  no-console
+1283:7  Warning: Unexpected console statement.  no-console
+1362:7  Warning: Unexpected console statement.  no-console
+1369:7  Warning: Unexpected console statement.  no-console
+
+./src/app/(protected)/tests/new-manual/components/NewTestsGrid.tsx
+7:3  Warning: 'GridRenderEditCellParams' is defined but never used.  @typescript-eslint/no-unused-vars
+8:3  Warning: 'GridValueGetter' is defined but never used.  @typescript-eslint/no-unused-vars
+86:16  Warning: 'error' is defined but never used.  @typescript-eslint/no-unused-vars
+274:13  Warning: 'apiFactory' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+
+./src/app/(protected)/tokens/components/CreateTokenModal.tsx
+68:7  Warning: Unexpected console statement.  no-console
+
+./src/app/(protected)/tokens/components/TokenDisplay.tsx
+3:10  Warning: 'useState' is defined but never used.  @typescript-eslint/no-unused-vars
+10:3  Warning: 'Paper' is defined but never used.  @typescript-eslint/no-unused-vars
+42:14  Warning: 'err' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/app/(protected)/tokens/components/TokensGrid.tsx
+10:3  Warning: 'Button' is defined but never used.  @typescript-eslint/no-unused-vars
+20:8  Warning: 'AddIcon' is defined but never used.  @typescript-eslint/no-unused-vars
+45:3  Warning: 'onCreateToken' is defined but never used.  @typescript-eslint/no-unused-vars
+53:9  Warning: 'theme' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+67:28  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+75:28  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+81:28  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+92:28  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+130:28  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./src/app/(protected)/tokens/components/TokensPageClient.tsx
+12:3  Warning: 'DialogContentText' is defined but never used.  @typescript-eslint/no-unused-vars
+134:15  Warning: 'deletedToken' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+
+./src/app/api/feedback/route.ts
+71:5  Warning: Unexpected console statement.  no-console
+
+./src/app/auth/signin/page.tsx
+6:10  Warning: 'clearAllSessionData' is defined but never used.  @typescript-eslint/no-unused-vars
+16:9  Warning: Unexpected console statement.  no-console
+17:9  Warning: Unexpected console statement.  no-console
+28:9  Warning: Unexpected console statement.  no-console
+44:11  Warning: Unexpected console statement.  no-console
+53:11  Warning: Unexpected console statement.  no-console
+63:9  Warning: Unexpected console statement.  no-console
+64:9  Warning: Unexpected console statement.  no-console
+70:11  Warning: Unexpected console statement.  no-console
+73:11  Warning: Unexpected console statement.  no-console
+86:11  Warning: Unexpected console statement.  no-console
+90:11  Warning: Unexpected console statement.  no-console
+100:13  Warning: Unexpected console statement.  no-console
+101:13  Warning: Unexpected console statement.  no-console
+106:11  Warning: Unexpected console statement.  no-console
+120:9  Warning: Unexpected console statement.  no-console
+130:9  Warning: Unexpected console statement.  no-console
+
+./src/app/auth/signout/page.tsx
+9:9  Warning: 'searchParams' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+12:5  Warning: Unexpected console statement.  no-console
+
+./src/app/demo/page.tsx
+42:5  Warning: Unexpected console statement.  no-console
+
+./src/app/layout.tsx
+3:8  Warning: 'Image' is defined but never used.  @typescript-eslint/no-unused-vars
+4:10  Warning: 'Box' is defined but never used.  @typescript-eslint/no-unused-vars
+16:3  Warning: 'DescriptionIcon' is defined but never used.  @typescript-eslint/no-unused-vars
+17:3  Warning: 'AutoFixHighIcon' is defined but never used.  @typescript-eslint/no-unused-vars
+63:7  Warning: Unexpected console statement.  no-console
+69:9  Warning: Unexpected console statement.  no-console
+
+./src/app/page.tsx
+6:3  Warning: 'Container' is defined but never used.  @typescript-eslint/no-unused-vars
+23:8  Warning: 'SpeedIcon' is defined but never used.  @typescript-eslint/no-unused-vars
+24:8  Warning: 'SecurityIcon' is defined but never used.  @typescript-eslint/no-unused-vars
+25:8  Warning: 'EmojiEmotionsIcon' is defined but never used.  @typescript-eslint/no-unused-vars
+26:8  Warning: 'LightbulbIcon' is defined but never used.  @typescript-eslint/no-unused-vars
+30:8  Warning: 'ExpandMoreIcon' is defined but never used.  @typescript-eslint/no-unused-vars
+94:13  Warning: Unexpected console statement.  no-console
+101:11  Warning: Unexpected console statement.  no-console
+
+./src/auth.ts
+4:8  Warning: 'Session' is defined but never used.  @typescript-eslint/no-unused-vars
+8:15  Warning: 'JWT' is defined but never used.  @typescript-eslint/no-unused-vars
+9:15  Warning: 'AdapterSession' is defined but never used.  @typescript-eslint/no-unused-vars
+32:36  Warning: 'request' is defined but never used.  @typescript-eslint/no-unused-vars
+76:11  Warning: Unexpected console statement.  no-console
+88:22  Warning: 'secret' is defined but never used.  @typescript-eslint/no-unused-vars
+103:9  Warning: Unexpected console statement.  no-console
+107:22  Warning: 'secret' is defined but never used.  @typescript-eslint/no-unused-vars
+128:13  Warning: Unexpected console statement.  no-console
+140:9  Warning: Unexpected console statement.  no-console
+141:9  Warning: Unexpected console statement.  no-console
+
+./src/components/auth/Auth0Lock.tsx
+25:42  Warning: 'clientId' is defined but never used.  @typescript-eslint/no-unused-vars
+25:52  Warning: 'domain' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/components/auth/LoginSection.tsx
+3:15  Warning: 'Typography' is defined but never used.  @typescript-eslint/no-unused-vars
+18:21  Warning: Forbidden non-null assertion.  @typescript-eslint/no-non-null-assertion
+19:19  Warning: Forbidden non-null assertion.  @typescript-eslint/no-non-null-assertion
+
+./src/components/comments/CommentItem.tsx
+8:3  Warning: 'Link' is defined but never used.  @typescript-eslint/no-unused-vars
+61:10  Warning: 'isLoadingTasks' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+77:9  Warning: Unexpected console statement.  no-console
+94:7  Warning: Unexpected console statement.  no-console
+115:7  Warning: Unexpected console statement.  no-console
+125:40  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./src/components/comments/CommentsSection.tsx
+8:3  Warning: 'Button' is defined but never used.  @typescript-eslint/no-unused-vars
+11:3  Warning: 'Paper' is defined but never used.  @typescript-eslint/no-unused-vars
+38:3  Warning: 'entityId' is defined but never used.  @typescript-eslint/no-unused-vars
+45:3  Warning: 'onCreateTaskFromEntity' is defined but never used.  @typescript-eslint/no-unused-vars
+93:9  Warning: Unexpected console statement.  no-console
+106:9  Warning: Unexpected console statement.  no-console
+118:9  Warning: Unexpected console statement.  no-console
+130:9  Warning: Unexpected console statement.  no-console
+137:9  Warning: 'getEntityDisplayName' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+
+./src/components/comments/CommentsWrapper.tsx
+4:10  Warning: 'Box' is defined but never used.  @typescript-eslint/no-unused-vars
+33:5  Warning: 'error' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+38:5  Warning: 'refetch' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+
+./src/components/common/BaseDataGrid.tsx
+15:3  Warning: 'Menu' is defined but never used.  @typescript-eslint/no-unused-vars
+26:3  Warning: 'GridRowId' is defined but never used.  @typescript-eslint/no-unused-vars
+53:12  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+54:9  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+57:20  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+59:25  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+61:8  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+92:37  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+93:29  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+101:34  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+154:3  Warning: 'showToolbar' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+157:3  Warning: 'sx' is defined but never used.  @typescript-eslint/no-unused-vars
+184:9  Warning: 'theme' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+209:52  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+273:43  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./src/components/common/BaseFreesoloAutocomplete.tsx
+9:3  Warning: 'AutocompleteProps' is defined but never used.  @typescript-eslint/no-unused-vars
+213:19  Warning: 'key' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+
+./src/components/common/BaseLineChart.tsx
+31:18  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+35:24  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+43:32  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+44:33  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+127:26  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+177:3  Warning: 'height' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+
+./src/components/common/BasePieChart.tsx
+67:32  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+68:33  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+134:7  Warning: Unexpected console statement.  no-console
+137:7  Warning: Unexpected console statement.  no-console
+144:7  Warning: Unexpected console statement.  no-console
+169:5  Warning: 'innerRadius' is defined but never used.  @typescript-eslint/no-unused-vars
+172:5  Warning: 'index' is defined but never used.  @typescript-eslint/no-unused-vars
+250:3  Warning: 'variant' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+355:13  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+355:24  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./src/components/common/BaseScatterChart.tsx
+9:3  Warning: 'Legend' is defined but never used.  @typescript-eslint/no-unused-vars
+11:3  Warning: 'Cell' is defined but never used.  @typescript-eslint/no-unused-vars
+22:18  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+34:32  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+35:33  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+46:29  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+123:9  Warning: 'themedLegendProps' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+163:29  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+181:42  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+181:68  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+182:13  Warning: 'payload' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+189:47  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+189:61  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./src/components/common/BaseTable.tsx
+19:11  Warning: 'AddButtonProps' is defined but never used.  @typescript-eslint/no-unused-vars
+28:17  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+33:9  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+35:22  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+49:26  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+65:32  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./src/components/common/BaseTag.tsx
+23:3  Warning: 'InputProps' is defined but never used.  @typescript-eslint/no-unused-vars
+26:3  Warning: 'FormHelperText' is defined but never used.  @typescript-eslint/no-unused-vars
+113:3  Warning: 'id' is defined but never used.  @typescript-eslint/no-unused-vars
+156:13  Warning: 'apiFactory' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+191:7  Warning: Unexpected console statement.  no-console
+207:9  Warning: 'handleInputChange' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+327:38  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+335:39  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+340:9  Warning: 'isTagInputDisabled' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+
+./src/components/common/BaseWorkflowSection.tsx
+10:3  Warning: 'MenuItem' is defined but never used.  @typescript-eslint/no-unused-vars
+36:32  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+73:3  Warning: 'entityId' is defined but never used.  @typescript-eslint/no-unused-vars
+80:3  Warning: 'statusReadOnly' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+146:39  Warning: Forbidden non-null assertion.  @typescript-eslint/no-non-null-assertion
+154:9  Warning: Unexpected console statement.  no-console
+196:36  Warning: Forbidden non-null assertion.  @typescript-eslint/no-non-null-assertion
+213:9  Warning: Unexpected console statement.  no-console
+240:9  Warning: 'InfoRow' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+286:16  Warning: 'error' is defined but never used.  @typescript-eslint/no-unused-vars
+306:16  Warning: 'error' is defined but never used.  @typescript-eslint/no-unused-vars
+327:16  Warning: 'error' is defined but never used.  @typescript-eslint/no-unused-vars
+354:16  Warning: 'error' is defined but never used.  @typescript-eslint/no-unused-vars
+448:19  Warning: 'key' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+500:19  Warning: 'key' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+
+./src/components/common/ErrorBoundary.tsx
+28:5  Warning: Unexpected console statement.  no-console
+36:5  Warning: Unexpected console statement.  no-console
+58:5  Warning: Unexpected console statement.  no-console
+155:7  Warning: Unexpected console statement.  no-console
+
+./src/components/common/FeedbackModal.tsx
+61:7  Warning: Unexpected console statement.  no-console
+
+./src/components/common/NotificationContext.tsx
+90:33  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./src/components/layout/LayoutContent.tsx
+38:9  Warning: 'isProtectedRoute' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+
+./src/components/providers/ThemeProvider.tsx
+9:8  Warning: 'CssBaseline' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/components/tasks/TaskCreationDrawer.tsx
+6:3  Warning: 'Button' is defined but never used.  @typescript-eslint/no-unused-vars
+13:3  Warning: 'CircularProgress' is defined but never used.  @typescript-eslint/no-unused-vars
+27:24  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+42:3  Warning: 'currentUserId' is defined but never used.  @typescript-eslint/no-unused-vars
+43:3  Warning: 'currentUserName' is defined but never used.  @typescript-eslint/no-unused-vars
+66:56  Warning: Forbidden non-null assertion.  @typescript-eslint/no-non-null-assertion
+76:9  Warning: Unexpected console statement.  no-console
+
+./src/components/tasks/TaskErrorBoundary.tsx
+28:5  Warning: Unexpected console statement.  no-console
+
+./src/components/tasks/TaskItem.tsx
+9:3  Warning: 'Link' is defined but never used.  @typescript-eslint/no-unused-vars
+14:10  Warning: 'formatDistanceToNow' is defined but never used.  @typescript-eslint/no-unused-vars
+16:16  Warning: 'TaskStatus' is defined but never used.  @typescript-eslint/no-unused-vars
+16:28  Warning: 'TaskPriority' is defined but never used.  @typescript-eslint/no-unused-vars
+80:7  Warning: Unexpected console statement.  no-console
+
+./src/components/tasks/TasksAndCommentsWrapper.tsx
+36:22  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+40:9  Warning: Unexpected console statement.  no-console
+56:9  Warning: Unexpected console statement.  no-console
+
+./src/components/tasks/TasksSection.tsx
+7:3  Warning: 'CircularProgress' is defined but never used.  @typescript-eslint/no-unused-vars
+8:3  Warning: 'Paper' is defined but never used.  @typescript-eslint/no-unused-vars
+20:3  Warning: 'GridRowSelectionModel' is defined but never used.  @typescript-eslint/no-unused-vars
+26:10  Warning: 'useSession' is defined but never used.  @typescript-eslint/no-unused-vars
+33:28  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+44:3  Warning: 'onCreateTask' is defined but never used.  @typescript-eslint/no-unused-vars
+45:3  Warning: 'onEditTask' is defined but never used.  @typescript-eslint/no-unused-vars
+47:3  Warning: 'currentUserId' is defined but never used.  @typescript-eslint/no-unused-vars
+48:3  Warning: 'currentUserName' is defined but never used.  @typescript-eslint/no-unused-vars
+129:9  Warning: 'handleDeleteTask' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+134:9  Warning: Unexpected console statement.  no-console
+139:35  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+143:7  Warning: Unexpected console statement.  no-console
+208:63  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./src/components/tasks/TasksWrapper.tsx
+24:3  Warning: 'currentUserPicture' is defined but never used.  @typescript-eslint/no-unused-vars
+33:22  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+37:9  Warning: Unexpected console statement.  no-console
+53:9  Warning: Unexpected console statement.  no-console
+76:22  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+84:31  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./src/constants/paths.ts
+31:37  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./src/hooks/__tests__/useComments.test.ts
+42:15  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+173:32  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+255:23  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./src/hooks/__tests__/useTasks.test.ts
+43:15  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./src/hooks/useComments.ts
+4:3  Warning: 'CreateCommentRequest' is defined but never used.  @typescript-eslint/no-unused-vars
+5:3  Warning: 'UpdateCommentRequest' is defined but never used.  @typescript-eslint/no-unused-vars
+53:7  Warning: Unexpected console statement.  no-console
+97:9  Warning: Unexpected console statement.  no-console
+149:9  Warning: Unexpected console statement.  no-console
+183:9  Warning: Unexpected console statement.  no-console
+236:9  Warning: Unexpected console statement.  no-console
+
+./src/hooks/useTasks.ts
+41:9  Warning: Unexpected console statement.  no-console
+51:11  Warning: Unexpected console statement.  no-console
+63:11  Warning: Unexpected console statement.  no-console
+68:9  Warning: Unexpected console statement.  no-console
+75:9  Warning: Unexpected console statement.  no-console
+95:9  Warning: Unexpected console statement.  no-console
+101:9  Warning: Unexpected console statement.  no-console
+108:9  Warning: Unexpected console statement.  no-console
+217:9  Warning: Unexpected console statement.  no-console
+225:9  Warning: Unexpected console statement.  no-console
+232:9  Warning: Unexpected console statement.  no-console
+
+./src/middleware.ts
+25:5  Warning: Unexpected console statement.  no-console
+48:12  Warning: 'error' is defined but never used.  @typescript-eslint/no-unused-vars
+50:5  Warning: Unexpected console statement.  no-console
+71:7  Warning: Unexpected console statement.  no-console
+85:7  Warning: Unexpected console statement.  no-console
+87:7  Warning: Unexpected console statement.  no-console
+158:3  Warning: Unexpected console statement.  no-console
+166:3  Warning: Unexpected console statement.  no-console
+175:5  Warning: Unexpected console statement.  no-console
+178:7  Warning: Unexpected console statement.  no-console
+188:5  Warning: Unexpected console statement.  no-console
+194:5  Warning: Unexpected console statement.  no-console
+201:5  Warning: Unexpected console statement.  no-console
+205:3  Warning: Unexpected console statement.  no-console
+210:7  Warning: Unexpected console statement.  no-console
+222:7  Warning: Unexpected console statement.  no-console
+236:7  Warning: Unexpected console statement.  no-console
+243:7  Warning: Unexpected console statement.  no-console
+249:5  Warning: Unexpected console statement.  no-console
+251:19  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+254:5  Warning: Unexpected console statement.  no-console
+263:7  Warning: Unexpected console statement.  no-console
+280:7  Warning: Unexpected console statement.  no-console
+
+./src/types/navigation.ts
+1:15  Warning: 'ReactElement' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/types/next-auth.d.ts
+40:16  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./src/utils/api-client/__tests__/client-factory.test.ts
+10:10  Warning: 'OrganizationsClient' is defined but never used.  @typescript-eslint/no-unused-vars
+11:10  Warning: 'UsersClient' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/utils/api-client/base-client.ts
+5:3  Warning: 'PaginationMetadata' is defined but never used.  @typescript-eslint/no-unused-vars
+59:35  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+62:32  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+78:24  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+80:32  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+103:7  Warning: Unexpected console statement.  no-console
+114:9  Warning: Unexpected console statement.  no-console
+118:7  Warning: Unexpected console statement.  no-console
+129:7  Warning: Unexpected console statement.  no-console
+158:7  Warning: Unexpected console statement.  no-console
+186:11  Warning: Unexpected console statement.  no-console
+194:26  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+204:31  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+218:13  Warning: Unexpected console statement.  no-console
+225:11  Warning: Unexpected console statement.  no-console
+234:20  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+252:11  Warning: Unexpected console statement.  no-console
+260:9  Warning: Unexpected console statement.  no-console
+267:23  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+284:13  Warning: Unexpected console statement.  no-console
+289:11  Warning: Unexpected console statement.  no-console
+312:70  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+360:22  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+371:16  Warning: 'parseError' is defined but never used.  @typescript-eslint/no-unused-vars
+379:16  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./src/utils/api-client/behavior-client.ts
+23:7  Warning: 'include' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+63:5  Warning: Unexpected console statement.  no-console
+70:7  Warning: Unexpected console statement.  no-console
+82:7  Warning: Unexpected console statement.  no-console
+
+./src/utils/api-client/config.ts
+9:1  Warning: Unexpected console statement.  no-console
+
+./src/utils/api-client/endpoints-client.ts
+35:7  Warning: Unexpected console statement.  no-console
+41:7  Warning: Unexpected console statement.  no-console
+59:47  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+59:61  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+60:23  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+69:72  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+88:70  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+89:23  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./src/utils/api-client/interfaces/behavior.ts
+15:18  Error: An interface declaring no members is equivalent to its supertype.  @typescript-eslint/no-empty-object-type
+17:18  Error: An interface declaring no members is equivalent to its supertype.  @typescript-eslint/no-empty-object-type
+84:11  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+147:11  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./src/utils/api-client/interfaces/category.ts
+11:18  Error: An interface declaring no members is equivalent to its supertype.  @typescript-eslint/no-empty-object-type
+13:18  Error: An interface declaring no members is equivalent to its supertype.  @typescript-eslint/no-empty-object-type
+
+./src/utils/api-client/interfaces/endpoint.ts
+7:25  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+13:33  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+14:36  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+20:33  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+21:42  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+22:35  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+27:37  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./src/utils/api-client/interfaces/metric.ts
+107:14  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./src/utils/api-client/interfaces/model.ts
+15:36  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+35:36  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+50:36  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./src/utils/api-client/interfaces/project.ts
+49:18  Error: An interface declaring no members is equivalent to its supertype.  @typescript-eslint/no-empty-object-type
+
+./src/utils/api-client/interfaces/prompt.ts
+30:18  Error: An interface declaring no members is equivalent to its supertype.  @typescript-eslint/no-empty-object-type
+32:18  Error: An interface declaring no members is equivalent to its supertype.  @typescript-eslint/no-empty-object-type
+
+./src/utils/api-client/interfaces/tag.ts
+28:18  Error: An interface declaring no members is equivalent to its supertype.  @typescript-eslint/no-empty-object-type
+30:18  Error: An interface declaring no members is equivalent to its supertype.  @typescript-eslint/no-empty-object-type
+
+./src/utils/api-client/interfaces/task.ts
+13:34  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+34:34  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+46:34  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./src/utils/api-client/interfaces/test-configuration.ts
+2:25  Warning: 'TypeLookup' is defined but never used.  @typescript-eslint/no-unused-vars
+18:31  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+21:18  Error: An interface declaring no members is equivalent to its supertype.  @typescript-eslint/no-empty-object-type
+23:18  Error: An interface declaring no members is equivalent to its supertype.  @typescript-eslint/no-empty-object-type
+
+./src/utils/api-client/interfaces/test-results.ts
+41:30  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+61:10  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+65:18  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+66:21  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+70:18  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+71:41  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+72:20  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+75:22  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+127:18  Error: An interface declaring no members is equivalent to its supertype.  @typescript-eslint/no-empty-object-type
+129:18  Error: An interface declaring no members is equivalent to its supertype.  @typescript-eslint/no-empty-object-type
+
+./src/utils/api-client/interfaces/test-run.ts
+4:10  Warning: 'Endpoint' is defined but never used.  @typescript-eslint/no-unused-vars
+5:10  Warning: 'TestSet' is defined but never used.  @typescript-eslint/no-unused-vars
+23:31  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+30:18  Error: An interface declaring no members is equivalent to its supertype.  @typescript-eslint/no-empty-object-type
+32:18  Error: An interface declaring no members is equivalent to its supertype.  @typescript-eslint/no-empty-object-type
+
+./src/utils/api-client/interfaces/test-set.ts
+12:31  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+107:31  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+179:39  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+184:29  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+209:31  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./src/utils/api-client/interfaces/tests.ts
+64:39  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+72:34  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+75:18  Error: An interface declaring no members is equivalent to its supertype.  @typescript-eslint/no-empty-object-type
+77:18  Error: An interface declaring no members is equivalent to its supertype.  @typescript-eslint/no-empty-object-type
+154:39  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+183:39  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+184:27  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./src/utils/api-client/interfaces/topic.ts
+11:18  Error: An interface declaring no members is equivalent to its supertype.  @typescript-eslint/no-empty-object-type
+13:18  Error: An interface declaring no members is equivalent to its supertype.  @typescript-eslint/no-empty-object-type
+
+./src/utils/api-client/interfaces/type-lookup.ts
+12:18  Error: An interface declaring no members is equivalent to its supertype.  @typescript-eslint/no-empty-object-type
+14:18  Error: An interface declaring no members is equivalent to its supertype.  @typescript-eslint/no-empty-object-type
+
+./src/utils/api-client/metrics-client.ts
+9:3  Warning: 'MetricsResponse' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/utils/api-client/models-client.ts
+9:3  Warning: 'ModelsResponse' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/utils/api-client/organizations-client.ts
+31:5  Warning: Unexpected console statement.  no-console
+38:21  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+39:7  Warning: Unexpected console statement.  no-console
+56:5  Warning: Unexpected console statement.  no-console
+
+./src/utils/api-client/projects-client.ts
+38:7  Warning: Unexpected console statement.  no-console
+44:7  Warning: Unexpected console statement.  no-console
+
+./src/utils/api-client/services-client.ts
+2:25  Warning: 'API_CONFIG' is defined but never used.  @typescript-eslint/no-unused-vars
+12:36  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+56:23  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./src/utils/api-client/test-configurations-client.ts
+10:10  Warning: 'TestRun' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/utils/api-client/test-runs-client.ts
+49:23  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./src/utils/api-client/test-sets-client.ts
+16:3  Warning: 'GenerationSample' is defined but never used.  @typescript-eslint/no-unused-vars
+17:3  Warning: 'TestSetGenerationConfig' is defined but never used.  @typescript-eslint/no-unused-vars
+41:50  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+98:7  Warning: Use "@ts-expect-error" instead of "@ts-ignore", as "@ts-ignore" will do nothing if the following line is error-free.  @typescript-eslint/ban-ts-comment
+154:7  Warning: Unexpected console statement.  no-console
+167:24  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+180:18  Warning: 'parseError' is defined but never used.  @typescript-eslint/no-unused-vars
+188:18  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+231:7  Warning: Unexpected console statement.  no-console
+320:22  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+353:28  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+370:28  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+421:22  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+431:27  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+443:16  Warning: 'parseError' is defined but never used.  @typescript-eslint/no-unused-vars
+451:16  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./src/utils/api-client/tests-client.ts
+65:7  Warning: Use "@ts-expect-error" instead of "@ts-ignore", as "@ts-ignore" will do nothing if the following line is error-free.  @typescript-eslint/ban-ts-comment
+96:5  Warning: Unexpected console statement.  no-console
+97:5  Warning: Unexpected console statement.  no-console
+98:5  Warning: Unexpected console statement.  no-console
+101:5  Warning: Unexpected console statement.  no-console
+111:5  Warning: Use "@ts-expect-error" instead of "@ts-ignore", as "@ts-ignore" will do nothing if the following line is error-free.  @typescript-eslint/ban-ts-comment
+113:7  Warning: Use "@ts-expect-error" instead of "@ts-ignore", as "@ts-ignore" will do nothing if the following line is error-free.  @typescript-eslint/ban-ts-comment
+115:7  Warning: Use "@ts-expect-error" instead of "@ts-ignore", as "@ts-ignore" will do nothing if the following line is error-free.  @typescript-eslint/ban-ts-comment
+129:5  Warning: Use "@ts-expect-error" instead of "@ts-ignore", as "@ts-ignore" will do nothing if the following line is error-free.  @typescript-eslint/ban-ts-comment
+131:7  Warning: Use "@ts-expect-error" instead of "@ts-ignore", as "@ts-ignore" will do nothing if the following line is error-free.  @typescript-eslint/ban-ts-comment
+133:7  Warning: Use "@ts-expect-error" instead of "@ts-ignore", as "@ts-ignore" will do nothing if the following line is error-free.  @typescript-eslint/ban-ts-comment
+
+./src/utils/api-client/tokens-client.ts
+30:14  Warning: 'error' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/utils/api-client/type-lookup-client.ts
+36:5  Warning: Unexpected console statement.  no-console
+
+./src/utils/client-auth.ts
+10:3  Warning: Unexpected console statement.  no-console
+16:5  Warning: Unexpected console statement.  no-console
+25:5  Warning: Unexpected console statement.  no-console
+31:5  Warning: Unexpected console statement.  no-console
+33:5  Warning: Unexpected console statement.  no-console
+36:5  Warning: Unexpected console statement.  no-console
+38:5  Warning: Unexpected console statement.  no-console
+42:7  Warning: Unexpected console statement.  no-console
+50:7  Warning: Unexpected console statement.  no-console
+55:7  Warning: Unexpected console statement.  no-console
+
+./src/utils/odata-filter.ts
+260:34  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+331:22  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+382:28  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+427:23  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+447:22  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./src/utils/session.ts
+37:12  Warning: 'error' is defined but never used.  @typescript-eslint/no-unused-vars
+39:5  Warning: Unexpected console statement.  no-console
+67:5  Warning: Unexpected console statement.  no-console
+73:3  Warning: Unexpected console statement.  no-console
+79:5  Warning: Unexpected console statement.  no-console
+87:5  Warning: Unexpected console statement.  no-console
+89:5  Warning: Unexpected console statement.  no-console
+117:3  Warning: Unexpected console statement.  no-console
+132:3  Warning: Unexpected console statement.  no-console
+140:3  Warning: Unexpected console statement.  no-console
+146:3  Warning: Unexpected console statement.  no-console
+
+./src/utils/task-lookup.ts
+10:43  Warning: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+75:5  Warning: Unexpected console statement.  no-console
+147:5  Warning: Unexpected console statement.  no-console
+220:7  Warning: Unexpected console statement.  no-console
+258:7  Warning: Unexpected console statement.  no-console
+
+info  - Need to disable some ESLint rules? Learn more here: https://nextjs.org/docs/app/api-reference/config/eslint#disabling-rules

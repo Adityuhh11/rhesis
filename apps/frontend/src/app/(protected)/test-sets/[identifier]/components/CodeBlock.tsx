@@ -31,9 +31,10 @@ test_set.download()  # Downloads to current directory as test_set_{id}.csv`;
 
     // Ensure Prism is available in the browser environment
     if (typeof window !== 'undefined') {
-      // Need to re-require Prism here to make sure it's loaded on the client side
-      require('prismjs');
-      require('prismjs/components/prism-python');
+      // Need to dynamically import Prism here to make sure it's loaded on the client side
+      import('prismjs').then(() => {
+        import('prismjs/components/prism-python');
+      });
 
       // Force highlighting after the component is mounted
       if (codeRef.current) {

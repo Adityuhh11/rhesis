@@ -125,6 +125,20 @@ export default function BaseTag({
     setLocalTags(value);
   }, [value]);
 
+  // Helper function to check if a tag name already exists
+  const tagExists = (
+    tagName: string,
+    tagsArray: string[] = localTags
+  ): boolean => {
+    if (!uniqueTags) return false;
+
+    const existsInArray = tagsArray.includes(tagName);
+    const existsInEntity =
+      entity?.tags?.some(tag => tag.name === tagName) || false;
+
+    return existsInArray || existsInEntity;
+  };
+
   const handleTagsChange = async (newTagNames: string[]) => {
     if (!sessionToken || !entityType || !entity || isUpdating) {
       onChange(newTagNames);
@@ -204,7 +218,13 @@ export default function BaseTag({
     if (maxTags !== undefined && localTags.length >= maxTags) return;
 
     // Check if tag already exists
-    if (uniqueTags && localTags.includes(trimmedValue)) return;
+    if (tagExists(trimmedValue)) {
+      notifications?.show(`Tag "${trimmedValue}" already exists`, {
+        severity: 'info',
+        autoHideDuration: 4000,
+      });
+      return;
+    }
 
     // Add the new tag
     handleTagsChange([...localTags, trimmedValue]);
@@ -254,11 +274,17 @@ export default function BaseTag({
     // Process each tag
     const newTags = [...localTags];
     let tagsAdded = 0;
+    let duplicatesFound = 0;
 
     for (const tag of tags) {
       const trimmedTag = tag.trim();
       if (!trimmedTag || !validate(trimmedTag)) continue;
-      if (uniqueTags && newTags.includes(trimmedTag)) continue;
+
+      // Check if tag already exists
+      if (tagExists(trimmedTag, newTags)) {
+        duplicatesFound++;
+        continue;
+      }
 
       // Check max tags limit
       if (maxTags !== undefined && newTags.length >= maxTags) break;
@@ -270,6 +296,19 @@ export default function BaseTag({
     if (tagsAdded > 0) {
       handleTagsChange(newTags);
       setInputValue('');
+    }
+
+    // Show notification for duplicates
+    if (duplicatesFound > 0) {
+      const message =
+        duplicatesFound === 1
+          ? `1 tag was skipped because it already exists`
+          : `${duplicatesFound} tags were skipped because they already exist`;
+
+      notifications?.show(message, {
+        severity: 'info',
+        autoHideDuration: 4000,
+      });
     }
   };
 
