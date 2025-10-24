@@ -116,6 +116,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     new_lines = []
     inserted = False
     
+    # Remove trailing newlines and replace double spaces with single spaces, to avoid frontend 
+    # linter errors
+    changelog_content = changelog_content.strip('\n')
+    changelog_content = changelog_content.replace('  ', ' ')
+
     for line in lines:
         new_lines.append(line)
         if line.strip() == "## [Unreleased]" and not inserted:
