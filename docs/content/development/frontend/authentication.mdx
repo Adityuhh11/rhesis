@@ -1,3 +1,5 @@
+import { CodeBlock } from '@/components/CodeBlock'
+
 # Authentication
 
 This document explains the authentication system used in the Rhesis frontend application.
@@ -24,10 +26,8 @@ The Rhesis frontend integrates with the Rhesis backend for authentication, which
 
 ## Authentication Setup
 
-The authentication is configured in `src/auth.ts`:
-
-```tsx
-import { jwtDecode } from "jwt-decode";
+<CodeBlock filename="example.tsx" language="tsx">
+{`import { jwtDecode } from "jwt-decode";
 
 // Token storage keys
 const ACCESS_TOKEN_KEY = "rhesis_access_token";
@@ -204,15 +204,17 @@ export async function fetchUser(): Promise<User | null> {
     console.error("Fetch user error:", error);
     return null;
   }
+}`}
+</CodeBlock>tch user error:", error);
+    return null;
+  }
 }
-```
-
+<CodeBlock filename="example.python" language="python">
+{`
 ## Route Protection
 
-Routes are protected using a custom middleware in `src/middleware.ts`:
-
-```tsx
-import { NextResponse } from "next/server";
+Routes are protected<CodeBlock filename="example.tsx" language="tsx">
+{`import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 import { isTokenExpired } from "./auth";
 
@@ -259,15 +261,15 @@ export async function middleware(request: NextRequest) {
 
 export const config = {
   matcher: ["/((?!_next/static|_next/image|favicon.ico|api/auth).*)"],
-};
-```
+};`}
+</CodeBlock>tatic|_next/image|favicon.ico|api/auth).*)"],
+};`}
+</CodeBlock>
 
 ## Authentication Context
 
-A React context is used to manage authentication state on the client:
-
-```tsx
-// src/components/providers/AuthProvider.tsx
+A React context is <CodeBlock filename="example.tsx" language="tsx">
+{`// src/components/providers/AuthProvider.tsx
 "use client";
 
 import { createContext, useContext, useState, useEffect } from "react";
@@ -363,15 +365,17 @@ export function useAuth() {
     throw new Error("useAuth must be used within an AuthProvider");
   }
   return context;
+}`}
+</CodeBlock>ithin an AuthProvider");
+  }
+  return context;
 }
-```
-
+<CodeBlock filename="example.python" language="python">
+{`
 ## Auth0 Callback Handling
 
-The callback from Auth0 is handled by a dedicated page:
-
-```tsx
-// app/auth/callback/page.tsx
+The c<CodeBlock filename="example.tsx" language="tsx">
+{`// app/auth/callback/page.tsx
 "use client";
 
 import { useEffect, useState } from "react";
@@ -458,15 +462,15 @@ export default function AuthCallback() {
       <p>Please wait while we complete the authentication process.</p>
     </div>
   );
-}
-```
+}`}
+</CodeBlock>he authentication process.</p>
+    </div>
+  );
+}`}
+</CodeBlock>
 
-## Login Component
-
-The login component redirects to Auth0:
-
-```tsx
-// src/components/auth/LoginButton.tsx
+## Login <CodeBlock filename="example.tsx" language="tsx">
+{`// src/components/auth/LoginButton.tsx
 "use client";
 
 import { useAuth } from "@/components/providers/AuthProvider";
@@ -479,15 +483,16 @@ export default function LoginButton() {
       Log In with Auth0
     </button>
   );
+}`}
+</CodeBlock>n}>
+      Log In with Auth0
+    </button>
+  );
 }
-```
-
-## Using Authentication in Components
-
-### Protected Component
-
-```tsx
-// src/components/common/ProtectedComponent.tsx
+<CodeBlock filename="example.python" language="python">
+{`
+## Using Aut<CodeBlock filename="example.tsx" language="tsx">
+{`// src/components/common/ProtectedComponent.tsx
 "use client";
 
 import { useAuth } from "@/components/providers/AuthProvider";
@@ -510,13 +515,11 @@ export default function ProtectedComponent({
   }
 
   return <>{children}</>;
-}
-```
-
-### User Profile
-
-```tsx
-// src/components/auth/UserProfile.tsx
+}`}
+</CodeBlock>eturn fallback;
+  }
+<CodeBlock filename="example.tsx" language="tsx">
+{`// src/components/auth/UserProfile.tsx
 "use client";
 
 import { useAuth } from "@/components/providers/AuthProvider";
@@ -538,15 +541,17 @@ export default function UserProfile() {
       <button onClick={logout}>Log Out</button>
     </div>
   );
-}
-```
+}`}
+</CodeBlock>lick={logout}>Log Out</button>
+    </div>
+  );
+}`}
+</CodeBlock>
 
 ## Role-Based Access Control
 
-Role-based access control is implemented using the user's roles:
-
-```tsx
-// src/components/common/RoleBasedAccess.tsx
+Role-based acc<CodeBlock filename="example.tsx" language="tsx">
+{`// src/components/common/RoleBasedAccess.tsx
 "use client";
 
 import { useAuth } from "@/components/providers/AuthProvider";
@@ -577,15 +582,16 @@ export default function RoleBasedAccess({
   }
 
   return <>{children}</>;
+}`}
+</CodeBlock>eturn fallback;
+  }
+
+  return <>{children}</>;
 }
-```
-
-## Auth Provider Setup
-
-The auth provider is set up in the root layout:
-
-```tsx
-// app/layout.tsx
+<CodeBlock filename="example.python" language="python">
+{`
+## Auth Provider Setu<CodeBlock filename="example.tsx" language="tsx">
+{`// app/layout.tsx
 import { AuthProvider } from "@/components/providers/AuthProvider";
 
 export default function RootLayout({
@@ -600,8 +606,13 @@ export default function RootLayout({
       </body>
     </html>
   );
-}
-```
+}`}
+</CodeBlock></AuthProvider>
+      </body>
+    </html>
+  );
+}`}
+</CodeBlock>
 
 ## Security Considerations
 

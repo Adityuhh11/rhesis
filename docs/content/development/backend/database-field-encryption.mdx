@@ -1,3 +1,5 @@
+import { CodeBlock } from '@/components/CodeBlock'
+
 # Database Field Encryption for Sensitive Tokens
 
 ## Status
@@ -37,19 +39,14 @@ We will implement field-level encryption for sensitive database columns using **
 - Simple, secure API: `Fernet(key).encrypt()` / `decrypt()`
 - Returns URL-safe base64-encoded ciphertext suitable for database storage
 - Well-documented and actively maintained
-- Battle-tested in production environments
-
-**Installation:**
+- Battle-te<CodeBlock filename="Terminal" language="bash">
+{`cd apps/backend
+uv add cryptography`}
+</CodeBlock>:**
 
 ```bash
-cd apps/backend
-uv add cryptography
-```
-
-**Basic Usage:**
-
-```python
-from cryptography.fernet import Fernet
+cd apps<CodeBlock filename="example.python" language="python">
+{`from cryptography.fernet import Fernet
 
 # Generate encryption key (one-time setup)
 key = Fernet.generate_key()  # Returns: b'32-byte-url-safe-base64-encoded-key'
@@ -62,9 +59,10 @@ plaintext = "my-api-key-12345"
 encrypted = cipher.encrypt(plaintext.encode())  # Returns: b'encrypted-base64-string'
 
 # Decrypt
-decrypted = cipher.decrypt(encrypted).decode()  # Returns: "my-api-key-12345"
-```
-
+decrypted = cipher.decrypt(encrypted).decode()  # Returns: "my-api-key-12345"`}
+</CodeBlock>crypted).decode()  # Returns: "my-api-key-12345"
+<CodeBlock filename="example.python" language="python">
+{`
 ### 2. Key Management Strategy
 
 **Environment Variable:** `DB_ENCRYPTION_KEY`
@@ -74,12 +72,10 @@ decrypted = cipher.decrypt(encrypted).decode()  # Returns: "my-api-key-12345"
 - 32 URL-safe base64-encoded bytes (Fernet standard format)
 - Example: `ZmDfcTF7_60GrrY167zsiPd67pEvs0aGOv2oasOM92s=`
 
-**Key Generation:**
-Developers can generate keys locally using:
-
-```bash
-python -c "from cryptography.fernet import Fernet; print(Fernet.generate_key().decode())"
-```
+**Key Generat<CodeBlock filename="Terminal" language="bash">
+{`python -c "from cryptography.fernet import Fernet; print(Fernet.generate_key().decode())"`}
+</CodeBlock>t Fernet; print(Fernet.generate_key().decode())"`}
+</CodeBlock>
 
 **Key Storage by Environment:**
 
@@ -125,22 +121,20 @@ python -c "from cryptography.fernet import Fernet; print(Fernet.generate_key().d
 
 **Migration Flow:**
 
-```
-1. Deploy application code with EncryptedString TypeDecorator
+<CodeBlock filename="example.text" language="text">
+{`1. Deploy application code with EncryptedString TypeDecorator
    - Includes backward compatibility (reads both encrypted and plaintext)
 2. Run data migration script to encrypt all existing plaintext values
    - Processes each row: plaintext → encrypted in same column
 3. Monitor application logs for any remaining plaintext values
    - Log warnings when plaintext is encountered
-4. After validation period (e.g., 1 week), remove backward compatibility fallback
-```
+4. After validation period (e.g., 1 week), remove backward compatibility fallback`}
+</CodeBlock>
 
 **Backward Compatibility Implementation:**
 
-The `EncryptedString` SQLAlchemy TypeDecorator will gracefully handle both encrypted and plaintext values during the migration window:
-
-```python
-def process_result_value(self, value, dialect):
+The `EncryptedString` SQLAlchemy TypeDecorator will gracefully handle both encrypted<CodeBlock filename="example.python" language="python">
+{`def process_result_value(self, value, dialect):
     """Decrypt when reading from database"""
     if value is None:
         return value
@@ -156,9 +150,10 @@ def process_result_value(self, value, dialect):
             "Encountered unencrypted value in encrypted column",
             extra={"column": self.column_name}
         )
-        return value  # Return plaintext during migration window
-```
-
+        return value  # Return plaintext during migration window`}
+</CodeBlock>alue  # Return plaintext during migration window
+<CodeBlock filename="example.python" language="python">
+{`
 ### 4. Database Schema: No Changes Required
 
 **Existing columns remain as-is:**
@@ -180,10 +175,8 @@ Fernet encryption adds overhead to the stored data:
 ### 5. Implementation Architecture
 
 **SQLAlchemy TypeDecorator:**
-Encryption/decryption will be transparent to application code using SQLAlchemy's `TypeDecorator`:
-
-```python
-from sqlalchemy import TypeDecorator, Text
+Encryption/decryption will be transparent to ap<CodeBlock filename="example.python" language="python">
+{`from sqlalchemy import TypeDecorator, Text
 from cryptography.fernet import Fernet
 import os
 
@@ -207,13 +200,9 @@ class EncryptedString(TypeDecorator):
         """Decrypt when reading from database"""
         if value is None:
             return value
-        return self.cipher.decrypt(value.encode()).decode()
-```
-
-**Usage in Models:**
-
-```python
-from sqlalchemy import Column, Integer, String
+        return self.cipher.decrypt(value.encode()).decode()`}
+</CodeBlock>urn self.cipher.decrypt(<CodeBlock filename="example.python" language="python">
+{`from sqlalchemy import Column, Integer, String
 from rhesis.backend.app.models.base import Base
 from rhesis.backend.app.utils.encryption import EncryptedString
 
@@ -223,8 +212,9 @@ class Endpoint(Base):
     id = Column(Integer, primary_key=True)
     name = Column(String)
     auth_token = Column(EncryptedString)  # Transparently encrypted
-    client_secret = Column(EncryptedString)  # Transparently encrypted
-```
+    client_secret = Column(EncryptedString)  # Transparently encrypted`}
+</CodeBlock>lumn(EncryptedString)  # Transparently encrypted`}
+</CodeBlock>
 
 ### 6. Security Model
 
@@ -377,10 +367,8 @@ This ADR is part of a larger implementation plan broken into subtasks:
 ### Phase 2 Enhancements
 
 **1. Key Rotation:**
-Implement support for dual-key encryption to enable zero-downtime key rotation:
-
-```python
-# Support both current and previous key
+Implement support for dual-ke<CodeBlock filename="example.python" language="python">
+{`# Support both current and previous key
 OLD_KEY = os.getenv("DB_ENCRYPTION_KEY_OLD")
 NEW_KEY = os.getenv("DB_ENCRYPTION_KEY")
 
@@ -388,7 +376,8 @@ def decrypt_with_fallback(value):
     try:
         return Fernet(NEW_KEY).decrypt(value)
     except InvalidToken:
-        return Fernet(OLD_KEY).decrypt(value)  # Fall back to old key
+        return Fernet(OLD_KEY).decrypt(value)  # Fall back to old key`}
+</CodeBlock>(OLD_KEY).decrypt(value)  # Fall back to old key
 ```
 
 **2. GCP Secret Manager Integration:**

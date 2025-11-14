@@ -1,3 +1,5 @@
+import { CodeBlock } from '@/components/CodeBlock'
+
 # Coding Standards
 
 This document outlines the coding standards and best practices for the Rhesis project. Following these standards ensures code quality, maintainability, and consistency across the codebase.
@@ -22,12 +24,8 @@ We follow [PEP 8](https://www.python.org/dev/peps/pep-0008/) and use [Ruff](http
 - **Classes**: `PascalCase` for class names
 - **Constants**: `UPPER_CASE` for constants
 
-### Type Hints
-
-All functions should include type hints:
-
-```python
-from typing import List, Optional, Dict, Any
+### Ty<CodeBlock filename="example.python" language="python">
+{`from typing import List, Optional, Dict, Any
 from datetime import datetime
 
 def create_user(
@@ -57,15 +55,16 @@ async def get_users_by_organization(
         .where(User.organization_id == org_id)
         .limit(limit)
     )
+    return result.scalars().all()`}
+</CodeBlock>t(limit)
+    )
     return result.scalars().all()
-```
-
+<CodeBlock filename="example.python" language="python">
+{`
 ### Docstrings
 
-Use Google-style docstrings for all functions and classes:
-
-```python
-def calculate_test_coverage(
+Use Goog<CodeBlock filename="example.python" language="python">
+{`def calculate_test_coverage(
     test_results: List[Dict[str, Any]],
     threshold: Optional[float] = None
 ) -> float:
@@ -105,15 +104,17 @@ def calculate_test_coverage(
             f"Coverage {coverage}% below threshold {threshold}%"
         )
 
-    return coverage
-```
+    return coverage`}
+</CodeBlock>old {threshold}%"
+        )
+
+    return coverage`}
+</CodeBlock>
 
 ### Error Handling
 
-Use specific exceptions and proper error handling:
-
-```python
-from rhesis.backend.core.exceptions import (
+<CodeBlock filename="example.python" language="python">
+{`from rhesis.backend.core.exceptions import (
     UserNotFoundError,
     ValidationError,
     DatabaseError
@@ -129,9 +130,10 @@ def get_user_by_id(user_id: int, db: Session) -> User:
     except SQLAlchemyError as e:
         raise DatabaseError(f"Database error: {str(e)}") from e
     except Exception as e:
-        raise ValidationError(f"Unexpected error: {str(e)}") from e
-```
-
+        raise ValidationError(f"Unexpected error: {str(e)}") from e`}
+</CodeBlock>ationError(f"Unexpected error: {str(e)}") from e
+<CodeBlock filename="example.python" language="python">
+{`
 ### Testing Standards
 
 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -153,14 +155,8 @@ def get_user_by_id(user_id: int, db: Session) -> User:
   </div>
   <div>
     <h3>Mocking</h3>
-    <p>Mock external dependencies and services.</p>
-  </div>
-</div>
-
-**Example Test:**
-
-```python
-import pytest
+    <p>Mock external dependencies an<CodeBlock filename="example.python" language="python">
+{`import pytest
 from unittest.mock import Mock, patch
 from rhesis.backend.services.user_service import UserService
 from rhesis.backend.models.user import User
@@ -217,8 +213,10 @@ class TestUserService:
 
         # Act & Assert
         with pytest.raises(UserAlreadyExistsError):
-            user_service.create_user(user_data)
-```
+            user_service.create_user(user_data)`}
+</CodeBlock>
+            user_service.create_user(user_data)`}
+</CodeBlock>
 
 ## JavaScript/TypeScript Standards
 
@@ -236,10 +234,8 @@ We use ESLint and Prettier for code formatting and linting.
 
 ### TypeScript Usage
 
-Use TypeScript for all new code with strict configuration:
-
-```typescript
-// Define interfaces for data structures
+Use Type<CodeBlock filename="example.typescript" language="typescript">
+{`// Define interfaces for data structures
 interface User {
   id: string;
   email: string;
@@ -284,15 +280,14 @@ const createUser = async (
   } catch (error) {
     throw new Error(`Failed to create user: ${error.message}`);
   }
+};`}
+</CodeBlock>ailed to create user: ${error.message}`);
+  }
 };
-```
-
-### React Components
-
-Follow React best practices and hooks:
-
-```typescript
-import React, { useState, useEffect, useCallback } from 'react';
+<CodeBlock filename="example.python" language="python">
+{`
+### React <CodeBlock filename="example.typescript" language="typescript">
+{`import React, { useState, useEffect, useCallback } from 'react';
 import { useQuery, useMutation } from '@tanstack/react-query';
 
 interface UserFormProps {
@@ -373,15 +368,18 @@ export const UserForm: React.FC<UserFormProps> = ({
       </button>
     </form>
   );
-};
-```
+};`}
+</CodeBlock>reate User'}
+      </button>
+    </form>
+  );
+};`}
+</CodeBlock>
 
 ### Custom Hooks
 
-Create reusable custom hooks for common functionality:
-
-```typescript
-import { useState, useEffect } from "react";
+Crea<CodeBlock filename="example.typescript" language="typescript">
+{`import { useState, useEffect } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 
 export const useUsers = (organizationId: string) => {
@@ -438,15 +436,18 @@ export const useLocalStorage = <T>(
   };
 
   return [storedValue, setValue];
-};
-```
+};`}
+</CodeBlock>    }
+  };
 
+  return [storedValue, setValue];
+};
+<CodeBlock filename="example.python" language="python">
+{`
 ### Error Handling
 
-Implement proper error boundaries and error handling:
-
-```typescript
-import React, { Component, ErrorInfo, ReactNode } from 'react';
+Imp<CodeBlock filename="example.typescript" language="typescript">
+{`import React, { Component, ErrorInfo, ReactNode } from 'react';
 
 interface Props {
   children: ReactNode;
@@ -490,8 +491,14 @@ export class ErrorBoundary extends Component<Props, State> {
 
     return this.props.children;
   }
-}
-```
+}`}
+</CodeBlock> );
+    }
+
+    return this.props.children;
+  }
+}`}
+</CodeBlock>
 
 ## General Best Practices
 
@@ -516,14 +523,8 @@ export class ErrorBoundary extends Component<Props, State> {
   </div>
   <div>
     <h3>Clean Code</h3>
-    <p>Write readable, self-documenting code.</p>
-  </div>
-</div>
-
-### Performance Considerations
-
-```typescript
-// Use React.memo for expensive components
+    <p>Write readable, self-documenting code.</<CodeBlock filename="example.typescript" language="typescript">
+{`// Use React.memo for expensive components
 const ExpensiveComponent = React.memo<Props>(({ data }) => {
   return <div>{/* Expensive rendering logic */}</div>;
 });
@@ -536,9 +537,12 @@ const expensiveValue = useMemo(() => {
 // Use useCallback for function props
 const handleClick = useCallback(() => {
   // Handle click logic
+}, [dependencies]);`}
+</CodeBlock>=> {
+  // Handle click logic
 }, [dependencies]);
-```
-
+<CodeBlock filename="example.text" language="text">
+{`
 ### Security Best Practices
 
 <Callout type="default">
@@ -568,12 +572,8 @@ const handleClick = useCallback(() => {
 - Include request/response examples
 - Document error codes and messages
 
-## Pre-commit Hooks
-
-We use pre-commit hooks to enforce code quality:
-
-```yaml
-# .pre-commit-config.yaml
+## Pre-commit Hooks<CodeBlock filename="example.yaml" language="yaml">
+{`# .pre-commit-config.yaml
 repos:
   - repo: https://github.com/astral-sh/ruff-pre-commit
     rev: v0.1.0
@@ -592,8 +592,10 @@ repos:
       - id: trailing-whitespace
       - id: end-of-file-fixer
       - id: check-yaml
-      - id: check-added-large-files
-```
+      - id: check-added-large-files`}
+</CodeBlock>: check-yaml
+      - id: check-added-large-files`}
+</CodeBlock>
 
 ## Code Review Checklist
 

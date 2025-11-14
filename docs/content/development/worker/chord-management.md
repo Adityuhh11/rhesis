@@ -1,3 +1,5 @@
+import { CodeBlock } from '@/components/CodeBlock'
+
 # Chord Management and Monitoring
 
 This document provides comprehensive information about managing Celery chords in the Rhesis worker system, including monitoring, troubleshooting, and best practices.
@@ -8,12 +10,8 @@ A **chord** in Celery is a pattern that allows you to execute a group of tasks i
 
 - Running multiple test executions in parallel and then collecting the results
 - Processing multiple files concurrently and then aggregating the output
-- Performing parallel computations and combining the results
-
-### Chord Structure
-
-```python
-from celery import chord
+- Performing parallel computati<CodeBlock filename="example.python" language="python">
+{`from celery import chord
 
 # Create a group of parallel tasks
 tasks = [
@@ -26,21 +24,19 @@ tasks = [
 callback = collect_results.s(start_time, config_id, ...)
 
 # Execute the chord
+job = chord(tasks)(callback)`}
+</CodeBlock># Execute the chord
 job = chord(tasks)(callback)
-```
-
+<CodeBlock filename="example.text" language="text">
+{`
 ## How Rhesis Uses Chords
 
 In the Rhesis system, chords are primarily used in test execution:
 
 1. **Parallel Test Execution**: Individual tests are executed in parallel using `execute_single_test` tasks
 2. **Result Collection**: Once all tests complete, `collect_results` is called to aggregate the results
-3. **Status Updates**: The test run status is updated based on the aggregated results
-
-### Example from `orchestration.py`:
-
-```python
-# Create tasks for parallel execution
+3. **Status Updates**: The test run status is updated based on the aggreg<CodeBlock filename="example.python" language="python">
+{`# Create tasks for parallel execution
 tasks = []
 for test in tests:
     task = execute_single_test.s(
@@ -60,17 +56,22 @@ callback = collect_results.s(
 )
 
 # Execute chord
-job = chord(tasks)(callback)
-```
+job = chord(tasks)(callback)`}
+</CodeBlock>
+)
+
+# Execute chord
+job = chord(tasks)(callback)`}
+</CodeBlock>
 
 ## Common Chord Issues
 
 ### 1. `chord_unlock` MaxRetriesExceededError
 
 **Symptoms:**
-```
-MaxRetriesExceededError: Can't retry celery.chord_unlock[task-id] args:(...) kwargs:{...}
-```
+<CodeBlock filename="example.text" language="text">
+{`MaxRetriesExceededError: Can't retry celery.chord_unlock[task-id] args:(...) kwargs:{...}`}
+</CodeBlock>
 
 **Causes:**
 - Individual tasks returning `None` instead of proper results
@@ -100,57 +101,38 @@ MaxRetriesExceededError: Can't retry celery.chord_unlock[task-id] args:(...) kwa
 
 ### Built-in Monitoring Script
 
-The system includes a comprehensive monitoring script at `src/rhesis/backend/tasks/execution/chord_monitor.py` that provides several utilities:
-
-#### 1. Check Chord Status
-
-```bash
-# Check for stuck chords running longer than 2 hours
+The system includes a comprehensive monitoring script at `src/rhesis/backend/tasks/execution/chord_monitor.py` that provi<CodeBlock filename="Terminal" language="bash">
+{`# Check for stuck chords running longer than 2 hours
 python -m rhesis.backend.tasks.execution.chord_monitor check --max-hours 2
 
 # Check with JSON output
-python -m rhesis.backend.tasks.execution.chord_monitor check --max-hours 1 --json
-```
-
-#### 2. Show Current Status
-
-```bash
-# Display summary of active chord_unlock tasks
-python -m rhesis.backend.tasks.execution.chord_monitor status
-```
-
-#### 3. Revoke Stuck Chords
-
-```bash
-# Dry run - show what would be revoked
+python -m rhesis.backend.tasks.execution.chord_monitor check --max-hours 1 --json`}
+</CodeBlock>ecution.chord_monitor check --m<CodeBlock filename="Terminal" language="bash">
+{`# Display summary of active chord_unlock tasks
+python -m rhesis.backend.tasks.execution.chord_monitor status`}
+</CodeBlock>sis.backend.tasks.execution.cho<CodeBlock filename="Terminal" language="bash">
+{`# Dry run - show what would be revoked
 python -m rhesis.backend.tasks.execution.chord_monitor revoke --max-hours 1 --dry-run
 
 # Actually revoke stuck chords
-python -m rhesis.backend.tasks.execution.chord_monitor revoke --max-hours 1
-```
-
-#### 4. Inspect Specific Chord
-
-```bash
-# Get detailed information about a specific chord
-python -m rhesis.backend.tasks.execution.chord_monitor inspect <chord-id> --verbose
-```
-
-#### 5. Clean All Tasks (Emergency)
-
-```bash
-# Purge all tasks from all queues (use with extreme caution)
-python -m rhesis.backend.tasks.execution.chord_monitor clean --force
-```
-
+python -m rhesis.backend.tasks.execution.chord_monitor revoke --max-hours 1`}
+</CodeBlock>sks.execution.chord_monitor revoke<CodeBlock filename="Terminal" language="bash">
+{`# Get detailed information about a specific chord
+python -m rhesis.backend.tasks.execution.chord_monitor inspect <chord-id> --verbose`}
+</CodeBlock>ution.chord_monitor inspect <chord-id> <CodeBlock filename="Terminal" language="bash">
+{`# Purge all tasks from all queues (use with extreme caution)
+python -m rhesis.backend.tasks.execution.chord_monitor clean --force`}
+</CodeBlock>kend.tasks.execution.chord_monitor clean --force
+<CodeBlock filename="example.text" language="text">
+{`
 ### Quick Fix Script
 
-A simplified monitoring script is available at the root level:
-
-```bash
-# Check and interactively fix chord issues
-python fix_chords.py
-```
+A simplified<CodeBlock filename="Terminal" language="bash">
+{`# Check and interactively fix chord issues
+python fix_chords.py`}
+</CodeBlock>eractively fix chord issues
+python fix_chords.py`}
+</CodeBlock>
 
 This script:
 - Shows current chord status
@@ -163,42 +145,34 @@ This script:
 
 ### 1. Regular Monitoring
 
-Set up periodic monitoring to catch chord issues early:
-
-```bash
-# Add to crontab to run every 15 minutes
-*/15 * * * * cd /path/to/backend && python fix_chords.py
-```
-
-### 2. Automated Cleanup
-
-Use the built-in periodic monitoring function:
-
-```python
-from rhesis.backend.tasks.execution.chord_monitor import setup_periodic_monitoring
+Set u<CodeBlock filename="Terminal" language="bash">
+{`# Add to crontab to run every 15 minutes
+*/15 * * * * cd /path/to/backend && python fix_chords.py`}
+</CodeBlock> * * cd /path/to/backend && python fix_chords.py
+<CodeBlock filename="example.python" language="python">
+{`
+### 2. Automated Clean<CodeBlock filename="example.python" language="python">
+{`from rhesis.backend.tasks.execution.chord_monitor import setup_periodic_monitoring
 
 # This can be called from a scheduled task
-result = setup_periodic_monitoring()
-```
+result = setup_periodic_monitoring()`}
+</CodeBlock>eduled task
+result = setup_periodic_monitoring()`}
+</CodeBlock>
 
-### 3. Logging and Alerting
-
-Monitor your logs for chord-related errors:
-
-```bash
-# Monitor for chord_unlock errors
+### 3. Logging and Ale<CodeBlock filename="Terminal" language="bash">
+{`# Monitor for chord_unlock errors
 tail -f celery_worker.log | grep "chord_unlock"
 
 # Monitor for MaxRetriesExceededError
-tail -f celery_worker.log | grep "MaxRetriesExceededError"
-```
-
+tail -f celery_worker.log | grep "MaxRetriesExceededError"`}
+</CodeBlock>lery_worker.log | grep "MaxRetriesExceededError"
+<CodeBlock filename="example.python" language="python">
+{`
 ### 4. Health Checks
 
-Include chord status in your health check endpoints:
-
-```python
-from rhesis.backend.tasks.execution.chord_monitor import get_active_chord_unlocks
+In<CodeBlock filename="example.python" language="python">
+{`from rhesis.backend.tasks.execution.chord_monitor import get_active_chord_unlocks
 
 def health_check():
     active_chords = get_active_chord_unlocks()
@@ -208,17 +182,17 @@ def health_check():
         "active_chord_unlocks": len(active_chords),
         "stuck_chords": len(stuck_chords),
         "status": "unhealthy" if stuck_chords else "healthy"
-    }
-```
+    }`}
+</CodeBlock>"unhealthy" if stuck_chords else "healthy"
+    }`}
+</CodeBlock>
 
 ## Configuration for Chord Stability
 
 ### Worker Configuration
 
-In `worker.py`, ensure proper chord configuration:
-
-```python
-app.conf.update(
+<CodeBlock filename="example.python" language="python">
+{`app.conf.update(
     # Chord configuration - prevent infinite retry loops
     chord_unlock_max_retries=3,
     chord_unlock_retry_delay=1.0,
@@ -250,15 +224,15 @@ app.conf.update(
             'time_limit': 900,       # 15 minutes hard limit
         }
     }
+)`}
+</CodeBlock>       # 15 minutes hard limit
+        }
+    }
 )
-```
-
-### Task Implementation Best Practices
-
-#### Always Return Valid Results
-
-```python
-@app.task(bind=True)
+<CodeBlock filename="example.python" language="python">
+{`
+### Task Implementatio<CodeBlock filename="example.python" language="python">
+{`@app.task(bind=True)
 def execute_single_test(self, ...):
     try:
         result = perform_test_execution(...)
@@ -288,13 +262,11 @@ def execute_single_test(self, ...):
             except self.MaxRetriesExceededError:
                 return failure_result
 
-        return failure_result
-```
+        return failure_result`}
+</CodeBlock>rn failure_result
 
-#### Handle Malformed Results in Callbacks
-
-```python
-@app.task(bind=True)
+        return failure_resu<CodeBlock filename="example.python" language="python">
+{`@app.task(bind=True)
 def collect_results(self, results, ...):
     # Handle different result formats from chord execution
     processed_results = []
@@ -312,63 +284,46 @@ def collect_results(self, results, ...):
     # Process results and handle failures gracefully
     failed_tasks = sum(1 for result in processed_results
                       if result is None or
-                      (isinstance(result, dict) and result.get("status") == "failed"))
-```
+                      (isinstance(result, dict) and result.get("status") == "failed"))`}
+</CodeBlock>lt, dict) and result.get("status") == "failed"))`}
+</CodeBlock>
 
 ## Troubleshooting Workflows
 
-### When You Encounter Chord Issues
-
-1. **Immediate Assessment**
+### When You Enc<CodeBlock filename="Terminal" language="bash">
+{`   python fix_chords.py`}
+</CodeBlock>sessment**
    ```bash
-   python fix_chords.py
-   ```
-
-2. **Check Active Tasks**
-   ```bash
-   python -m rhesis.backend.tasks.execution.chord_monitor status
-   ```
-
-3. **Look for Stuck Chords**
-   ```bash
-   python -m rhesis.backend.tasks.execution.chord_monitor check --max-hours 1
-   ```
-
-4. **Review Logs**
-   ```bash
-   tail -50 celery_worker.log | grep -E "(chord_unlock|MaxRetries|ERROR)"
-   ```
-
-5. **Clean Up if Necessary**
-   ```bash
-   # Revoke stuck chords
+   python<CodeBlock filename="Terminal" language="bash">
+{`   python -m rhesis.backend.tasks.execution.chord_monitor status`}
+</CodeBlock>.backend.tasks.execution.chord_mon<CodeBlock filename="Terminal" language="bash">
+{`   python -m rhesis.backend.tasks.execution.chord_monitor check --max-hours 1`}
+</CodeBlock>s.execution.chord_monito<CodeBlock filename="Terminal" language="bash">
+{`   tail -50 celery_worker.log | grep -E "(chord_unlock|MaxRetries|ERROR)"`}
+</CodeBlock>g | grep -E "(chord_unlock|MaxRetr<CodeBlock filename="Terminal" language="bash">
+{`   # Revoke stuck chords
    python -m rhesis.backend.tasks.execution.chord_monitor revoke --max-hours 0.5
 
    # Restart workers to pick up new configuration
    pkill -f celery
-   celery -A rhesis.backend.worker.app worker --loglevel=INFO &
-   ```
-
+   celery -A rhesis.backend.worker.app worker --loglevel=INFO &`}
+</CodeBlock>s.backend.worker.app worker --loglevel=INFO &
+   <CodeBlock filename="example.text" language="text">
+{`
 ### Emergency Recovery
 
-If the system is completely stuck with many chord_unlock tasks:
-
-1. **Stop All Workers**
-   ```bash
+If the system is completely stuck with m<CodeBlock filename="Terminal" language="bash">
+{`   pkill -f celery`}
+</CodeBlock>p All Workers**`}
+</CodeBlock>bash
    pkill -f celery
-   ```
-
-2. **Purge All Tasks** (use with caution)
-   ```bash
-   python -m rhesis.backend.tasks.execution.chord_monitor clean --force
-   ```
-
-3. **Restart Workers**
-   ```bash
-   celery -A rhesis.backend.worker.app worker --loglevel=INFO &
-   ```
-
-4. **Monitor Recovery**
+ <CodeBlock filename="Terminal" language="bash">
+{`   python -m rhesis.backend.tasks.execution.chord_monitor clean --force`}
+</CodeBlock>d.tasks.execution.chord_moni<CodeBlock filename="Terminal" language="bash">
+{`   celery -A rhesis.backend.worker.app worker --loglevel=INFO &`}
+</CodeBlock>s.backend.worker.app worker -<CodeBlock filename="Terminal" language="bash">
+{`   python fix_chords.py`}
+</CodeBlock>Recovery**
    ```bash
    python fix_chords.py
    ```

@@ -33,10 +33,10 @@ The primary interaction endpoint for conversing with Rosalind. Requires bearer t
 
 **Headers:**
 
-```
-Content-Type: application/json
-Authorization: Bearer <your-api-key>  # Required if authentication is enabled
-```
+<CodeBlock filename="Headers" isTerminal={true}>
+{`Content-Type: application/json
+Authorization: Bearer <your-api-key>  # Required if authentication is enabled`}
+</CodeBlock>
 
 <CodeBlock filename="chat-request.json" language="json">
   {`{
@@ -169,19 +169,19 @@ The chatbot supports bearer token authentication for secure access. The authenti
 
 Include the bearer token in the `Authorization` header:
 
-```
-Authorization: Bearer <your-api-key>
-```
+<CodeBlock filename="Authorization Header" isTerminal={true}>
+{`Authorization: Bearer <your-api-key>`}
+</CodeBlock>
 
 ### Authentication Errors
 
 **401 Unauthorized** - Missing or invalid token:
 
-```json
-{
+<CodeBlock filename="error-response.json" language="json">
+{`{
   "detail": "Not authenticated. Bearer token required."
-}
-```
+}`}
+</CodeBlock>
 
 ## Deployment Modes
 
@@ -196,8 +196,8 @@ The chatbot supports two deployment modes, automatically determined by environme
 - 🎯 **Use case**: Public demos, evaluation, testing
 - 🔧 **Backend behavior**: Endpoint created without `auth_type`, no Authorization header sent
 
-```json
-// Endpoint configuration in backend
+<CodeBlock filename="public-endpoint-config.json" language="json">
+{`// Endpoint configuration in backend
 {
   "name": "Insurance Chatbot",
   "url": "https://chatbot.rhesis.ai/chat",
@@ -206,8 +206,8 @@ The chatbot supports two deployment modes, automatically determined by environme
   "request_headers": {
     "Content-Type": "application/json"
   }
-}
-```
+}`}
+</CodeBlock>
 
 ### Mode 2: Authenticated Access (With API Key)
 
@@ -218,8 +218,8 @@ The chatbot supports two deployment modes, automatically determined by environme
 - 🎯 **Use case**: Production deployments, per-user quotas, secure access
 - 🔧 **Backend behavior**: Endpoint created with `auth_type="bearer_token"`, Authorization header automatically injected
 
-```json
-// Endpoint configuration in backend
+<CodeBlock filename="authenticated-endpoint-config.json" language="json">
+{`// Endpoint configuration in backend
 {
   "name": "Insurance Chatbot",
   "url": "https://chatbot.rhesis.ai/chat",
@@ -230,8 +230,8 @@ The chatbot supports two deployment modes, automatically determined by environme
     "Content-Type": "application/json"
     // Authorization, X-User-ID, X-Organization-ID automatically injected by backend
   }
-}
-```
+}`}
+</CodeBlock>
 
 <Callout type="info">
   **Automatic Configuration**: The backend automatically detects which mode to

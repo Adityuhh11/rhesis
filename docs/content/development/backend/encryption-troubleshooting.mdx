@@ -1,21 +1,14 @@
+import { CodeBlock } from '@/components/CodeBlock'
+
 # Encryption Troubleshooting Guide
-
-## Quick Diagnostics
-
-### Check Encryption Status
-
-```bash
-# Verify DB_ENCRYPTION_KEY is set
+<CodeBlock filename="Terminal" language="bash">
+{`# Verify DB_ENCRYPTION_KEY is set
 echo $DB_ENCRYPTION_KEY
 
 # Test encryption/decryption
-python -c "from rhesis.backend.app.utils.encryption import encrypt, decrypt; print('✓ Working')"
-```
-
-### Verify Database Encryption
-
-```sql
--- Count encrypted vs plaintext values (plaintext_count should be 0 after migration)
+python -c "from rhesis.backend.app.utils.encryption import encrypt, decrypt; print('✓ Working')"`}
+</CodeBlock>ion import encrypt, decrypt; print<CodeBlock filename="example.sql" language="sql">
+{`-- Count encrypted vs plaintext values (plaintext_count should be 0 after migration)
 SELECT
     'endpoint' as table_name,
     COUNT(*) FILTER (WHERE auth_token LIKE 'gAAAAA%') as encrypted,
@@ -30,24 +23,23 @@ UNION ALL
 SELECT 'token',
     COUNT(*) FILTER (WHERE token LIKE 'gAAAAA%'),
     COUNT(*) FILTER (WHERE token IS NOT NULL AND NOT token LIKE 'gAAAAA%')
+FROM token WHERE token IS NOT NULL;`}
+</CodeBlock>E 'gAAAAA%')
 FROM token WHERE token IS NOT NULL;
-```
-
+<CodeBlock filename="example.python" language="python">
+{`
 ## Common Issues
 
-### Issue: "DB_ENCRYPTION_KEY environment variable is not set"
-
-**Solution:**
-
-```bash
-# Generate key
+### Issue: "DB_ENCRYPTION_K<CodeBlock filename="Terminal" language="bash">
+{`# Generate key
 python -c "from cryptography.fernet import Fernet; print(Fernet.generate_key().decode())"
 
 # Set in environment
 export DB_ENCRYPTION_KEY="<generated-key>"
 
-# For production: Update Kubernetes secret or GCP Secret Manager
-```
+# For production: Update Kubernetes secret or GCP Secret Manager`}
+</CodeBlock>: Update Kubernetes secret or GCP Secret Manager`}
+</CodeBlock>
 
 ---
 
@@ -65,16 +57,13 @@ export DB_ENCRYPTION_KEY="<generated-key>"
 
 ### Issue: Endpoint/Model API Calls Failing
 
-**Cause:** Token not decrypting properly
-
-**Diagnosis:**
-
-```python
-# Check if value is encrypted in DB
+**Caus<CodeBlock filename="example.python" language="python">
+{`# Check if value is encrypted in DB
 from rhesis.backend.app.utils.encryption import is_encrypted
-print(is_encrypted(endpoint.auth_token))  # Should be False (auto-decrypted by ORM)
-```
-
+print(is_encrypted(endpoint.auth_token))  # Should be False (auto-decrypted by ORM)`}
+</CodeBlock>ken))  # Should be False (auto-decrypted by ORM)
+<CodeBlock filename="example.python" language="python">
+{`
 **Solution:**
 
 - Verify encryption key is correct
@@ -110,12 +99,8 @@ print(is_encrypted(endpoint.auth_token))  # Should be False (auto-decrypted by O
 **Solution:**
 
 - Re-run migration: `alembic upgrade head`
-- Or manually re-save affected records to trigger encryption
-
-## Debug Script
-
-```python
-#!/usr/bin/env python3
+- Or manually re-save affec<CodeBlock filename="example.python" language="python">
+{`#!/usr/bin/env python3
 """Quick encryption status check"""
 from rhesis.backend.app.database import SessionLocal
 from rhesis.backend.app.models.endpoint import Endpoint
@@ -133,30 +118,21 @@ for table, model, field in [
     records = db.query(model).all()
     encrypted = sum(1 for r in records if getattr(r, field, None) and is_encrypted(getattr(r, field)))
     total = sum(1 for r in records if getattr(r, field, None))
-    print(f"{table}: {encrypted}/{total} encrypted")
-```
-
-## Verification Queries
-
-```sql
--- After migration, all should return 0
+    print(f"{table}: {encrypted}/{total} encrypted")`}
+</CodeBlock>print(f"{table}: {encrypted<CodeBlock filename="example.sql" language="sql">
+{`-- After migration, all should return 0
 SELECT COUNT(*) FROM endpoint
 WHERE (auth_token IS NOT NULL AND NOT auth_token LIKE 'gAAAAA%')
    OR (client_secret IS NOT NULL AND NOT client_secret LIKE 'gAAAAA%')
    OR (last_token IS NOT NULL AND NOT last_token LIKE 'gAAAAA%');
 
 SELECT COUNT(*) FROM model WHERE key IS NOT NULL AND NOT key LIKE 'gAAAAA%';
-SELECT COUNT(*) FROM token WHERE token IS NOT NULL AND NOT token LIKE 'gAAAAA%';
-```
-
-## Getting Help
-
-### Log Collection
-
-```bash
-# Collect encryption-related logs
-kubectl logs -l app=rhesis-backend -n rhesis-prod --since=1h | grep -i "encrypt\|decrypt" > logs.txt
-```
+SELECT COUNT(*) FROM token WHERE token IS NOT NULL AND NOT token LIKE 'gAAAAA%';`}
+</CodeBlock> token IS NOT NULL AND NOT token LIKE '<CodeBlock filename="Terminal" language="bash">
+{`# Collect encryption-related logs
+kubectl logs -l app=rhesis-backend -n rhesis-prod --since=1h | grep -i "encrypt\|decrypt" > logs.txt`}
+</CodeBlock>since=1h | grep -i "encrypt\|decrypt" > logs.txt`}
+</CodeBlock>
 
 ### Support
 

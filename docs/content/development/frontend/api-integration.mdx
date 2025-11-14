@@ -1,3 +1,5 @@
+import { CodeBlock } from '@/components/CodeBlock'
+
 # API Integration
 
 This document explains how the Rhesis frontend application integrates with the Rhesis backend API.
@@ -168,10 +170,8 @@ return data;
 
 ### Endpoint Definitions
 
-API endpoints are defined in separate files for each resource, all targeting the Rhesis backend API:
-
-```tsx
-// src/utils/api-client/endpoints/projects.ts
+API endpoints are defined in separate files for ea<CodeBlock filename="example.tsx" language="tsx">
+{`// src/utils/api-client/endpoints/projects.ts
 import { apiClient } from "../client";
 import type { Project, ProjectCreate, ProjectUpdate } from "../types/projects";
 
@@ -210,15 +210,18 @@ export const projectsApi = {
       method: "DELETE",
     });
   },
+};`}
+</CodeBlock>{id}`, {
+      method: "DELETE",
+    });
+  },
 };
-```
-
+<CodeBlock filename="example.typescript" language="typescript">
+{`
 ### Type Definitions
 
-API types are defined to match the Rhesis backend API response structures:
-
-```tsx
-// src/utils/api-client/types/projects.ts
+API types are defined to<CodeBlock filename="example.tsx" language="tsx">
+{`// src/utils/api-client/types/projects.ts
 export interface Project {
   id: string;
   name: string;
@@ -238,17 +241,18 @@ export interface ProjectUpdate {
   name?: string;
   description?: string;
   status?: "active" | "archived";
-}
-```
+}`}
+</CodeBlock>on?: string;
+  status?: "active" | "archived";
+}`}
+</CodeBlock>
 
 ## Using the API Client
 
 ### In Server Components
 
-In server components, you can use the API client to communicate with the Rhesis backend:
-
-```tsx
-// app/(protected)/projects/page.tsx
+In server components, you can use the <CodeBlock filename="example.tsx" language="tsx">
+{`// app/(protected)/projects/page.tsx
 import { projectsApi } from "@/utils/api-client/endpoints/projects";
 
 export default async function ProjectsPage() {
@@ -265,15 +269,19 @@ export default async function ProjectsPage() {
       </ul>
     </div>
   );
+}`}
+</CodeBlock>}</li>
+        ))}
+      </ul>
+    </div>
+  );
 }
-```
-
+<CodeBlock filename="example.python" language="python">
+{`
 ### In Client Components
 
-In client components, you can use the API client with React hooks to communicate with the Rhesis backend:
-
-```tsx
-// components/projects/ProjectForm.tsx
+In client components, you can use the API client with R<CodeBlock filename="example.tsx" language="tsx">
+{`// components/projects/ProjectForm.tsx
 "use client";
 
 import { useState } from "react";
@@ -316,15 +324,18 @@ export default function ProjectForm() {
       </button>
     </form>
   );
-}
-```
+}`}
+</CodeBlock>ate Project"}
+      </button>
+    </form>
+  );
+}`}
+</CodeBlock>
 
 ## Server Actions
 
-For form submissions and mutations, you can use server actions that communicate with the Rhesis backend API:
-
-```tsx
-// app/(protected)/projects/actions.ts
+For form submissions and mutations, you can use server act<CodeBlock filename="example.tsx" language="tsx">
+{`// app/(protected)/projects/actions.ts
 "use server";
 
 import { revalidatePath } from "next/cache";
@@ -378,9 +389,13 @@ export async function deleteProject(id: string) {
         error instanceof Error ? error.message : "Failed to delete project",
     };
   }
+}`}
+</CodeBlock>ssage : "Failed to delete project",
+    };
+  }
 }
-```
-
+<CodeBlock filename="example.text" language="text">
+{`
 ## API Configuration
 
 The Rhesis backend API URL is configured in environment variables:
@@ -390,19 +405,16 @@ The Rhesis backend API URL is configured in environment variables:
 NEXT_PUBLIC_API_BASE_URL=https://api.rhesis.ai`}
 </CodeBlock>
 
-For local development, you might point to a local instance of the Rhesis backend:
-
-```
+For local development, you might point to a local instance of the Rhesis backend:`}
+</CodeBlock>
 # .env.local
 NEXT_PUBLIC_API_BASE_URL=http://localhost:3001
-```
-
+<CodeBlock filename="example.python" language="python">
+{`
 ## Error Handling
 
-The API client includes centralized error handling for Rhesis backend API errors:
-
-```tsx
-// components/common/ErrorBoundary.tsx
+The API client includes central<CodeBlock filename="example.tsx" language="tsx">
+{`// components/common/ErrorBoundary.tsx
 "use client";
 
 import { useEffect } from "react";
@@ -454,8 +466,12 @@ export default function ErrorBoundary({
       <button onClick={reset}>Try again</button>
     </div>
   );
-}
-```
+}`}
+</CodeBlock>ick={reset}>Try again</button>
+    </div>
+  );
+}`}
+</CodeBlock>
 
 ## API Documentation
 

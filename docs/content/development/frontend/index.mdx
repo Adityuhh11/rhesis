@@ -1,3 +1,5 @@
+import { CodeBlock } from '@/components/CodeBlock'
+
 # Frontend Documentation
 
 Welcome to the Rhesis Frontend documentation. This section covers the React-based frontend application that provides the user interface for the Rhesis platform.
@@ -220,10 +222,8 @@ const { user, login, logout, isLoading } = useAuth();
 
 ### State Management
 
-Using Zustand for lightweight, scalable state management:
-
-```typescript
-// Example store
+Using Z<CodeBlock filename="example.typescript" language="typescript">
+{`// Example store
 interface AppState {
   user: User | null;
   organization: Organization | null;
@@ -236,9 +236,11 @@ const useAppStore = create<AppState>((set) => ({
   organization: null,
   setUser: (user) => set({ user }),
   setOrganization: (org) => set({ organization: org }),
+}));`}
+</CodeBlock>ation: (org) => set({ organization: org }),
 }));
-```
-
+<CodeBlock filename="example.typescript" language="typescript">
+{`
 ### Data Fetching
 
 React Query for efficient data fetching and caching:
@@ -314,9 +316,8 @@ The frontend includes a comprehensive component library:
 
 ### App Router Structure
 
-Next.js 15 App Router provides file-based routing:
-
-```
+Next.js 15 App Router provides file-based routing:`}
+</CodeBlock>
 app/
 ├── page.tsx                    # Home page (/)
 ├── auth/
@@ -328,13 +329,8 @@ app/
 │   │   ├── page.tsx           # Tests list (/tests)
 │   │   └── [id]/page.tsx      # Test detail (/tests/123)
 │   └── settings/page.tsx       # Settings (/settings)
-└── layout.tsx                  # Root layout
-```
-
-### Route Protection
-
-```typescript
-// Middleware for route protection
+└── layout.tsx       <CodeBlock filename="example.typescript" language="typescript">
+{`// Middleware for route protection
 export function middleware(request: NextRequest) {
   const token = request.cookies.get("auth-token");
 
@@ -343,17 +339,20 @@ export function middleware(request: NextRequest) {
   }
 
   return NextResponse.next();
-}
-```
+}`}
+</CodeBlock>uest.url));
+  }
 
+  return NextResponse.next();
+}
+<CodeBlock filename="example.typescript" language="typescript">
+{`
 ## API Integration
 
 ### API Client
 
-Centralized API client with automatic error handling:
-
-```typescript
-// API client configuration
+Cen<CodeBlock filename="example.typescript" language="typescript">
+{`// API client configuration
 const apiClient = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_URL,
   timeout: 10000,
@@ -366,15 +365,13 @@ apiClient.interceptors.request.use((config) => {
     config.headers.Authorization = `Bearer ${token}`;
   }
   return config;
-});
-```
-
-### API Hooks
-
-Custom hooks for API integration:
-
-```typescript
-// Custom hook for tests
+});`}
+</CodeBlock>on = `Bearer ${token}`;
+  }
+  return config;
+});`}
+</CodeBlock><CodeBlock filename="example.typescript" language="typescript">
+{`// Custom hook for tests
 export function useTests(organizationId: string) {
   return useQuery({
     queryKey: ["tests", organizationId],
@@ -391,29 +388,29 @@ export function useCreateTest() {
       queryClient.invalidateQueries(["tests"]);
     },
   });
+}`}
+</CodeBlock>ent.invalidateQueries(["tests"]);
+    },
+  });
 }
-```
-
+<CodeBlock filename="example.text" language="text">
+{`
 ## Styling & Design
 
 ### Tailwind CSS
 
-Utility-first CSS framework for rapid development:
-
-```typescript
-// Component with Tailwind classes
+<CodeBlock filename="example.typescript" language="typescript">
+{`// Component with Tailwind classes
 <div className="flex items-center justify-between p-6 bg-white rounded-lg shadow-sm border border-gray-200">
   <h2 className="text-xl font-semibold text-gray-900">Test Results</h2>
   <Button variant="primary">Export</Button>
-</div>
-```
+</div>`}
+</CodeBlock><Button variant="primary">Export</Button>
+</div>`}
+</CodeBlock>
 
-### Design System
-
-Consistent design tokens and components:
-
-```typescript
-// Design tokens
+### Desig<CodeBlock filename="example.typescript" language="typescript">
+{`// Design tokens
 const colors = {
   primary: {
     50: "#eff6ff",
@@ -428,29 +425,26 @@ const buttonVariants = {
   primary: "bg-primary-500 text-white hover:bg-primary-600",
   secondary: "bg-gray-100 text-gray-900 hover:bg-gray-200",
   danger: "bg-red-500 text-white hover:bg-red-600",
+};`}
+</CodeBlock>er: "bg-red-500 text-white hover:bg-red-600",
 };
-```
-
+<CodeBlock filename="example.typescript" language="typescript">
+{`
 ## Performance Optimization
 
-### Code Splitting
-
-Automatic code splitting with Next.js:
-
-```typescript
-// Dynamic imports for code splitting
+### Code<CodeBlock filename="example.typescript" language="typescript">
+{`// Dynamic imports for code splitting
 const TestEditor = dynamic(() => import('./TestEditor'), {
   loading: () => <TestEditorSkeleton />,
   ssr: false,
-});
-```
+});`}
+</CodeBlock> () => <TestEditorSkeleton />,
+  ssr: false,
+});`}
+</CodeBlock>
 
-### Image Optimization
-
-Next.js Image component for optimized images:
-
-```typescript
-import Image from 'next/image';
+### Image Optimizat<CodeBlock filename="example.typescript" language="typescript">
+{`import Image from 'next/image';
 
 <Image
   src="/logo.png"
@@ -458,9 +452,14 @@ import Image from 'next/image';
   width={200}
   height={50}
   priority
+/>`}
+</CodeBlock> Logo"
+  width={200}
+  height={50}
+  priority
 />
-```
-
+<CodeBlock filename="Terminal" language="bash">
+{`
 ### Caching Strategies
 
 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -480,14 +479,8 @@ import Image from 'next/image';
     <h3>CDN Optimization</h3>
     <p>Static assets served from CDN.</p>
   </div>
-</div>
-
-## Development Workflow
-
-### Local Development
-
-```bash
-# Start development server
+</di<CodeBlock filename="Terminal" language="bash">
+{`# Start development server
 npm run dev
 
 # Run type checking
@@ -500,15 +493,15 @@ npm run lint
 npm run test
 
 # Build for production
-npm run build
-```
+npm run build`}
+</CodeBlock>m run test
 
-### Environment Configuration
+# Build for production
+npm run build`}
+</CodeBlock>
 
-Key environment variables:
-
-```bash
-# API Configuration
+### Env<CodeBlock filename="Terminal" language="bash">
+{`# API Configuration
 NEXT_PUBLIC_API_URL=http://localhost:8080
 NEXT_PUBLIC_WS_URL=ws://localhost:8080
 
@@ -518,17 +511,17 @@ NEXT_PUBLIC_AUTH_CLIENT_ID=your-client-id
 
 # Feature Flags
 NEXT_PUBLIC_ENABLE_ANALYTICS=true
+NEXT_PUBLIC_ENABLE_BETA_FEATURES=false`}
+</CodeBlock>TICS=true
 NEXT_PUBLIC_ENABLE_BETA_FEATURES=false
-```
-
+<CodeBlock filename="example.python" language="python">
+{`
 ## Testing
 
 ### Test Suite
 
-Comprehensive testing with Jest and React Testing Library:
-
-```typescript
-// Component test example
+Comprehe<CodeBlock filename="example.typescript" language="typescript">
+{`// Component test example
 import { render, screen } from '@testing-library/react';
 import { TestCard } from './TestCard';
 
@@ -539,8 +532,11 @@ describe('TestCard', () => {
     expect(screen.getByText(mockTest.name)).toBeInTheDocument();
     expect(screen.getByText(mockTest.description)).toBeInTheDocument();
   });
-});
-```
+});`}
+</CodeBlock>est.description)).toBeInTheDocument();
+  });
+});`}
+</CodeBlock>
 
 ### Test Categories
 
@@ -559,17 +555,13 @@ describe('TestCard', () => {
   </div>
   <div>
     <h3>Visual Regression Tests</h3>
-    <p>UI consistency and design validation.</p>
-  </div>
-</div>
-
-## Deployment
-
-### Build Process
-
-```bash
-# Production build
+    <p>UI consistency and design validation.</p><CodeBlock filename="Terminal" language="bash">
+{`# Production build
 npm run build
+
+# Static export (optional)
+npm run export`}
+</CodeBlock>build
 
 # Static export (optional)
 npm run export

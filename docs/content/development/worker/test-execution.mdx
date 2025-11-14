@@ -1,3 +1,5 @@
+import { CodeBlock } from '@/components/CodeBlock'
+
 # Test Execution System
 
 ## Overview
@@ -6,13 +8,13 @@ The Rhesis test execution system provides a flexible and extensible architecture
 
 ## Architecture
 
-The system uses the **Strategy Pattern** to route tests to appropriate executors based on their type:
-
-```
-Test → Factory → Executor → Results
+The system uses the **Strategy Pattern** to route t<CodeBlock filename="example.text" language="text">
+{`Test → Factory → Executor → Results
          ↓
     SingleTurnExecutor (traditional tests)
     MultiTurnExecutor (Penelope-based)
+    [Future: ImageTestExecutor, etc.]`}
+</CodeBlock>ope-based)
     [Future: ImageTestExecutor, etc.]
 ```
 
@@ -32,14 +34,8 @@ Test → Factory → Executor → Results
 3. **Shared Utilities** (`executors/shared.py`)
    - Common helper functions
    - Data retrieval and validation
-   - Result storage
-
-## Test Flow
-
-### Standard Execution Flow
-
-```
-Test Configuration
+   - Result <CodeBlock filename="Diagram" language="text">
+{`Test Configuration
     ↓
 Retrieve Test
     ↓
@@ -48,6 +44,11 @@ Determine Test Type
     ├─→ Single-Turn → SingleTurnExecutor
     │
     └─→ Multi-Turn → MultiTurnExecutor
+    ↓
+Store Results
+    ↓
+Return Summary`}
+</CodeBlock>xecutor
     ↓
 Store Results
     ↓
@@ -67,10 +68,8 @@ See [Execution Modes](/development/worker/execution-modes) for details.
 
 ### Creating an Executor
 
-All executors must implement the `BaseTestExecutor` interface:
-
-```python
-from rhesis.backend.tasks.execution.executors.base import BaseTestExecutor
+All executor<CodeBlock filename="example.py" language="python">
+{`from rhesis.backend.tasks.execution.executors.base import BaseTestExecutor
 
 class CustomTestExecutor(BaseTestExecutor):
     def execute(
@@ -89,6 +88,9 @@ class CustomTestExecutor(BaseTestExecutor):
             "test_id": test_id,
             "execution_time": execution_time_ms,
             "metrics": metrics_dict,
+        }`}
+</CodeBlock>,
+            "metrics": metrics_dict,
         }
 ```
 
@@ -98,14 +100,8 @@ All executors must return a dictionary with:
 
 - `test_id` (str): The test identifier
 - `execution_time` (float): Execution time in milliseconds
-- `metrics` (Dict[str, Any]): Metric evaluation results
-
-## Usage Examples
-
-### Running a Test
-
-```python
-from rhesis.backend.tasks.execution.test_execution import execute_test
+- `metrics` (Dict[str, Any]): Metric evaluat<CodeBlock filename="example.py" language="python">
+{`from rhesis.backend.tasks.execution.test_execution import execute_test
 
 # Execute test (automatically routes to correct executor)
 result = execute_test(
@@ -119,13 +115,10 @@ result = execute_test(
 )
 
 print(f"Execution time: {result['execution_time']}ms")
-print(f"Metrics: {result['metrics']}")
-```
-
-### Using Executors Directly
-
-```python
-from rhesis.backend.tasks.execution.executors import (
+print(f"Metrics: {result['metrics']}")`}
+</CodeBlock>me']}ms")
+print(f"Metrics: {resu<CodeBlock filename="example.py" language="python">
+{`from rhesis.backend.tasks.execution.executors import (
     create_executor,
     SingleTurnTestExecutor,
     MultiTurnTestExecutor,
@@ -137,29 +130,22 @@ executor = create_executor(test)
 
 # Or use a specific executor directly
 executor = MultiTurnTestExecutor()
-result = executor.execute(db, test_config_id, ...)
+result = executor.execute(db, test_config_id, ...)`}
+</CodeBlock>sult = executor.execute(db, test_config_id, ...)
 ```
 
 ## Extending the System
 
-### Adding a New Test Type
-
-1. **Create the Executor**
-
-```python
-# executors/image_test_executor.py
+### <CodeBlock filename="example.py" language="python">
+{`# executors/image_test_executor.py
 from rhesis.backend.tasks.execution.executors.base import BaseTestExecutor
 
 class ImageTestExecutor(BaseTestExecutor):
     def execute(self, ...):
         # Image-specific test logic
-        pass
-```
-
-2. **Update the Factory**
-
-```python
-# executors/factory.py
+        pass`}
+</CodeBlock>        # Image-specific test<CodeBlock filename="example.py" language="python">
+{`# executors/factory.py
 def create_executor(test: Test) -> BaseTestExecutor:
     test_type = get_test_type(test)
 
@@ -167,16 +153,15 @@ def create_executor(test: Test) -> BaseTestExecutor:
         from .image_test_executor import ImageTestExecutor
         return ImageTestExecutor()
     elif test_type == TestType.MULTI_TURN:
-        # ...existing code
-```
-
-3. **Add Test Type Enum**
-
-```python
-# tasks/enums.py
+        # ...existing code`}
+</CodeBlock> TestType.MULTI_TURN:
+       <CodeBlock filename="example.py" language="python">
+{`# tasks/enums.py
 class TestType(str, Enum):
     SINGLE_TURN = "Single-Turn"
     MULTI_TURN = "Multi-Turn"
+    IMAGE = "Image"  # New type`}
+</CodeBlock>N = "Multi-Turn"
     IMAGE = "Image"  # New type
 ```
 
@@ -220,10 +205,8 @@ Use parallel execution mode for independent tests to maximize throughput.
 
 ## Module Location
 
-The test execution code is located in the backend repository but is primarily executed by workers:
-
-```
-apps/backend/src/rhesis/backend/tasks/execution/
+The test execution code is located in the backen<CodeBlock filename="Diagram" language="text">
+{`apps/backend/src/rhesis/backend/tasks/execution/
 ├── executors/
 │   ├── __init__.py
 │   ├── base.py                    # BaseTestExecutor ABC
@@ -236,7 +219,8 @@ apps/backend/src/rhesis/backend/tasks/execution/
 ├── orchestration.py               # Task orchestration
 ├── parallel.py                    # Parallel execution
 ├── sequential.py                  # Sequential execution
-└── penelope_target.py             # Backend target for Penelope
+└── penelope_target.py             # Backend target for Penelope`}
+</CodeBlock>get.py             # Backend target for Penelope
 ```
 
 ## Related Documentation

@@ -1,3 +1,5 @@
+import { CodeBlock } from '@/components/CodeBlock'
+
 # Development Workflow
 
 ## Overview
@@ -14,42 +16,39 @@ This document outlines the recommended development workflow for working with the
 4. Set up your local PostgreSQL database
 5. Configure your `.env` file with local settings
 
-### Running the Application
-
-Start the FastAPI development server:
-
-```bash
+### Running the <CodeBlock filename="Terminal" language="bash">
+{`uvicorn rhesis.backend.app.main:app --reload`}
+</CodeBlock>ash
 uvicorn rhesis.backend.app.main:app --reload
-```
-
+<CodeBlock filename="example.text" language="text">
+{`
 The `--reload` flag enables auto-reloading when code changes are detected.
 
 ## Code Style and Quality
 
 ### Formatting
 
-The project uses `ruff` for code formatting. Format your code using:
-
-```bash
+The project uses `<CodeBlock filename="Terminal" language="bash">
+{`uv run --all-groups ruff format .`}
+</CodeBlock>sing:`}
+</CodeBlock>bash
 uv run --all-groups ruff format .
-```
-
+<CodeBlock filename="example.text" language="text">
+{`
 This ensures consistent code style across the project.
 
-### Linting
-
-Run the linter to check for code quality issues:
-
-```bash
-uv run --all-groups ruff check .
-```
-
-Fix automatically fixable issues:
+### Linting<CodeBlock filename="Terminal" language="bash">
+{`uv run --all-groups ruff check .`}
+</CodeBlock>ssues:`}
+</CodeBlock>bash
+uv run --all-groups r<CodeBlock filename="Terminal" language="bash">
+{`uv run --all-groups ruff check --fix .`}
+</CodeBlock>
 
 ```bash
 uv run --all-groups ruff check --fix .
-```
-
+<CodeBlock filename="example.typescript" language="typescript">
+{`
 ### Type Checking
 
 Although not strictly enforced, adding type hints to your code is encouraged for better IDE support and code quality.
@@ -118,37 +117,31 @@ Tests are located in the `tests/backend/` directory. When writing tests:
 
 1. Create test files that mirror the structure of the code being tested
 2. Use pytest fixtures for common setup and teardown
-3. Use a test database (configured in `conftest.py`)
+3. Use a test database (configured in `con<CodeBlock filename="Terminal" language="bash">
+{`pytest`}
+</CodeBlock>nning Tests
 
-### Running Tests
-
-Run the test suite:
-
-```bash
-pytest
-```
-
-Run specific tests:
-
-```bash
-pytest tests/backend/test_specific_module.py
-```
+Run the te<CodeBlock filename="Terminal" language="bash">
+{`pytest tests/backend/test_specific_module.py`}
+</CodeBlock>ash
+pytest tests/backend/test_specific_module.py`}
+</CodeBlock>
 
 ## Debugging
 
 ### Logging
 
-Use the application's logging system for debugging:
-
-```python
-from rhesis.backend.logging import logger
+U<CodeBlock filename="example.python" language="python">
+{`from rhesis.backend.logging import logger
 
 logger.debug("Debug message")
 logger.info("Info message")
 logger.warning("Warning message")
+logger.error("Error message")`}
+</CodeBlock>"Warning message")
 logger.error("Error message")
-```
-
+<CodeBlock filename="example.text" language="text">
+{`
 ### Interactive Debugging
 
 For interactive debugging:
@@ -175,9 +168,8 @@ Follow these guidelines for commit messages:
 3. Optionally followed by a blank line and detailed description
 4. Reference issue numbers where appropriate
 
-Example:
-
-```
+Example:`}
+</CodeBlock>
 Add user authentication endpoint
 
 - Implement JWT token generation

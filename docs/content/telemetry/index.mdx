@@ -1,3 +1,5 @@
+import { CodeBlock } from '@/components/CodeBlock'
+
 # Telemetry System
 
 Rhesis includes a privacy-focused telemetry system to collect and analyze usage patterns from both cloud-hosted and self-hosted instances. This helps us understand how the platform is used and improve it for everyone.
@@ -12,8 +14,8 @@ Rhesis includes a privacy-focused telemetry system to collect and analyze usage 
 
 The telemetry system consists of three main components working together:
 
-```
-┌────────────────────────────────────────────────────────┐
+<CodeBlock filename="Architecture Diagram" isTerminal={true}>
+{`┌────────────────────────────────────────────────────────┐
 │  Rhesis Instances (Cloud + Self-Hosted)                │
 │  ┌──────────┐              ┌──────────┐                │
 │  │ Backend  │              │ Frontend │                │
@@ -38,8 +40,8 @@ The telemetry system consists of three main components working together:
         ┌──────────────────────┐
         │ PostgreSQL           │  Separate Analytics DB
         │ Analytics Database   │  (Isolated from main DB)
-        └──────────────────────┘
-```
+        └──────────────────────┘`}
+</CodeBlock>
 
 ### Components
 
@@ -95,12 +97,12 @@ The telemetry system consists of three main components working together:
 
 All user and organization IDs are one-way hashed before storage:
 
-```python
-# Example: SHA-256 hash truncated to 16 characters
+<CodeBlock filename="id_hashing.py" language="python">
+{`# Example: SHA-256 hash truncated to 16 characters
 hash = hashlib.sha256(id_str.encode()).hexdigest()[:16]
 # Original ID: "user-123-456-789"
-# Stored hash: "a1b2c3d4e5f6g7h8" (cannot be reversed)
-```
+# Stored hash: "a1b2c3d4e5f6g7h8" (cannot be reversed)`}
+</CodeBlock>
 
 **Properties:**
 
@@ -213,16 +215,16 @@ Configured via `apps/otel-collector/otel-collector-config.yaml`:
 
 **Environment Variables:**
 
-```bash
-TELEMETRY_PROCESSOR_ENDPOINT=telemetry-processor:4317
-```
+<CodeBlock filename=".env" language="bash">
+{`TELEMETRY_PROCESSOR_ENDPOINT=telemetry-processor:4317`}
+</CodeBlock>
 
 ### Telemetry Processor
 
 **Required Environment Variables:**
 
-```bash
-# Analytics Database (separate from main database)
+<CodeBlock filename=".env" language="bash">
+{`# Analytics Database (separate from main database)
 ANALYTICS_DB_USER=your-db-username
 ANALYTICS_DB_PASS=your-secure-password
 ANALYTICS_DB_HOST=postgres-analytics
@@ -234,30 +236,30 @@ ANALYTICS_DATABASE_URL=postgresql://user:pass@host:port/dbname
 
 # Service Configuration
 PORT=4317
-LOG_LEVEL=INFO
-```
+LOG_LEVEL=INFO`}
+</CodeBlock>
 
 ## Local Development
 
 ### Starting the Services
 
-```bash
-# Start analytics database and telemetry services
+<CodeBlock filename="Terminal" language="bash">
+{`# Start analytics database and telemetry services
 docker-compose up -d postgres-analytics otel-collector telemetry-processor
 
 # View logs
 docker-compose logs -f otel-collector telemetry-processor
 
 # Check health
-curl http://localhost:13133  # OTel Collector health
-```
+curl http://localhost:13133  # OTel Collector health`}
+</CodeBlock>
 
 ### Database Setup
 
 The analytics database uses **Alembic** for migrations, which run automatically on container start.
 
-```bash
-# Manual migration
+<CodeBlock filename="Terminal" language="bash">
+{`# Manual migration
 cd apps/telemetry-processor
 ./migrate.sh
 
@@ -265,54 +267,54 @@ cd apps/telemetry-processor
 alembic upgrade head
 
 # Check current schema version
-alembic current
-```
+alembic current`}
+</CodeBlock>
 
 ### Connect to Analytics Database
 
-```bash
-# Via Docker Compose
+<CodeBlock filename="Terminal" language="bash">
+{`# Via Docker Compose
 docker-compose exec postgres-analytics psql -U your-db-username -d rhesis_analytics
 
 # Check data
 SELECT COUNT(*) FROM user_activity;
 SELECT COUNT(*) FROM endpoint_usage;
-SELECT COUNT(*) FROM feature_usage;
-```
+SELECT COUNT(*) FROM feature_usage;`}
+</CodeBlock>
 
 ## Monitoring & Analytics
 
 ### Health Checks
 
-```bash
-# OTel Collector health
+<CodeBlock filename="Terminal" language="bash">
+{`# OTel Collector health
 curl http://localhost:13133
 
 # Collector metrics
 curl http://localhost:8888/metrics
 
 # Debug traces
-open http://localhost:55679/debug/tracez
-```
+open http://localhost:55679/debug/tracez`}
+</CodeBlock>
 
 ### Sample Queries
 
 **Recent Activity Summary:**
 
-```sql
-SELECT
+<CodeBlock filename="query.sql" language="sql">
+{`SELECT
     event_type,
     COUNT(*) as count,
     MAX(timestamp) as latest
 FROM user_activity
 WHERE timestamp > NOW() - INTERVAL '24 hours'
-GROUP BY event_type;
-```
+GROUP BY event_type;`}
+</CodeBlock>
 
 **Top Endpoints by Usage:**
 
-```sql
-SELECT
+<CodeBlock filename="top_endpoints.sql" language="sql">
+{`SELECT
     endpoint,
     method,
     COUNT(*) as hits,
@@ -321,34 +323,34 @@ FROM endpoint_usage
 WHERE timestamp > NOW() - INTERVAL '24 hours'
 GROUP BY endpoint, method
 ORDER BY hits DESC
-LIMIT 10;
-```
+LIMIT 10;`}
+</CodeBlock>
 
 **Feature Adoption:**
 
-```sql
-SELECT
+<CodeBlock filename="feature_adoption.sql" language="sql">
+{`SELECT
     feature_name,
     action,
     COUNT(*) as count
 FROM feature_usage
 WHERE timestamp > NOW() - INTERVAL '7 days'
 GROUP BY feature_name, action
-ORDER BY count DESC;
-```
+ORDER BY count DESC;`}
+</CodeBlock>
 
 **Overall Statistics:**
 
-```sql
-SELECT
+<CodeBlock filename="overall_stats.sql" language="sql">
+{`SELECT
     'user_activity' as table_name,
     COUNT(*) as count
 FROM user_activity
 UNION ALL
 SELECT 'endpoint_usage', COUNT(*) FROM endpoint_usage
 UNION ALL
-SELECT 'feature_usage', COUNT(*) FROM feature_usage;
-```
+SELECT 'feature_usage', COUNT(*) FROM feature_usage;`}
+</CodeBlock>
 
 ## Troubleshooting
 
@@ -356,76 +358,78 @@ SELECT 'feature_usage', COUNT(*) FROM feature_usage;
 
 1. **Check telemetry is enabled:**
 
-   ```bash
-   # In your .env file
-   TELEMETRY_ENABLED=true
-   DEPLOYMENT_TYPE=self-hosted  # or "cloud"
-   ```
+<CodeBlock filename=".env" language="bash">
+{`# In your .env file
+TELEMETRY_ENABLED=true
+DEPLOYMENT_TYPE=self-hosted  # or "cloud"`}
+</CodeBlock>
 
 2. **Verify OTel Collector is receiving data:**
 
-   ```bash
-   docker-compose logs otel-collector
-   # Look for "Traces received" messages
-   ```
+<CodeBlock filename="Terminal" language="bash">
+{`docker-compose logs otel-collector
+# Look for "Traces received" messages`}
+</CodeBlock>
 
 3. **Check Telemetry Processor logs:**
 
-   ```bash
-   docker-compose logs telemetry-processor
-   # Look for "Processing span" messages
-   ```
+<CodeBlock filename="Terminal" language="bash">
+{`docker-compose logs telemetry-processor
+# Look for "Processing span" messages`}
+</CodeBlock>
 
 4. **Test database connection:**
-   ```bash
-   docker-compose exec postgres-analytics psql -U user -d dbname -c "SELECT 1;"
-   ```
+
+<CodeBlock filename="Terminal" language="bash">
+{`docker-compose exec postgres-analytics psql -U user -d dbname -c "SELECT 1;"`}
+</CodeBlock>
 
 ### Connection Issues
 
 **OTel Collector can't reach Telemetry Processor:**
 
-```bash
-# Check if processor is running
+<CodeBlock filename="Terminal" language="bash">
+{`# Check if processor is running
 docker-compose ps telemetry-processor
 
 # Check network connectivity
-docker-compose exec otel-collector ping telemetry-processor
-```
+docker-compose exec otel-collector ping telemetry-processor`}
+</CodeBlock>
 
 **Processor can't reach database:**
 
-```bash
-# Verify database is running
+<CodeBlock filename="Terminal" language="bash">
+{`# Verify database is running
 docker-compose ps postgres-analytics
 
 # Check logs
-docker-compose logs postgres-analytics
-```
+docker-compose logs postgres-analytics`}
+</CodeBlock>
 
 ### Performance Issues
 
 1. **Check database indexes:**
 
-   ```sql
-   SELECT tablename, indexname
-   FROM pg_indexes
-   WHERE tablename IN ('user_activity', 'endpoint_usage', 'feature_usage');
-   ```
+<CodeBlock filename="check_indexes.sql" language="sql">
+{`SELECT tablename, indexname
+FROM pg_indexes
+WHERE tablename IN ('user_activity', 'endpoint_usage', 'feature_usage');`}
+</CodeBlock>
 
 2. **Monitor active connections:**
 
-   ```sql
-   SELECT COUNT(*), state
-   FROM pg_stat_activity
-   WHERE datname = 'rhesis_analytics'
-   GROUP BY state;
-   ```
+<CodeBlock filename="monitor_connections.sql" language="sql">
+{`SELECT COUNT(*), state
+FROM pg_stat_activity
+WHERE datname = 'rhesis_analytics'
+GROUP BY state;`}
+</CodeBlock>
 
 3. **Review collector memory usage:**
-   ```bash
-   docker stats otel-collector telemetry-processor
-   ```
+
+<CodeBlock filename="Terminal" language="bash">
+{`docker stats otel-collector telemetry-processor`}
+</CodeBlock>
 
 ## Deployment
 
@@ -440,9 +444,9 @@ Both services can be deployed to Cloud Run with Cloud SQL for the analytics data
 
 **Cloud SQL Connection:**
 
-```bash
-ANALYTICS_DATABASE_URL=postgresql://user:pass@/dbname?host=/cloudsql/PROJECT:REGION:INSTANCE
-```
+<CodeBlock filename=".env" language="bash">
+{`ANALYTICS_DATABASE_URL=postgresql://user:pass@/dbname?host=/cloudsql/PROJECT:REGION:INSTANCE`}
+</CodeBlock>
 
 ### Kubernetes
 
@@ -456,25 +460,25 @@ infrastructure/k8s/manifests/otel-collector-deployment.yaml
 
 ### Build and Run Collector
 
-```bash
-cd apps/otel-collector
+<CodeBlock filename="Terminal" language="bash">
+{`cd apps/otel-collector
 docker build -t rhesis-otel-collector .
 
-docker run -p 4317:4317 -p 4318:4318 -p 13133:13133 \
-  -e TELEMETRY_PROCESSOR_ENDPOINT=host.docker.internal:4317 \
-  rhesis-otel-collector
-```
+docker run -p 4317:4317 -p 4318:4318 -p 13133:13133 \\
+  -e TELEMETRY_PROCESSOR_ENDPOINT=host.docker.internal:4317 \\
+  rhesis-otel-collector`}
+</CodeBlock>
 
 ### Build and Run Processor
 
-```bash
-cd apps/telemetry-processor
+<CodeBlock filename="Terminal" language="bash">
+{`cd apps/telemetry-processor
 docker build -t rhesis-telemetry-processor .
 
-docker run -p 4317:4317 \
-  -e ANALYTICS_DATABASE_URL=postgresql://user:pass@host/db \
-  rhesis-telemetry-processor
-```
+docker run -p 4317:4317 \\
+  -e ANALYTICS_DATABASE_URL=postgresql://user:pass@host/db \\
+  rhesis-telemetry-processor`}
+</CodeBlock>
 
 ## Development
 
@@ -512,33 +516,34 @@ apps/telemetry-processor/
 
 1. **Add model** to `models/analytics.py`:
 
-   ```python
-   class NewFeatureAnalytics(AnalyticsBase):
-       __tablename__ = "new_feature_analytics"
-       custom_field = Column(String(100))
-   ```
+<CodeBlock filename="models/analytics.py" language="python">
+{`class NewFeatureAnalytics(AnalyticsBase):
+    __tablename__ = "new_feature_analytics"
+    custom_field = Column(String(100))`}
+</CodeBlock>
 
 2. **Create migration**:
 
-   ```bash
-   cd apps/telemetry-processor
-   alembic revision -m "add new feature analytics"
-   ```
+<CodeBlock filename="Terminal" language="bash">
+{`cd apps/telemetry-processor
+alembic revision -m "add new feature analytics"`}
+</CodeBlock>
 
 3. **Add processor service** in `services/`:
 
-   ```python
-   class NewFeatureProcessor(BaseSpanProcessor):
-       def process_span(self, span, resource, session):
-           # Processing logic
-   ```
+<CodeBlock filename="services/new_feature.py" language="python">
+{`class NewFeatureProcessor(BaseSpanProcessor):
+    def process_span(self, span, resource, session):
+        # Processing logic`}
+</CodeBlock>
 
 4. **Update router** in `services/span_router.py`
 
 5. **Run migration**:
-   ```bash
-   alembic upgrade head
-   ```
+
+<CodeBlock filename="Terminal" language="bash">
+{`alembic upgrade head`}
+</CodeBlock>
 
 ## Why Separate Analytics Database?
 

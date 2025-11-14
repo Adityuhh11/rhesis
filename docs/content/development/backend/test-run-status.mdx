@@ -1,3 +1,5 @@
+import { CodeBlock } from '@/components/CodeBlock'
+
 # Test Run Status
 
 This guide explains how test run statuses are determined and what they represent in the Rhesis backend.
@@ -24,11 +26,11 @@ Test run statuses reflect **execution completion**, not test assertion results. 
 
 **Example scenarios:**
 
-```
-10 tests, 10 passed, 0 failed, 0 errors → COMPLETED (email: success)
+<CodeBlock filename="example.text" language="text">
+{`10 tests, 10 passed, 0 failed, 0 errors → COMPLETED (email: success)
 10 tests, 7 passed, 3 failed, 0 errors → COMPLETED (email: failed)
-10 tests, 0 passed, 10 failed, 0 errors → COMPLETED (email: failed)
-```
+10 tests, 0 passed, 10 failed, 0 errors → COMPLETED (email: failed)`}
+</CodeBlock>
 
 ### PARTIAL
 
@@ -43,10 +45,10 @@ Test run statuses reflect **execution completion**, not test assertion results. 
 
 **Example scenarios:**
 
-```
-10 tests, 5 passed, 3 failed, 2 errors → PARTIAL
-10 tests, 8 passed, 0 failed, 2 errors → PARTIAL
-```
+<CodeBlock filename="example.text" language="text">
+{`10 tests, 5 passed, 3 failed, 2 errors → PARTIAL
+10 tests, 8 passed, 0 failed, 2 errors → PARTIAL`}
+</CodeBlock>
 
 ### FAILED
 
@@ -61,10 +63,10 @@ Test run statuses reflect **execution completion**, not test assertion results. 
 
 **Example scenarios:**
 
-```
-0 tests, 0 passed, 0 failed, 0 errors → FAILED (no tests)
-10 tests, 0 passed, 0 failed, 10 errors → FAILED (all errored)
-```
+<CodeBlock filename="example.text" language="text">
+{`0 tests, 0 passed, 0 failed, 0 errors → FAILED (no tests)
+10 tests, 0 passed, 0 failed, 10 errors → FAILED (all errored)`}
+</CodeBlock>
 
 ### PROGRESS
 
@@ -79,10 +81,8 @@ Test run statuses reflect **execution completion**, not test assertion results. 
 
 ## Status Determination Logic
 
-The status is determined in the chord callback (`collect_results`) after all tests complete:
-
-```python
-# 1. No tests at all → FAILED
+The status is determined in the chord call<CodeBlock filename="example.python" language="python">
+{`# 1. No tests at all → FAILED
 if total_tests == 0:
     status = "Failed"
 
@@ -96,9 +96,12 @@ elif execution_errors == total_tests:
 
 # 4. Mixed results → PARTIAL
 else:
+    status = "Partial"`}
+</CodeBlock>d results → PARTIAL
+else:
     status = "Partial"
-```
-
+<CodeBlock filename="example.text" language="text">
+{`
 **Implementation:** `apps/backend/src/rhesis/backend/tasks/execution/result_processor.py`
 
 ---
@@ -133,9 +136,8 @@ else:
 
 ## Examples
 
-### Scenario 1: Successful Test Run
-
-```
+### Scenario 1: Successful Test Run`}
+</CodeBlock>
 Total: 10 tests
 Passed: 10
 Failed: 0
@@ -144,11 +146,10 @@ Execution Errors: 0
 Run Status: COMPLETED
 Email Status: success
 Reason: All tests executed and passed
-```
-
-### Scenario 2: Tests Failed Assertions
-
-```
+<CodeBlock filename="example.text" language="text">
+{`
+### Scenario 2: Tests Failed Assertions`}
+</CodeBlock>
 Total: 10 tests
 Passed: 7
 Failed: 3
@@ -157,11 +158,10 @@ Execution Errors: 0
 Run Status: COMPLETED
 Email Status: failed
 Reason: All tests executed (even though some failed)
-```
-
-### Scenario 3: Incomplete Execution
-
-```
+<CodeBlock filename="example.text" language="text">
+{`
+### Scenario 3: Incomplete Execution`}
+</CodeBlock>
 Total: 10 tests
 Passed: 5
 Failed: 3
@@ -170,11 +170,10 @@ Execution Errors: 2
 Run Status: PARTIAL
 Email Status: partial
 Reason: 2 tests couldn't execute
-```
-
-### Scenario 4: Complete Failure
-
-```
+<CodeBlock filename="example.text" language="text">
+{`
+### Scenario 4: Complete Failure`}
+</CodeBlock>
 Total: 10 tests
 Passed: 0
 Failed: 0
@@ -183,11 +182,10 @@ Execution Errors: 10
 Run Status: FAILED
 Email Status: failed
 Reason: No tests could execute
-```
-
-### Scenario 5: Empty Test Run
-
-```
+<CodeBlock filename="example.text" language="text">
+{`
+### Scenario 5: Empty Test Run`}
+</CodeBlock>
 Total: 0 tests
 Passed: 0
 Failed: 0
@@ -196,16 +194,14 @@ Execution Errors: 0
 Run Status: FAILED
 Email Status: failed
 Reason: No tests in the run
-```
-
+<CodeBlock filename="example.python" language="python">
+{`
 ---
 
 ## Statistics Calculation
 
-Test statistics are calculated by analyzing `test_metrics`:
-
-```python
-def get_test_statistics(test_run, db):
+Test stat<CodeBlock filename="example.python" language="python">
+{`def get_test_statistics(test_run, db):
     for result in test_results:
         metrics = result.test_metrics.get('metrics', {})
 
@@ -218,8 +214,11 @@ def get_test_statistics(test_run, db):
         if all_metrics_passed:
             tests_passed += 1
         else:
-            tests_failed += 1
-```
+            tests_failed += 1`}
+</CodeBlock>+= 1
+        else:
+            tests_failed += 1`}
+</CodeBlock>
 
 **Source of Truth:** `test_metrics.metrics[].is_successful`
 

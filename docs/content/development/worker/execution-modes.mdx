@@ -1,3 +1,5 @@
+import { CodeBlock } from '@/components/CodeBlock'
+
 # Execution Modes
 
 ## Overview
@@ -8,16 +10,14 @@ When executing a test configuration (a set of tests against an endpoint), Rhesis
 
 ### Description
 
-Tests are executed simultaneously using multiple Celery workers. This is the default mode and provides the fastest execution time.
-
-### How It Works
-
-```
-Test Configuration
+Tests are executed simultaneously using multiple Celery workers. This is the default mode and prov<CodeBlock filename="Diagram" language="text">
+{`Test Configuration
     ↓
 Celery Chord (parallel dispatch)
     ├─→ Worker 1: Test A ─┐
     ├─→ Worker 2: Test B ─┼─→ Collect Results
+    └─→ Worker 3: Test C ─┘`}
+</CodeBlock>─┼─→ Collect Results
     └─→ Worker 3: Test C ─┘
 ```
 
@@ -46,24 +46,22 @@ Celery Chord (parallel dispatch)
 
 ### Configuration
 
-Parallel is the default mode. No configuration needed:
-
-```python
-# Implicitly uses parallel mode
+Para<CodeBlock filename="example.py" language="python">
+{`# Implicitly uses parallel mode
 test_config = TestConfiguration(
     endpoint_id=endpoint.id,
     test_set_id=test_set.id,
     # attributes is empty or doesn't specify execution_mode
-)
-```
-
-Or explicitly set:
-
-```python
-test_config = TestConfiguration(
+)`}
+</CodeBlock>tes is empty or doesn'<CodeBlock filename="example.py" language="python">
+{`test_config = TestConfiguration(
     endpoint_id=endpoint.id,
     test_set_id=test_set.id,
     attributes={
+        "execution_mode": "Parallel"
+    }
+)`}
+</CodeBlock>s={
         "execution_mode": "Parallel"
     }
 )
@@ -75,14 +73,17 @@ test_config = TestConfiguration(
 
 ### Description
 
-Tests are executed one after another in sequence. Each test must complete before the next one starts.
-
-### How It Works
-
-```
-Test Configuration
+Tests are executed one after another in sequence. Each test must comp<CodeBlock filename="example.text" language="text">
+{`Test Configuration
     ↓
 Test 1
+    ↓
+Test 2
+    ↓
+Test 3
+    ↓
+Collect Results`}
+</CodeBlock>
     ↓
 Test 2
     ↓
@@ -113,30 +114,26 @@ Collect Results
 - Less efficient resource utilization
 - Longer wait times for results
 
-### Configuration
-
-Set in test configuration attributes:
-
-```python
-test_config = TestConfiguration(
+### Co<CodeBlock filename="example.py" language="python">
+{`test_config = TestConfiguration(
     endpoint_id=endpoint.id,
     test_set_id=test_set.id,
     attributes={
         "execution_mode": "Sequential"
     }
-)
-```
-
-Or programmatically:
-
-```python
-from rhesis.backend.tasks.execution.modes import set_execution_mode
+)`}
+</CodeBlock>{
+        "execution_mod<CodeBlock filename="example.py" language="python">
+{`from rhesis.backend.tasks.execution.modes import set_execution_mode
 from rhesis.backend.tasks.enums import ExecutionMode
 
 success = set_execution_mode(
     db=db,
     test_config_id=test_config.id,
     execution_mode=ExecutionMode.SEQUENTIAL,
+    organization_id=org_id
+)`}
+</CodeBlock>ionMode.SEQUENTIAL,
     organization_id=org_id
 )
 ```
@@ -145,18 +142,17 @@ success = set_execution_mode(
 
 ## Implementation Details
 
-### Execution Flow
-
-Both modes produce identical result structures:
-
-```python
-{
+### Execution Flo<CodeBlock filename="example.py" language="python">
+{`{
     "status": "completed",
     "total_tests": 10,
     "tests_passed": 8,
     "tests_failed": 2,
     "execution_errors": 0,
     "execution_time": "2m 15s",
+    "completed_at": "2024-01-15 10:30:00"
+}`}
+</CodeBlock>5s",
     "completed_at": "2024-01-15 10:30:00"
 }
 ```
@@ -172,12 +168,8 @@ Both modes use the same `collect_results` task for consistency:
 
 ### Task Orchestration
 
-#### Parallel Mode (`parallel.py`)
-
-Uses Celery's chord primitive:
-
-```python
-from celery import chord
+#### Parallel Mo<CodeBlock filename="example.py" language="python">
+{`from celery import chord
 
 # Create task group
 test_tasks = [
@@ -188,21 +180,24 @@ test_tasks = [
 # Execute in parallel with callback
 chord(test_tasks)(
     collect_results.signature(...)
+)`}
+</CodeBlock>est_tasks)(
+    collect_results.signature(...)
 )
 ```
 
-#### Sequential Mode (`sequential.py`)
-
-Uses Celery's chain primitive:
-
-```python
-from celery import chain
+#### Sequential Mode<CodeBlock filename="example.py" language="python">
+{`from celery import chain
 
 # Create sequential chain
 tasks = []
 for test in tests:
     tasks.append(execute_test_task.signature(...))
 tasks.append(collect_results.signature(...))
+
+# Execute sequentially
+chain(*tasks)()`}
+</CodeBlock>re(...))
 
 # Execute sequentially
 chain(*tasks)()
@@ -232,34 +227,18 @@ Example with 20 tests, 5s average test time:
 | Mode                 | Execution Time | Resource Usage |
 | -------------------- | -------------- | -------------- |
 | Parallel (5 workers) | ~20-25 seconds | High           |
-| Sequential           | ~100 seconds   | Low            |
-
----
-
-## Utilities
-
-### Get Current Mode
-
-```python
-from rhesis.backend.tasks.execution.modes import get_execution_mode
+| Sequential           | ~100 seconds   | Low    <CodeBlock filename="example.py" language="python">
+{`from rhesis.backend.tasks.execution.modes import get_execution_mode
 
 mode = get_execution_mode(test_config)
-# Returns: ExecutionMode.PARALLEL or ExecutionMode.SEQUENTIAL
-```
-
-### Get Mode Description
-
-```python
-from rhesis.backend.tasks.execution.modes import get_mode_description
+# Returns: ExecutionMode.PARALLEL or ExecutionMode.SEQUENTIAL`}
+</CodeBlock>ecutionMode.PARALLEL or Exec<CodeBlock filename="example.py" language="python">
+{`from rhesis.backend.tasks.execution.modes import get_mode_description
 
 description = get_mode_description(ExecutionMode.PARALLEL)
-# Returns: "Tests are executed simultaneously using multiple workers..."
-```
-
-### Get Recommendations
-
-```python
-from rhesis.backend.tasks.execution.modes import get_mode_recommendations
+# Returns: "Tests are executed simultaneously using multiple workers..."`}
+</CodeBlock>ecuted simultaneously using<CodeBlock filename="example.py" language="python">
+{`from rhesis.backend.tasks.execution.modes import get_mode_recommendations
 
 recommendations = get_mode_recommendations()
 # Returns: {
@@ -269,27 +248,25 @@ recommendations = get_mode_recommendations()
 #     "cons": [...]
 #   },
 #   ...
+# }`}
+</CodeBlock>": [...],
+#     "cons": [...]
+#   },
+#   ...
 # }
 ```
 
----
-
-## Monitoring and Debugging
-
-### Parallel Mode
-
-```bash
-# Check worker status
+-<CodeBlock filename="Terminal" language="bash">
+{`# Check worker status
 celery -A rhesis.backend.worker inspect active
 
 # Monitor task progress
-celery -A rhesis.backend.worker events
-```
-
-### Sequential Mode
-
-```bash
-# Follow sequential execution
+celery -A rhesis.backend.worker events`}
+</CodeBlock> progress
+celery -A rhe<CodeBlock filename="Terminal" language="bash">
+{`# Follow sequential execution
+tail -f celery.log | grep "execute_test"`}
+</CodeBlock>ecution
 tail -f celery.log | grep "execute_test"
 ```
 

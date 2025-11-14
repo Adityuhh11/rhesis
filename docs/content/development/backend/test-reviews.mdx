@@ -1,3 +1,5 @@
+import { CodeBlock } from '@/components/CodeBlock'
+
 # Human Reviews for Test Results
 
 ## Overview
@@ -28,14 +30,8 @@ This schema separates **automated metrics** (`test_metrics`) from **human-provid
 The `test_reviews` field is stored as a JSON object with two parts:
 
 - `metadata`: Summary information about the reviews collection.
-- `reviews`: List of individual review objects.
-
----
-
-## JSON Schema
-
-```json
-{
+- `reviews`: List <CodeBlock filename="example.json" language="json">
+{`{
   "metadata": {
     "last_updated_at": "2025-10-10T14:15:00Z",
     "last_updated_by": {
@@ -69,9 +65,14 @@ The `test_reviews` field is stored as a JSON object with two parts:
       }
     }
   ]
+}`}
+</CodeBlock>erence": "Refusal Detection"
+      }
+    }
+  ]
 }
-```
-
+<CodeBlock filename="example.text" language="text">
+{`
 ---
 
 ## Field Reference
@@ -96,14 +97,11 @@ The `test_reviews` field is stored as a JSON object with two parts:
 | `comments`   | string            | Free-text explanation from the reviewer.                          |
 | `created_at` | string (ISO 8601) | Timestamp when the review was first created.                      |
 | `updated_at` | string (ISO 8601) | Timestamp when the review was last modified.                      |
-| `target`     | object            | Defines whether the review applies to a metric or the whole test. |
-
-#### Example `target` values
-
-```json
-{ "type": "test", "reference": null }
-{ "type": "metric", "reference": "Refusal Detection" }
-```
+| `target`     | object            | Defines whether the review applies to a metric <CodeBlock filename="example.json" language="json">
+{`{ "type": "test", "reference": null }
+{ "type": "metric", "reference": "Refusal Detection" }`}
+</CodeBlock>e": "metric", "reference": "Refusal Detection" }`}
+</CodeBlock>
 
 ---
 
@@ -118,10 +116,8 @@ The column stores the complete review structure as JSON, providing flexibility f
 
 ### Backend Models
 
-**File**: `apps/backend/src/rhesis/backend/app/models/test_result.py`
-
-```python
-class TestResult(Base, ...):
+**File**: `apps/bac<CodeBlock filename="example.python" language="python">
+{`class TestResult(Base, ...):
     test_reviews = Column(JSONB)
 
     @property
@@ -132,9 +128,11 @@ class TestResult(Base, ...):
     @property
     def matches_review(self) -> bool:
         """Check if test result status_id matches latest review status_id"""
+        # Returns True/False`}
+</CodeBlock>review status_id"""
         # Returns True/False
-```
-
+<CodeBlock filename="example.python" language="python">
+{`
 **Derived Properties:**
 
 - `last_review`: Returns the most recent review by `updated_at` timestamp
@@ -142,10 +140,8 @@ class TestResult(Base, ...):
 
 ### Pydantic Schemas
 
-**File**: `apps/backend/src/rhesis/backend/app/schemas/test_result.py`
-
-```python
-# Review schemas
+**File**: `apps/back<CodeBlock filename="example.python" language="python">
+{`# Review schemas
 class ReviewTargetCreate(Base):
     type: str  # "test" or "metric"
     reference: Optional[str] = None  # metric name or null
@@ -167,8 +163,11 @@ class ReviewResponse(Base):
     comments: str
     created_at: str
     updated_at: str
-    target: Dict[str, Any]
-```
+    target: Dict[str, Any]`}
+</CodeBlock>r
+    updated_at: str
+    target: Dict[str, Any]`}
+</CodeBlock>
 
 ---
 
@@ -178,25 +177,19 @@ All endpoints follow REST conventions and automatically manage metadata.
 
 ### 1. Create Review
 
-**Endpoint**: `POST /test_results/{test_result_id}/reviews`
-
-**Request Body**:
-
-```json
-{
+**Endpoint**: `POST /test_re<CodeBlock filename="example.json" language="json">
+{`{
   "status_id": "735acfa0-cca2-48a1-bb90-ba10b16f1cdb",
   "comments": "Test review - looks good after manual inspection",
   "target": {
     "type": "test",
     "reference": null
   }
-}
-```
-
-**Response** (201 Created):
-
-```json
-{
+}`}
+</CodeBlock>
+    "type": "test",
+    "refer<CodeBlock filename="example.json" language="json">
+{`{
   "review_id": "c370e2d7-f526-41c4-94f0-a6f25735a9b9",
   "status": {
     "status_id": "735acfa0-cca2-48a1-bb90-ba10b16f1cdb",
@@ -213,9 +206,14 @@ All endpoints follow REST conventions and automatically manage metadata.
     "type": "test",
     "reference": null
   }
+}`}
+</CodeBlock>
+    "type": "test",
+    "reference": null
+  }
 }
-```
-
+<CodeBlock filename="example.sql" language="sql">
+{`
 **Features**:
 
 - Auto-generates unique `review_id`
@@ -226,20 +224,12 @@ All endpoints follow REST conventions and automatically manage metadata.
 
 ### 2. Update Review
 
-**Endpoint**: `PUT /test_results/{test_result_id}/reviews/{review_id}`
-
-**Request Body** (all fields optional):
-
-```json
-{
+**Endpoint**: `PUT /test_results/{test_result_id}/reviews/{re<CodeBlock filename="example.json" language="json">
+{`{
   "comments": "UPDATED: After further review, this test passes all criteria"
-}
-```
-
-**Response** (200 OK):
-
-```json
-{
+}`}
+</CodeBlock>further review, this test <CodeBlock filename="example.json" language="json">
+{`{
   "review_id": "c370e2d7-f526-41c4-94f0-a6f25735a9b9",
   "status": {
     "status_id": "735acfa0-cca2-48a1-bb90-ba10b16f1cdb",
@@ -256,8 +246,13 @@ All endpoints follow REST conventions and automatically manage metadata.
     "type": "test",
     "reference": null
   }
-}
-```
+}`}
+</CodeBlock>
+    "type": "test",
+    "reference": null
+  }
+}`}
+</CodeBlock>
 
 **Features**:
 
@@ -268,12 +263,8 @@ All endpoints follow REST conventions and automatically manage metadata.
 
 ### 3. Delete Review
 
-**Endpoint**: `DELETE /test_results/{test_result_id}/reviews/{review_id}`
-
-**Response** (200 OK):
-
-```json
-{
+**Endpoint**: `DELETE /test_results/{test_resul<CodeBlock filename="example.json" language="json">
+{`{
   "message": "Review deleted successfully",
   "review_id": "c370e2d7-f526-41c4-94f0-a6f25735a9b9",
   "deleted_review": {
@@ -285,9 +276,13 @@ All endpoints follow REST conventions and automatically manage metadata.
     "updated_at": "2025-10-10T13:18:41.168149",
     "target": {...}
   }
+}`}
+</CodeBlock>0-10T13:18:41.168149",
+    "target": {...}
+  }
 }
-```
-
+<CodeBlock filename="example.text" language="text">
+{`
 **Features**:
 
 - Removes review from reviews array
@@ -297,12 +292,8 @@ All endpoints follow REST conventions and automatically manage metadata.
 
 ### 4. Get Test Result with Reviews
 
-**Endpoint**: `GET /test_results/{test_result_id}`
-
-**Response** includes:
-
-```json
-{
+**Endpoint**: `GET /test<CodeBlock filename="example.json" language="json">
+{`{
   "id": "fe647ace-5364-4158-b634-9bc7c53d7905",
   "status_id": "735acfa0-cca2-48a1-bb90-ba10b16f1cdb",
   "test_reviews": {
@@ -341,8 +332,12 @@ All endpoints follow REST conventions and automatically manage metadata.
     "target": {...}
   },
   "matches_review": true
-}
-```
+}`}
+</CodeBlock> "target": {...}
+  },
+  "matches_review": true
+}`}
+</CodeBlock>
 
 **Derived Properties**:
 
@@ -387,13 +382,13 @@ The `metadata` section is automatically updated on every review operation:
 
 ### JSONB Column Updates
 
-When modifying reviews, use SQLAlchemy's `flag_modified` to ensure changes are detected:
-
-```python
-from sqlalchemy.orm.attributes import flag_modified
+When modifying reviews, use SQLAlchemy<CodeBlock filename="example.python" language="python">
+{`from sqlalchemy.orm.attributes import flag_modified
 
 # After modifying test_reviews
 flag_modified(test_result, "test_reviews")
+db.commit()`}
+</CodeBlock>odified(test_result, "test_reviews")
 db.commit()
 ```
 

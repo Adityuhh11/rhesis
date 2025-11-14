@@ -1,3 +1,5 @@
+import { CodeBlock } from '@/components/CodeBlock'
+
 # Getting Started
 
 This guide will help you set up and run the Rhesis frontend application locally for development.
@@ -10,45 +12,44 @@ Before you begin, ensure you have the following installed:
 - [npm](https://www.npmjs.com/) or [Yarn](https://yarnpkg.com/)
 - Git
 
-## Installation Steps
-
-### 1. Clone the Repository
-
-```bash
-git clone https://github.com/rhesis-ai/rhesis.git
-cd rhesis/apps/frontend
-```
-
-### 2. Install Dependencies
+<CodeBlock filename="Terminal" language="bash">
+{`git clone https://github.com/rhesis-ai/rhesis.git
+cd rhesis/apps/frontend`}
+</CodeBlock>com/rhesis-ai/rhesis.git
+cd rhe<CodeBlock filename="Terminal" language="bash">
+{`npm install
+# or
+yarn install`}
+</CodeBlock>endencies
 
 ```bash
 npm install
 # or
 yarn install
-```
-
+<CodeBlock filename="example.text" language="text">
+{`
 ### 3. Set Up Environment Variables
 
-Copy the example environment file and fill in the required values:
-
-```bash
+Copy the example<CodeBlock filename="Terminal" language="bash">
+{`cp .env.example .env.local`}
+</CodeBlock>ired values:`}
+</CodeBlock>bash
 cp .env.example .env.local
-```
-
+<CodeBlock filename="Terminal" language="bash">
+{`
 Update `.env.local` with the necessary configurations:
 
 - `NEXTAUTH_SECRET`: Generate one using `npx auth secret` or `openssl rand -hex 32`.
 - `NEXT_PUBLIC_API_BASE_URL`: The base URL for your backend API.
 - `GOOGLE_CLIENT_ID`: Your Google OAuth Client ID.
 - `GOOGLE_CLIENT_SECRET`: Your Google OAuth Client Secret.
-- `AUTH_SECRET`: Should be the same as `NEXTAUTH_SECRET`.
-
-### 4. Run the Development Server
-
-```bash
+- `AUTH_SECRET`: Should be the same as `NE<CodeBlock filename="Terminal" language="bash">
+{`npm run dev`}
+</CodeBlock> Run the Development Server`}
+</CodeBlock>bash
 npm run dev
-```
-
+<CodeBlock filename="Terminal" language="bash">
+{`
 Open [http://localhost:3000](http://localhost:3000) in your browser to see the application.
 
 ## Development Workflow
@@ -74,10 +75,8 @@ We recommend using Visual Studio Code with the following extensions:
 
 ### Recommended VSCode Settings
 
-Create or update your `.vscode/settings.json` file with:
-
-```json
-{
+Create<CodeBlock filename="example.json" language="json">
+{`{
   "editor.formatOnSave": true,
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "editor.codeActionsOnSave": {
@@ -85,8 +84,10 @@ Create or update your `.vscode/settings.json` file with:
   },
   "typescript.tsdk": "node_modules/typescript/lib",
   "typescript.enablePromptUseWorkspaceTsdk": true
-}
-```
+}`}
+</CodeBlock>typescript.enablePromptUseWorkspaceTsdk": true
+}`}
+</CodeBlock>
 
 ## Next Steps
 

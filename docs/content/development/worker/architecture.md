@@ -1,3 +1,5 @@
+import { CodeBlock } from '@/components/CodeBlock'
+
 # Worker Architecture and Dependencies
 
 This document explains the relationships and dependencies between the Rhesis worker system, the backend API, and the SDK components.
@@ -6,8 +8,8 @@ This document explains the relationships and dependencies between the Rhesis wor
 
 The Rhesis platform consists of several interrelated components:
 
-```
-┌───────────┐     ┌───────────┐     ┌───────────┐
+<CodeBlock filename="example.text" language="text">
+{`┌───────────┐     ┌───────────┐     ┌───────────┐
 │           │     │           │     │           │
 │  Backend  │────▶│   Broker  │────▶│   Worker  │
 │    API    │     │           │     │           │
@@ -21,8 +23,8 @@ The Rhesis platform consists of several interrelated components:
 │           │                       │           │
 │  Database │◀─────────────────────▶│    SDK    │
 │           │                       │           │
-└───────────┘                       └───────────┘
-```
+└───────────┘                       └───────────┘`}
+</CodeBlock>
 
 ## Backend-Worker Interdependencies
 
@@ -41,18 +43,15 @@ The worker depends on the backend code in several ways:
 1. **Shared Models**: The worker needs access to the same data models defined in the backend
 2. **Database Access**: Worker tasks use the same database connection/ORM layer as the backend
 3. **Business Logic**: Tasks often execute backend business logic in an asynchronous context
-4. **Context Management**: The worker needs to maintain the same multi-tenant context system
-
-Example import hierarchy:
-
-```python
-# In a worker task
+4. **Context Management**: The worker needs to maintain the same mult<CodeBlock filename="example.python" language="python">
+{`# In a worker task
 from rhesis.backend.app import models, crud    # Backend models and database operations
 from rhesis.backend.app.database import SessionLocal, set_tenant  # Backend database utilities
 from rhesis.backend.tasks.base import BaseTask # Worker-specific task base class
-from rhesis.sdk import client                  # Shared SDK components
-```
-
+from rhesis.sdk import client                  # Shared SDK components`}
+</CodeBlock> client                  # Shared SDK components
+<CodeBlock filename="example.typescript" language="typescript">
+{`
 ### SDK Dependencies
 
 Both the worker and backend depend on the Rhesis SDK for:
@@ -74,9 +73,8 @@ When deploying the worker, it must include:
 
 ### Environment Configuration
 
-The worker requires the same environment variables as the backend, plus additional worker-specific settings:
-
-```
+The worker requires the same environment variables as the backend, plus additional worker-specific settings:`}
+</CodeBlock>
 # Backend variables also needed by worker
 DATABASE_URL=postgresql://user:password@host/dbname
 TENANT_ENABLED=true
@@ -87,8 +85,8 @@ BROKER_URL=rediss://:password@redis-host:6378/0?ssl_cert_reqs=CERT_NONE
 CELERY_RESULT_BACKEND=rediss://:password@redis-host:6378/1?ssl_cert_reqs=CERT_NONE
 CELERY_WORKER_CONCURRENCY=8
 CELERY_WORKER_PREFETCH_MULTIPLIER=4
-```
-
+<CodeBlock filename="example.python" language="python">
+{`
 ### Development Workflow
 
 When developing tasks, you need to:
@@ -112,12 +110,8 @@ Because the worker executes backend code asynchronously:
 
 1. The tenant context (organization/user IDs) must be explicitly passed to tasks
 2. Database sessions must be properly managed (opened and closed)
-3. Any state or context that would normally be available in an API request must be reconstructed
-
-This is handled through:
-
-```python
-# In the backend API
+3. Any state or context that would normally be available in an API reque<CodeBlock filename="example.python" language="python">
+{`# In the backend API
 from rhesis.backend.tasks import task_launcher
 
 @router.post("/execute")
@@ -141,5 +135,7 @@ def my_task(self, arg1, arg2, db=None):
 
     # Use backend functionality with proper context
     result = backend_function(db, arg1, arg2)
-    return result
-```
+    return result`}
+</CodeBlock>ckend_function(db, arg1, arg2)
+    return result`}
+</CodeBlock>

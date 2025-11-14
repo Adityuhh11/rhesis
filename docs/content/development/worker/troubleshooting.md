@@ -1,3 +1,5 @@
+import { CodeBlock } from '@/components/CodeBlock'
+
 # Worker Troubleshooting Guide
 
 This document covers common issues you may encounter with the Rhesis worker system and how to resolve them.
@@ -26,36 +28,32 @@ Sometimes tasks can get stuck in an infinite retry loop, especially chord tasks 
 
 ### Symptoms of Stuck Tasks
 
-The most obvious symptom is thousands of repeated log entries like these:
-
-```
-Task celery.chord_unlock[82116cfc-ae23-4526-b7ff-7267f389b367] retry: Retry in 1.0s
-MaxRetriesExceededError: Can't retry celery.chord_unlock[task-id] args:(...) kwargs:{...}
+The most obvious sympto<CodeBlock filename="example.text" language="text">
+{`Task celery.chord_unlock[82116cfc-ae23-4526-b7ff-7267f389b367] retry: Retry in 1.0s
+MaxRetriesExceededError: Can't retry celery.chord_unlock[task-id] args:(...) kwargs:{...}`}
+</CodeBlock>ry.chord_unlock[task-id] args:(...) kwargs:{...}
 ```
 
 These messages indicate that there are "zombie" tasks that keep retrying indefinitely.
 
 ### Quick Resolution for Stuck Chords
 
-> **💡 See [Chord Management Guide](chord-management.md) for comprehensive solutions**
-
-```bash
-# Check for stuck chords
+> **💡 See [Chord Management Guide](<CodeBlock filename="Terminal" language="bash">
+{`# Check for stuck chords
 python -m rhesis.backend.tasks.execution.chord_monitor check --max-hours 1
 
 # Revoke stuck chords (dry run first)
 python -m rhesis.backend.tasks.execution.chord_monitor revoke --max-hours 1 --dry-run
 
 # Actually revoke them
-python -m rhesis.backend.tasks.execution.chord_monitor revoke --max-hours 1
+python -m rhesis.backend.tasks.execution.chord_monitor revoke --max-hours 1`}
+</CodeBlock>sks.execution.chord_monitor revoke --max-hours 1
 ```
 
 ### Configuration to Prevent Stuck Tasks
 
-The worker.py file includes configuration to limit chord retries:
-
-```python
-app.conf.update(
+The worker.py f<CodeBlock filename="example.py" language="python">
+{`app.conf.update(
     # Chord configuration - prevent infinite retry loops
     chord_unlock_max_retries=3,
     chord_unlock_retry_delay=1.0,
@@ -68,13 +66,14 @@ app.conf.update(
     task_track_started=True,
     task_send_sent_event=True,
     worker_send_task_events=True,
+)`}
+</CodeBlock>_event=True,
+    worker_send_task_events=True,
 )
 ```
 
-Additionally, the results handling in `tasks/execution/results.py` includes logic to detect and handle failed subtasks:
-
-```python
-# Handle different result formats from chord execution
+Additionally, the results handling in `tasks/execution/results.py` in<CodeBlock filename="example.py" language="python">
+{`# Handle different result formats from chord execution
 processed_results = []
 if results:
     for result in results:
@@ -90,28 +89,25 @@ if results:
 # Check for failed tasks and count them
 failed_tasks = sum(1 for result in processed_results
                   if result is None or
-                  (isinstance(result, dict) and result.get("status") == "failed"))
+                  (isinstance(result, dict) and result.get("status") == "failed"))`}
+</CodeBlock>lt, dict) and result.get("status") == "failed"))
 ```
 
 ### Purging Stuck Tasks
 
-> **⚠️ Use these commands with caution in production**
-
-For immediate relief from stuck tasks:
-
-```bash
-# Emergency: Purge all tasks (see chord-management.md for safer alternatives)
-python -m rhesis.backend.tasks.execution.chord_monitor clean --force
+> **⚠️ Use these commands with caution in pr<CodeBlock filename="Terminal" language="bash">
+{`# Emergency: Purge all tasks (see chord-management.md for safer alternatives)
+python -m rhesis.backend.tasks.execution.chord_monitor clean --force`}
+</CodeBlock>kend.tasks.execution.chord_monitor clean --force
 ```
 
 For more targeted approaches, see the [Chord Management Guide](chord-management.md#monitoring-script-reference).
 
 ## Tenant Context Issues
 
-If tasks fail with errors related to the tenant context, such as:
-
-```
-unrecognized configuration parameter "app.current_organization"
+If tasks fail w<CodeBlock filename="example.text" language="text">
+{`unrecognized configuration parameter "app.current_organization"`}
+</CodeBlock>nfiguration parameter "app.current_organization"
 ```
 
 Ensure that:
@@ -120,17 +116,16 @@ Ensure that:
 2. The `organization_id` and `user_id` are correctly passed to the task
 3. The tenant context is explicitly set at the beginning of database operations
 
-The `execute_single_test` task in `tasks/execution/test.py` includes defensive coding to handle such issues:
-
-```python
-# Access context from task request - task headers take precedence over kwargs
+The `execute_single_test` task in `tasks/execution/test.py<CodeBlock filename="example.py" language="python">
+{`# Access context from task request - task headers take precedence over kwargs
 task = self.request
 request_user_id = getattr(task, 'user_id', None)
 request_org_id = getattr(task, 'organization_id', None)
 
 # Use passed parameters if available, otherwise use request context
 user_id = user_id or request_user_id
-organization_id = organization_id or request_org_id
+organization_id = organization_id or request_org_id`}
+</CodeBlock>anization_id = organization_id or request_org_id
 ```
 
 ## Common Worker Errors
@@ -192,10 +187,8 @@ organization_id = organization_id or request_org_id
 
 ### Check Registered Workers
 
-Use this Python script to check if workers are properly registered with the Celery broker:
-
-```bash
-# Create check_workers.py in project root
+Use this Python script to check if worke<CodeBlock filename="Terminal" language="bash">
+{`# Create check_workers.py in project root
 cat > check_workers.py << 'EOF'
 #!/usr/bin/env python3
 import os
@@ -257,17 +250,16 @@ if __name__ == "__main__":
     check_celery_workers()
 EOF
 
-chmod +x check_workers.py
+chmod +x check_workers.py`}
+</CodeBlock>_celery_worke<CodeBlock filename="Terminal" language="bash">
+{`python check_workers.py`}
+</CodeBlock>
 ```
 
 **Usage:**
 ```bash
-python check_workers.py
-```
-
-**Expected Output (healthy workers):**
-```
-🚀 CELERY WORKER CHECKER
+python check_wor<CodeBlock filename="example.text" language="text">
+{`🚀 CELERY WORKER CHECKER
 ==================================================
 ⏰ Timestamp: 2025-06-14T10:57:41.278363
 
@@ -280,41 +272,34 @@ python check_workers.py
 📊 Worker Statistics:
   📈 celery@worker-pod-abc123:
     - Pool: 8 max concurrency
-    - Total tasks: 0
-```
-
-**Expected Output (no workers):**
-```
-📋 Active Workers:
+    - Total tasks: 0`}
+</CodeBlock>  - Pool: 8 max concurrency
+    - To<CodeBlock filename="example.text" language="text">
+{`📋 Active Workers:
   ❌ No active workers found
 
 📋 Registered Workers:
   ❌ No registered workers found
 
 📊 Worker Statistics:
-  ❌ No worker statistics available
-```
-
-### Quick Worker Status Commands
-
-```bash
-# Check if any workers are running
+  ❌ No worker statistics available`}
+</CodeBlock>r Statistics:
+  ❌ No worker statisti<CodeBlock filename="Terminal" language="bash">
+{`# Check if any workers are running
 python -c "from rhesis.backend.worker import app; print('Workers:', list(app.control.inspect().active().keys()) if app.control.inspect().active() else 'None')"
 
 # Get worker statistics
 python -c "from rhesis.backend.worker import app; import json; print(json.dumps(app.control.inspect().stats(), indent=2))"
 
 # Check registered tasks
-python -c "from rhesis.backend.worker import app; registered = app.control.inspect().registered(); print(f'Registered tasks: {sum(len(tasks) for tasks in registered.values()) if registered else 0}')"
+python -c "from rhesis.backend.worker import app; registered = app.control.inspect().registered(); print(f'Registered tasks: {sum(len(tasks) for tasks in registered.values()) if registered else 0}')"`}
+</CodeBlock>in registered.values()) if registered else 0}')"
 ```
 
 ### Worker Connection Troubleshooting
 
-If no workers are found:
-
-1. **Check broker connectivity:**
-   ```bash
-   python -c "
+If no worke<CodeBlock filename="Terminal" language="bash">
+{`   python -c "
    import os
    import redis
    from urllib.parse import urlparse
@@ -323,23 +308,23 @@ If no workers are found:
    parsed = urlparse(broker_url)
    r = redis.Redis(host=parsed.hostname, port=parsed.port, password=parsed.password, ssl=(parsed.scheme=='rediss'))
    print('Redis ping:', r.ping())
+   "`}
+</CodeBlock>iss'))
+   print('Redis ping:', r.ping())
    "
-   ```
-
-2. **Verify worker processes are running:**
-   ```bash
-   # For local development
+   <CodeBlock filename="Terminal" language="bash">
+{`   # For local development
    ps aux | grep celery
 
    # For Docker/Kubernetes
    kubectl get pods -n <namespace>
-   kubectl logs <pod-name> -n <namespace>
-   ```
-
-3. **Check worker startup logs:**
-   ```bash
-   # Look for successful worker registration
+   kubectl logs <pod-name> -n <namespace>`}
+</CodeBlock>ce>
+   kubectl logs <pod-name> -n <name<CodeBlock filename="Terminal" language="bash">
+{`   # Look for successful worker registration
    grep -i "ready" /path/to/worker/logs
+   grep -i "connected" /path/to/worker/logs`}
+</CodeBlock>s
    grep -i "connected" /path/to/worker/logs
    ```
 
@@ -347,19 +332,16 @@ If no workers are found:
 
 ### Regular Monitoring
 
-Set up automated monitoring to catch issues early:
-
-```bash
-# Add to crontab for periodic monitoring
-*/15 * * * * cd /path/to/backend && python fix_chords.py >/dev/null 2>&1
+<CodeBlock filename="Terminal" language="bash">
+{`# Add to crontab for periodic monitoring
+*/15 * * * * cd /path/to/backend && python fix_chords.py >/dev/null 2>&1`}
+</CodeBlock>/backend && python fix_chords.py >/dev/null 2>&1
 ```
 
 ### Health Checks
 
-Include chord status in your application health checks:
-
-```python
-from rhesis.backend.tasks.execution.chord_monitor import get_active_chord_unlocks, check_stuck_chords
+Inclu<CodeBlock filename="example.py" language="python">
+{`from rhesis.backend.tasks.execution.chord_monitor import get_active_chord_unlocks, check_stuck_chords
 
 def worker_health_check():
     active_chords = get_active_chord_unlocks()
@@ -368,6 +350,9 @@ def worker_health_check():
     return {
         "status": "unhealthy" if stuck_chords else "healthy",
         "active_chord_unlocks": len(active_chords),
+        "stuck_chords": len(stuck_chords)
+    }`}
+</CodeBlock>
         "stuck_chords": len(stuck_chords)
     }
 ```

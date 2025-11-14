@@ -1,3 +1,5 @@
+import { CodeBlock } from '@/components/CodeBlock'
+
 # Test Result Status
 
 This guide explains how individual test result statuses are determined and what they represent in the Rhesis backend.
@@ -32,19 +34,18 @@ A test result's status reflects whether the test **passed all its metric evaluat
 
 ### Initial Status Assignment (During Execution)
 
-The status is determined **once** by analyzing the `test_metrics` field when creating or updating a test result:
-
-```python
-# Check if ALL metrics passed
+The status is determined **once** by analyzing the `test_metri<CodeBlock filename="example.python" language="python">
+{`# Check if ALL metrics passed
 all_metrics_passed = all(
     metric_data.get('is_successful', False)
     for metric_data in metrics.values()
     if isinstance(metric_data, dict)
 )
 
-status = "Pass" if all_metrics_passed else "Fail"
-```
-
+status = "Pass" if all_metrics_passed else "Fail"`}
+</CodeBlock>tatus = "Pass" if all_metrics_passed else "Fail"
+<CodeBlock filename="example.text" language="text">
+{`
 **Key principle:** A single failed metric causes the entire test to fail.
 
 ### Status as Source of Truth
@@ -73,10 +74,8 @@ This design ensures:
 
 ## Test Metrics Structure
 
-Test results contain a `test_metrics` field with the following structure:
-
-```json
-{
+Test results contain a <CodeBlock filename="example.json" language="json">
+{`{
   "execution_time": 1.23,
   "metrics": {
     "Answer Relevancy": {
@@ -97,23 +96,21 @@ Test results contain a `test_metrics` field with the following structure:
       "threshold": 0.7
     }
   }
-}
-```
+}`}
+</CodeBlock>score": 0.92,
+      "threshold": 0.7
+    }
+  }
+}`}
+</CodeBlock>
 
 In this example:
 
 - 2 metrics passed (`is_successful: true`)
 - 1 metric failed (`is_successful: false`)
 - **Result:** Test status = **Fail**
-
----
-
-## Examples
-
-### Example 1: All Metrics Pass
-
-```json
-{
+<CodeBlock filename="example.json" language="json">
+{`{
   "test_metrics": {
     "metrics": {
       "Answer Relevancy": { "is_successful": true },
@@ -121,16 +118,16 @@ In this example:
       "Answer Fluency": { "is_successful": true }
     }
   }
+}`}
+</CodeBlock> Fluency": { "is_successful": true }
+    }
+  }
 }
-```
-
+<CodeBlock filename="example.text" language="text">
+{`
 **Status:** Pass  
-**Reason:** All 3 metrics passed
-
-### Example 2: One Metric Fails
-
-```json
-{
+**Reason:** All<CodeBlock filename="example.json" language="json">
+{`{
   "test_metrics": {
     "metrics": {
       "Answer Relevancy": { "is_successful": true },
@@ -138,16 +135,16 @@ In this example:
       "Answer Fluency": { "is_successful": true }
     }
   }
-}
-```
+}`}
+</CodeBlock> Fluency": { "is_successful": true }
+    }
+  }
+}`}
+</CodeBlock>
 
 **Status:** Fail  
-**Reason:** 1 out of 3 metrics failed
-
-### Example 3: All Metrics Fail
-
-```json
-{
+**Reason:** 1 out of<CodeBlock filename="example.json" language="json">
+{`{
   "test_metrics": {
     "metrics": {
       "Answer Relevancy": { "is_successful": false },
@@ -155,23 +152,27 @@ In this example:
       "Answer Fluency": { "is_successful": false }
     }
   }
+}`}
+</CodeBlock>Fluency": { "is_successful": false }
+    }
+  }
 }
-```
-
+<CodeBlock filename="example.text" language="text">
+{`
 **Status:** Fail  
-**Reason:** All metrics failed
-
-### Example 4: Single Metric Test
-
-```json
-{
+**Reason:** All<CodeBlock filename="example.json" language="json">
+{`{
   "test_metrics": {
     "metrics": {
       "Refusal Detection": { "is_successful": true }
     }
   }
-}
-```
+}`}
+</CodeBlock>etection": { "is_successful": true }
+    }
+  }
+}`}
+</CodeBlock>
 
 **Status:** Pass  
 **Reason:** The only metric passed
@@ -182,12 +183,8 @@ In this example:
 
 The test result status is automatically set in three scenarios:
 
-### 1. Automated Test Execution
-
-When tests run automatically via the worker:
-
-```python
-# apps/backend/src/rhesis/backend/tasks/execution/test_execution.py
+### 1. Automated Test Execu<CodeBlock filename="example.python" language="python">
+{`# apps/backend/src/rhesis/backend/tasks/execution/test_execution.py
 def create_test_result_record(..., metrics_results, ...):
     # Determine status based on whether all metrics passed
     all_metrics_passed = all(
@@ -196,15 +193,12 @@ def create_test_result_record(..., metrics_results, ...):
         if isinstance(metric_data, dict)
     )
 
-    status_value = "Pass" if all_metrics_passed else "Fail"
-```
-
-### 2. API POST /test_results
-
-When creating a test result via API:
-
-```python
-# apps/backend/src/rhesis/backend/app/routers/test_result.py
+    status_value = "Pass" if all_metrics_passed else "Fail"`}
+</CodeBlock>value = "Pass" if all_metrics_passed else "Fail"
+<CodeBlock filename="example.python" language="python">
+{`
+### 2. API POST /<CodeBlock filename="example.python" language="python">
+{`# apps/backend/src/rhesis/backend/app/routers/test_result.py
 @router.post("/")
 def create_test_result(test_result: schemas.TestResultCreate, ...):
     # Auto-set status if not provided
@@ -212,24 +206,22 @@ def create_test_result(test_result: schemas.TestResultCreate, ...):
         metrics = test_result.test_metrics.get('metrics', {})
         if metrics:
             all_metrics_passed = all(...)
-            status = "Pass" if all_metrics_passed else "Fail"
-```
+            status = "Pass" if all_metrics_passed else "Fail"`}
+</CodeBlock>tatus = "Pass" if all_metrics_passed else "Fail"`}
+</CodeBlock>
 
-### 3. API PUT /test_results/\{id\}
-
-When updating test metrics via API:
-
-```python
-# apps/backend/src/rhesis/backend/app/routers/test_result.py
+### 3. API PUT /test_r<CodeBlock filename="example.python" language="python">
+{`# apps/backend/src/rhesis/backend/app/routers/test_result.py
 @router.put("/{test_result_id}")
 def update_test_result(test_result: schemas.TestResultUpdate, ...):
     # Auto-update status if metrics changed but status not provided
     if test_result.test_metrics and not test_result.status_id:
         metrics = test_result.test_metrics.get('metrics', {})
         all_metrics_passed = all(...)
-        status = "Pass" if all_metrics_passed else "Fail"
-```
-
+        status = "Pass" if all_metrics_passed else "Fail"`}
+</CodeBlock>tatus = "Pass" if all_metrics_passed else "Fail"
+<CodeBlock filename="example.python" language="python">
+{`
 **Note:** You can manually override the status by explicitly providing `status_id` in API calls.
 
 ---
@@ -238,12 +230,8 @@ def update_test_result(test_result: schemas.TestResultUpdate, ...):
 
 All statistics and reporting use the **stored `status` field** as the source of truth:
 
-### Email Notifications
-
-Counts tests by using stored status:
-
-```python
-# apps/backend/src/rhesis/backend/tasks/execution/result_processor.py
+### Email N<CodeBlock filename="example.python" language="python">
+{`# apps/backend/src/rhesis/backend/tasks/execution/result_processor.py
 from rhesis.backend.app.constants import (
     categorize_test_result_status,
     STATUS_CATEGORY_PASSED,
@@ -255,15 +243,13 @@ for result in test_results:
     if status_category == STATUS_CATEGORY_PASSED:
         tests_passed += 1
     elif status_category == STATUS_CATEGORY_FAILED:
-        tests_failed += 1
-```
+        tests_failed += 1`}
+</CodeBlock>TATUS_CATEGORY_FAILED:
+        tests_failed += 1`}
+</CodeBlock>
 
-### Test Result Stats API
-
-Returns pass/fail counts based on stored status:
-
-```python
-# apps/backend/src/rhesis/backend/app/services/stats/test_result.py
+### Test Result Stats API<CodeBlock filename="example.python" language="python">
+{`# apps/backend/src/rhesis/backend/app/services/stats/test_result.py
 from rhesis.backend.app.constants import (
     categorize_test_result_status,
     STATUS_CATEGORY_PASSED,
@@ -281,28 +267,32 @@ GET /test_results/stats
     "failed": 25,    // Tests with status "Fail"
     "pass_rate": 75.0
   }
+}`}
+</CodeBlock>s with status "Fail"
+    "pass_rate": 75.0
+  }
 }
-```
-
+<CodeBlock filename="example.javascript" language="javascript">
+{`
 **Note:** Per-metric statistics still analyze the `test_metrics` field to show which specific metrics passed or failed.
 
 ### Frontend Display
 
-The frontend also analyzes `test_metrics` to determine pass/fail:
-
-```typescript
-// apps/frontend/src/app/(protected)/test-runs/[identifier]/components/TestsTableView.tsx
-const originalPassed = passedMetrics === totalMetrics;
-```
+The frontend al<CodeBlock filename="example.typescript" language="typescript">
+{`// apps/frontend/src/app/(protected)/test-runs/[identifier]/components/TestsTableView.tsx
+const originalPassed = passedMetrics === totalMetrics;`}
+</CodeBlock>originalPassed = passedMetrics === totalMetrics;`}
+</CodeBlock>
 
 ---
 
 ## Execution Errors
 
-If a test has no metrics or empty metrics, it's counted as an **execution error** (not Pass or Fail):
-
-```json
-{
+If a test has no metrics or empty metrics, it's cou<CodeBlock filename="example.json" language="json">
+{`{
+  "test_metrics": null // or missing entirely
+}`}
+</CodeBlock>
   "test_metrics": null // or missing entirely
 }
 ```

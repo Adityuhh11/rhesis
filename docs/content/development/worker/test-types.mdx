@@ -1,3 +1,5 @@
+import { CodeBlock } from '@/components/CodeBlock'
+
 # Test Types
 
 ## Overview
@@ -30,17 +32,16 @@ Single-turn tests use the `Test` model with a `Prompt` containing:
 
 - `content`: The input text
 - `expected_response`: Optional expected output
-- Associated `Behavior` with metrics for evaluation
-
-### Example
-
-```python
-# Create a single-turn test
+- Associated `<CodeBlock filename="example.py" language="python">
+{`# Create a single-turn test
 test = Test(
     prompt=prompt,
     behavior=behavior,  # Contains metrics
     test_type="Single-Turn",
     organization_id=org_id,
+    user_id=user_id
+)`}
+</CodeBlock>   organization_id=org_id,
     user_id=user_id
 )
 ```
@@ -79,16 +80,18 @@ Agentic conversation tests where [Penelope](/penelope) orchestrates multi-turn i
 
 ### Configuration
 
-Multi-turn tests store configuration in the `test_configuration` JSONB field:
-
-```json
-{
+Multi-turn tests store conf<CodeBlock filename="example.json" language="json">
+{`{
   "goal": "Verify the chatbot can answer 2 questions about insurance coverage",
   "instructions": "Ask about coverage, then ask a follow-up question",
   "scenario": "You are a customer seeking information",
   "restrictions": "The chatbot must not mention competitor brands",
   "context": {
     "additional_info": "..."
+  },
+  "max_turns": 10
+}`}
+</CodeBlock>additional_info": "..."
   },
   "max_turns": 10
 }
@@ -101,12 +104,8 @@ Multi-turn tests store configuration in the `test_configuration` JSONB field:
 - **scenario** (optional): Role/context for the agent
 - **restrictions** (optional): Boundaries the target must respect
 - **context** (optional): Additional metadata
-- **max_turns** (optional): Maximum conversation turns (default: 10)
-
-### Example
-
-```python
-# Create a multi-turn test
+- **max_turns** (optional): Max<CodeBlock filename="example.py" language="python">
+{`# Create a multi-turn test
 test = Test(
     prompt=prompt,  # Used as fallback goal if not in config
     test_type="Multi-Turn",
@@ -116,6 +115,9 @@ test = Test(
         "max_turns": 5
     },
     organization_id=org_id,
+    user_id=user_id
+)`}
+</CodeBlock>   organization_id=org_id,
     user_id=user_id
 )
 ```
@@ -135,12 +137,8 @@ The complete Penelope trace is stored, including:
 - Agent reasoning at each step
 - Tool calls and responses
 - Goal evaluation details
-- Execution statistics
-
-### Penelope Trace Structure
-
-```json
-{
+- <CodeBlock filename="example.json" language="json">
+{`{
   "status": "success",
   "goal_achieved": true,
   "turns_used": 3,
@@ -165,6 +163,11 @@ The complete Penelope trace is stored, including:
     "Goal Achievement": {
       "score": 1.0,
       "is_successful": true,
+      "confidence": 1.0
+    }
+  }
+}`}
+</CodeBlock>sful": true,
       "confidence": 1.0
     }
   }
@@ -197,10 +200,8 @@ Load testing and stress testing endpoints under various conditions.
 
 ## Test Type Detection
 
-The system automatically routes tests to the appropriate executor:
-
-```python
-from rhesis.backend.tasks.execution.modes import get_test_type, is_multi_turn_test
+The system autom<CodeBlock filename="example.py" language="python">
+{`from rhesis.backend.tasks.execution.modes import get_test_type, is_multi_turn_test
 from rhesis.backend.tasks.enums import TestType
 
 # Get test type
@@ -212,6 +213,9 @@ if is_multi_turn_test(test):
     pass
 
 # Or use enum
+if test_type == TestType.MULTI_TURN:
+    # ...`}
+</CodeBlock>m
 if test_type == TestType.MULTI_TURN:
     # ...
 ```

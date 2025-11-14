@@ -1,3 +1,5 @@
+import { CodeBlock } from '@/components/CodeBlock'
+
 # Database Models
 
 ## Overview
@@ -104,12 +106,8 @@ The database implements row-level security to enforce multi-tenancy:
 
 The application uses mixins to add common functionality to models:
 
-### TagsMixin
-
-Adds tagging capabilities to models:
-
-```python
-class TagsMixin:
+#<CodeBlock filename="example.python" language="python">
+{`class TagsMixin:
     @declared_attr
     def tags(cls):
         return relationship(
@@ -119,14 +117,18 @@ class TagsMixin:
                         f"TaggedItem.item_type == '{cls.__name__.lower()}')",
             secondaryjoin="TaggedItem.tag_id == Tag.id",
             viewonly=True,
+        )`}
+</CodeBlock>== Tag.id",
+            viewonly=True,
         )
-```
-
+<CodeBlock filename="example.text" language="text">
+{`
 ## Database Initialization
 
-The database schema is created using SQLAlchemy's metadata:
-
-```python
+The datab<CodeBlock filename="example.python" language="python">
+{`Base.metadata.create_all(bind=engine)`}
+</CodeBlock>`}
+</CodeBlock>python
 Base.metadata.create_all(bind=engine)
 ```
 

@@ -1,3 +1,5 @@
+import { CodeBlock } from '@/components/CodeBlock'
+
 # Routing
 
 This document explains the routing system used in the Rhesis frontend application, which is built with Next.js App Router.
@@ -236,21 +238,20 @@ export default function ProjectPage({ params }: { params: { id: string } }) {
 
 ## Loading States
 
-Loading states are defined using special `loading.tsx` files:
-
-```tsx
-// app/(protected)/projects/loading.tsx
+Loading sta<CodeBlock filename="example.tsx" language="tsx">
+{`// app/(protected)/projects/loading.tsx
 export default function Loading() {
   return <div>Loading projects...</div>;
+}`}
+</CodeBlock>g() {
+  return <div>Loading projects...</div>;
 }
-```
-
+<CodeBlock filename="example.typescript" language="typescript">
+{`
 ## Error Handling
 
-Error states are defined using special `error.tsx` files:
-
-```tsx
-// app/(protected)/projects/error.tsx
+Error s<CodeBlock filename="example.tsx" language="tsx">
+{`// app/(protected)/projects/error.tsx
 "use client";
 
 export default function Error({
@@ -266,26 +267,29 @@ export default function Error({
       <button onClick={reset}>Try again</button>
     </div>
   );
-}
-```
+}`}
+</CodeBlock>ick={reset}>Try again</button>
+    </div>
+  );
+}`}
+</CodeBlock>
 
 ## Not Found Pages
 
-Not found pages are defined using special `not-found.tsx` files:
-
-```tsx
-// app/(protected)/projects/[id]/not-found.tsx
+Not found page<CodeBlock filename="example.tsx" language="tsx">
+{`// app/(protected)/projects/[id]/not-found.tsx
 export default function NotFound() {
   return <div>Project not found</div>;
+}`}
+</CodeBlock>und() {
+  return <div>Project not found</div>;
 }
-```
-
+<CodeBlock filename="example.python" language="python">
+{`
 ## Metadata
 
-Page metadata is defined using the `metadata` export:
-
-```tsx
-// app/(protected)/projects/page.tsx
+Pag<CodeBlock filename="example.tsx" language="tsx">
+{`// app/(protected)/projects/page.tsx
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -295,8 +299,11 @@ export const metadata: Metadata = {
 
 export default function ProjectsPage() {
   // ...
-}
-```
+}`}
+</CodeBlock>ort default function ProjectsPage() {
+  // ...
+}`}
+</CodeBlock>
 
 ## Best Practices
 

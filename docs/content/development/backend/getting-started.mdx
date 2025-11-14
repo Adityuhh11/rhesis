@@ -1,3 +1,5 @@
+import { CodeBlock } from '@/components/CodeBlock'
+
 # Getting Started with Rhesis Backend
 
 This guide will help you set up and run the Rhesis backend on your local machine for development purposes.
@@ -123,16 +125,16 @@ Fix linting issues automatically:
 
 <CodeBlock filename="lint-fix.sh" language="bash">
   {`uv run --all-groups ruff check --fix .`}
-</CodeBlock>
-
-### Running Tests
+</<CodeBlock filename="Terminal" language="bash">
+{`pytest`}
+</CodeBlock>nning Tests
 
 Run the test suite:
 
 ```bash
 pytest
-```
-
+<CodeBlock filename="example.text" language="text">
+{`
 ## Authentication Setup
 
 For local development, you can use Auth0 or set up a mock authentication system.
@@ -140,9 +142,8 @@ For local development, you can use Auth0 or set up a mock authentication system.
 ### Auth0 Configuration
 
 1. Create an Auth0 application at https://auth0.com/
-2. Update the Auth0 configuration in your `.env` file:
-
-```
+2. Update the Auth0 configuration in your `.env` file:`}
+</CodeBlock>
 AUTH0_DOMAIN=your-domain.auth0.com
 AUTH0_AUDIENCE=your-audience
 AUTH0_CLIENT_ID=your-client-id

@@ -1,3 +1,5 @@
+import { CodeBlock } from '@/components/CodeBlock'
+
 # Managing Documentation
 
 This guide explains how to manage and maintain the Rhesis documentation site built with Nextra.
@@ -15,10 +17,10 @@ There are multiple ways to run the Rhesis documentation site. Choose the method 
 
 #### Method 1: Using the CLI Tool (Recommended)
 
-The easiest way to run the documentation is using our CLI tool from the project root:
-
-```bash
-# From the project root directory
+The easiest way to run the document<CodeBlock filename="Terminal" language="bash">
+{`# From the project root directory
+./rh docs start`}
+</CodeBlock> From the project root directory
 ./rh docs start
 ```
 
@@ -31,25 +33,23 @@ This command will:
 
 #### Method 2: Manual Steps
 
-If you prefer to run the documentation manually or need more control:
-
-```bash
-# Navigate to docs directory
+If you prefer to ru<CodeBlock filename="Terminal" language="bash">
+{`# Navigate to docs directory
 cd apps/documentation
 
 # Install dependencies (if not already done)
 npm install
 
 # Start development server
+npm run dev`}
+</CodeBlock> install
+
+# Start development server
 npm run dev
 ```
 
-The documentation will be available at: **http://localhost:3001**
-
-#### Method 3: Additional Commands
-
-```bash
-# Build for production
+The documentation will be available at: **http://lo<CodeBlock filename="Terminal" language="bash">
+{`# Build for production
 npm run build
 
 # Start production server (after building)
@@ -59,43 +59,41 @@ npm run start
 npm run lint
 
 # Check for outdated dependencies
+npm outdated`}
+</CodeBlock>
+
+# Check for outdated dependencies
 npm outdated
 ```
 
 #### Verification
 
-Once the server is running, you can verify it's working correctly:
-
-```bash
-# Check if the server is responding
+Once the server <CodeBlock filename="Terminal" language="bash">
+{`# Check if the server is responding
 curl -s -o /dev/null -w "%{http_code}" http://localhost:3001
 
-# Expected output: 200
-```
+# Expected output: 200`}
+</CodeBlock>}" http://localhost:3001
 
-#### Troubleshooting
-
-**Port Conflicts:**
-
-```bash
-# Check what's using port 3001
+# Expected output: <CodeBlock filename="Terminal" language="bash">
+{`# Check what's using port 3001
 lsof -i :3001
 
 # Kill the process if needed
 kill -9 <PID>
 
 # Or use a different port
-PORT=3002 npm run dev
-```
-
-**Dependencies Issues:**
-
-```bash
-# Clear npm cache
+PORT=3002 npm run dev`}
+</CodeBlock>
+# Or use a different port
+P<CodeBlock filename="Terminal" language="bash">
+{`# Clear npm cache
 npm cache clean --force
 
 # Remove node_modules and reinstall
 rm -rf node_modules package-lock.json
+npm install`}
+</CodeBlock>m -rf node_modules package-lock.json
 npm install
 ```
 
@@ -107,10 +105,8 @@ npm install
 
 ## Project Structure
 
-The documentation is organized using Nextra's file-based routing:
-
-```
-apps/documentation/
+The documentati<CodeBlock filename="Diagram" language="text">
+{`apps/documentation/
 ├── app/                    # Next.js App Router pages
 │   ├── page.mdx           # Home page (/)
 │   ├── docs/              # Documentation pages (/docs/*)
@@ -124,24 +120,19 @@ apps/documentation/
 ├── public/               # Static assets (images, etc.)
 ├── theme.config.jsx      # Nextra theme configuration
 ├── mdx-components.js     # MDX component customization
-└── package.json         # Dependencies and scripts
+└── package.json         # Dependencies and scripts`}
+</CodeBlock> package.json         # Dependencies and scripts
 ```
 
 ## Adding New Pages
 
 ### Creating a New Page
 
-1. **Create a new `.mdx` file** in the appropriate directory:
-
-```bash
-# Example: Create a new API documentation page
-touch apps/documentation/app/docs/backend/api.mdx
-```
-
-2. **Add content to the page**:
-
-````mdx
-# API Reference
+1. **Create<CodeBlock filename="Terminal" language="bash">
+{`# Example: Create a new API documentation page
+touch apps/documentation/app/docs/backend/api.mdx`}
+</CodeBlock>ouch apps/documentation/app/docs/bac<CodeBlock filename="example.mdx" language="mdx">
+{`# API Reference
 
 Welcome to the Rhesis API reference documentation.
 
@@ -164,8 +155,11 @@ Retrieve a list of users.
 
 **Parameters:**
 
-- `page` (optional): Page number for pagination
-- `limit` (optional): Number of items per page
+- \`page\` (optional): Page number for pagination
+- \`limit\` (optional): Number of items per page
+
+**Response:**`}
+</CodeBlock>ional): Number of items per page
 
 **Response:**
 
@@ -185,20 +179,14 @@ Retrieve a list of users.
 ```
 ````
 
-## Error Handling
-
-All endpoints return consistent error responses:
-
-```json
-{
+## Error Handling<CodeBlock filename="example.json" language="json">
+{`{
   "error": "Error message",
   "code": "ERROR_CODE",
   "details": {}
-}
-```
-
-````
-
+}`}
+</CodeBlock>sag<CodeBlock filename="example.text" language="text">
+{`
 ### Page Organization
 
 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -232,7 +220,8 @@ All endpoints return consistent error responses:
 
 ### Callout Components
 
-Nextra provides built-in callout components for highlighting information:
+Nextra provides built-in callout components for highlighting information:`}
+</CodeBlock>allout components for highlighting information:
 
 ```mdx
 <Callout type="default">
@@ -247,11 +236,12 @@ Nextra provides built-in callout components for highlighting information:
 
 <Callout type="error">
   **Error Callout**
-  This is an error callout for critical issues.
-</Callout>
-````
-
+  This i<CodeBlock filename="example.text" language="text">
+{`
 ### Grid Layouts
+
+Use CSS Grid for responsive layouts:`}
+</CodeBlock>d Layouts
 
 Use CSS Grid for responsive layouts:
 
@@ -267,22 +257,22 @@ Use CSS Grid for responsive layouts:
   </div>
   <div>
     <h3>Feature 3</h3>
-    <p>Description of the third feature.</p>
-  </div>
-</div>
-```
-
+    <p>De<CodeBlock filename="example.text" language="text">
+{`
 ### Code Blocks
 
-Use syntax highlighting for code examples:
+Use syntax highlighting for code examples:`}
+</CodeBlock>cks
 
-````mdx
-```python
-def create_user(user_data: UserCreate, db: Session) -> User:
+<CodeBlock filename="example.py" language="python">
+{`def create_user(user_data: UserCreate, db: Session) -> User:
     """Create a new user in the database."""
     user = User(**user_data.dict())
     db.add(user)
     db.commit()
+    db.refresh(user)
+    return user`}
+</CodeBlock>db.commit()
     db.refresh(user)
     return user
 ```
@@ -305,10 +295,8 @@ const createUser = async (userData: UserCreate): Promise<User> => {
 
 ### Theme Configuration
 
-The `theme.config.jsx` file controls the documentation appearance:
-
-```jsx
-import ThemeAwareLogo from './components/ThemeAwareLogo'
+The `theme.confi<CodeBlock filename="example.jsx" language="jsx">
+{`import ThemeAwareLogo from './components/ThemeAwareLogo'
 
 export default {
   logo: <ThemeAwareLogo />,
@@ -335,21 +323,25 @@ export default {
     key: 'rhesis-docs',
     text: 'Welcome to Rhesis Documentation'
   },
+}`}
+</CodeBlock>  text: 'Welcome to Rhesis Documentation'
+  },
 }
 ````
 
-### MDX Components
-
-Customize MDX rendering in `mdx-components.js`:
-
-```javascript
-import { useMDXComponents as getThemeComponents } from "nextra-theme-docs";
+### MDX Component<CodeBlock filename="example.js" language="javascript">
+{`import { useMDXComponents as getThemeComponents } from "nextra-theme-docs";
 
 const themeComponents = getThemeComponents();
 
 export function useMDXComponents(components) {
   return {
     ...themeComponents,
+    ...components,
+    Callout,
+  };
+}`}
+</CodeBlock>mponents,
     ...components,
     Callout,
   };
@@ -364,63 +356,48 @@ Nextra 4 uses Pagefind for full-text search:
 
 <Callout type="default">
   **Search Note** Search is only available after building the documentation.
-  During development, you'll see a message indicating that search requires a
-  build.
-</Callout>
-
-### Building for Search
-
-```bash
-# Build the documentation
+  During development, you'll see a message indicating that search requi<CodeBlock filename="Terminal" language="bash">
+{`# Build the documentation
 npm run build
 
 # This automatically runs Pagefind indexing
-# The search index is generated in public/_pagefind/
+# The search index is generated in public/_pagefind/`}
+</CodeBlock>e search index is generated in public/_pagefind/
 ```
 
 ### Search Configuration
 
-The search is automatically configured in `package.json`:
-
-```json
-{
+The sea<CodeBlock filename="example.json" language="json">
+{`{
   "scripts": {
     "postbuild": "pagefind --site .next/server/app --output-path public/_pagefind"
   }
+}`}
+</CodeBlock>server/app --output-path public/_pagefind"
+  }
 }
-```
-
-## Development Workflow
-
-### Local Development
-
-```bash
-# Start development server
+`<CodeBlock filename="Terminal" language="bash">
+{`# Start development server
 npm run dev
 
 # The server will be available at http://localhost:3001
-# Changes are automatically reflected
-```
-
-### Building and Deploying
-
-```bash
-# Build for production
+# Changes are automatically reflected`}
+</CodeBlock>lhost:3001
+# Changes are autom<CodeBlock filename="Terminal" language="bash">
+{`# Build for production
 npm run build
 
 # Start production server
 npm run start
 
 # Or deploy to your hosting platform
+# The built files are in .next/ and public/`}
+</CodeBlock>form
 # The built files are in .next/ and public/
 ```
 
-### Continuous Integration
-
-For automated documentation deployment:
-
-```yaml
-# .github/workflows/docs.yml
+### Continuous In<CodeBlock filename="example.yaml" language="yaml">
+{`# .github/workflows/docs.yml
 name: Deploy Documentation
 
 on:
@@ -439,6 +416,8 @@ jobs:
       - run: cd apps/documentation && npm install
       - run: cd apps/documentation && npm run build
       - name: Deploy to hosting platform
+        # Add your deployment steps here`}
+</CodeBlock>latform
         # Add your deployment steps here
 ```
 
@@ -465,14 +444,8 @@ jobs:
   </div>
   <div>
     <h3>Cross-references</h3>
-    <p>Link to related pages and external resources.</p>
-  </div>
-</div>
-
-### Markdown Best Practices
-
-````mdx
-# Use proper heading hierarchy
+    <p>Link to related pages and external resources.<CodeBlock filename="example.mdx" language="mdx">
+{`# Use proper heading hierarchy
 
 ## Section headings
 
@@ -483,6 +456,9 @@ jobs:
 - First item
 - Second item
 - Third item
+
+# Use code blocks with language specification`}
+</CodeBlock>
 
 # Use code blocks with language specification
 
@@ -498,10 +474,8 @@ def example():
 
 # Use images with alt text
 
-![Rhesis Logo](/logo/rhesis-Logo-rgb-main-logo.png "Rhesis Logo")
-
-````
-
+![Rhesis Logo](/<CodeBlock filename="example.text" language="text">
+{`
 ## Troubleshooting
 
 ### Common Issues
@@ -515,6 +489,10 @@ def example():
   - Environment variables are set correctly
 </Callout>
 
+**Search Not Working:**`}
+</CodeBlock>et correctly
+</Callout>
+
 **Search Not Working:**
 ```bash
 # Ensure Pagefind is installed
@@ -523,7 +501,10 @@ npm install pagefind
 # Rebuild the documentation
 npm run build
 
-# Check that _pagefind directory exists
+# Check th<CodeBlock filename="example.text" language="text">
+{`
+**Styling Issues:**`}
+</CodeBlock>
 ls public/_pagefind/
 ````
 
@@ -535,12 +516,8 @@ rm -rf .next
 
 # Reinstall dependencies
 rm -rf node_modules package-lock.json
-npm install
-
-# Restart development server
-npm run dev
-```
-
+np<CodeBlock filename="example.text" language="text">
+{`
 ### Performance Optimization
 
 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -575,6 +552,9 @@ npm run dev
 3. **Add new features** and API endpoints
 4. **Remove deprecated content**
 5. **Improve navigation** and cross-references
+
+### Version Management`}
+</CodeBlock>** and cross-references
 
 ### Version Management
 

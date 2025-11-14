@@ -1,3 +1,5 @@
+import { CodeBlock } from '@/components/CodeBlock'
+
 # Endpoint Configuration Guide
 
 This guide explains how to configure endpoints in the system for both REST and WebSocket protocols, including authentication methods.
@@ -40,12 +42,8 @@ The system uses special placeholders that are automatically replaced with actual
 
 - `request_body_template`: String containing the JSON template for the request body
 - `request_headers`: String containing the JSON template for request headers
-- `query_params`: String containing URL query parameters (optional)
-
-#### REST Example
-
-```json
-// request_body_template
+- `query_params`: String containing <CodeBlock filename="example.json" language="json">
+{`// request_body_template
 {
   "query": "{{ input }}"
 }
@@ -54,13 +52,10 @@ The system uses special placeholders that are automatically replaced with actual
 {
   "Content-Type": "application/json",
   "Authorization": "Bearer {{ auth_token }}"
-}
-```
-
-#### WebSocket Example
-
-```json
-// request_body_template
+}`}
+</CodeBlock>,
+  "Authorization": "Bear<CodeBlock filename="example.json" language="json">
+{`// request_body_template
 {
   "auth_token": "{{ auth_token }}",
   "session_id": "{{ session_id }}",
@@ -72,33 +67,34 @@ The system uses special placeholders that are automatically replaced with actual
   "Upgrade": "websocket",
   "Connection": "Upgrade",
   "Sec-WebSocket-Version": "13"
+}`}
+</CodeBlock>n": "Upgrade",
+  "Sec-WebSocket-Version": "13"
 }
-```
-
+<CodeBlock filename="example.text" language="text">
+{`
 ### Response Configuration Fields
 
 - `response_format`: Format of the response (e.g., "json")
-- `response_mappings`: String containing JSON mapping of response fields
-
-#### REST Example
-
-```json
-// response_mappings
+- `response_mappings`: String containing <CodeBlock filename="example.json" language="json">
+{`// response_mappings
 {
   "output": "$.data.response"
-}
-```
-
-#### WebSocket Example
-
-```json
-// response_mappings
+}`}
+</CodeBlock>ponse_mappings
+{
+  "output<CodeBlock filename="example.json" language="json">
+{`// response_mappings
 {
   "conversation_id": "$.conversation_id",
   "error": "$.error",
   "status": "$.message"
-}
-```
+}`}
+</CodeBlock>
+  "error": "$.error",
+  "status": "$.message"
+}`}
+</CodeBlock>
 
 ### Authentication Fields
 
@@ -114,14 +110,8 @@ The system uses special placeholders that are automatically replaced with actual
 - `client_secret`: OAuth client secret
 - `token_url`: OAuth token endpoint URL
 - `scopes`: Array of required scopes
-- `audience`: Target audience for the token (if required)
-
-## Configuration Examples
-
-### REST Endpoint
-
-```json
-{
+- `audience`: Target audience for the token (if requi<CodeBlock filename="example.json" language="json">
+{`{
   "name": "Data Query API",
   "description": "Endpoint for querying data using natural language",
   "url": "https://api.example.com/query",
@@ -133,13 +123,10 @@ The system uses special placeholders that are automatically replaced with actual
   "response_format": "json",
   "response_mappings": "{\"result\": \"$.data.result\"}",
   "auth_type": "bearer"
-}
-```
-
-### WebSocket Endpoint
-
-```json
-{
+}`}
+</CodeBlock>: \"$.data.result\"}",
+  "<CodeBlock filename="example.json" language="json">
+{`{
   "name": "Real-time Chat API",
   "description": "WebSocket endpoint for real-time chat interactions",
   "url": "wss://api.example.com/chat",
@@ -156,9 +143,12 @@ The system uses special placeholders that are automatically replaced with actual
   "token_url": "https://auth-provider.com/oauth/token",
   "scopes": ["chat:write"],
   "audience": "https://api.example.com"
+}`}
+</CodeBlock>ite"],
+  "audience": "https://api.example.com"
 }
-```
-
+<CodeBlock filename="example.text" language="text">
+{`
 ## Best Practices
 
 1. **Field Configuration**
@@ -199,10 +189,8 @@ The system uses special placeholders that are automatically replaced with actual
 
 ## Validation Rules
 
-You can specify validation rules for the endpoint using the `validation_rules` field:
-
-```json
-{
+You can specify validation rules fo<CodeBlock filename="example.json" language="json">
+{`{
   "validation_rules": {
     "required_fields": ["input", "session_id"],
     "max_length": {
@@ -212,8 +200,13 @@ You can specify validation rules for the endpoint using the `validation_rules` f
       "session_id": "uuid"
     }
   }
-}
-```
+}`}
+</CodeBlock>ormat": {
+      "session_id": "uuid"
+    }
+  }
+}`}
+</CodeBlock>
 
 ## Troubleshooting
 
