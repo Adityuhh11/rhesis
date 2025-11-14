@@ -1,3 +1,5 @@
+import { FileTree } from '@/components/FileTree'
+
 # Backend Architecture
 
 ## Overview
@@ -15,29 +17,58 @@ The Rhesis backend is built with FastAPI, a modern Python web framework designed
 
 ## Directory Structure
 
-<CodeBlock filename="backend-directory-structure.txt" language="text">
-  {`apps/backend/
-├── src/
-│   └── rhesis/
-│       └── backend/
-│           ├── __init__.py      # Package initialization
-│           ├── app/             # Main application code
-│           │   ├── main.py      # FastAPI application entry point
-│           │   ├── database.py  # Database connection and session management
-│           │   ├── crud.py      # CRUD operations
-│           │   ├── models/      # SQLAlchemy models
-│           │   ├── schemas/     # Pydantic schemas
-│           │   ├── routers/     # API endpoints
-│           │   ├── auth/        # Authentication logic
-│           │   ├── utils/       # Utility functions
-│           │   └── services/    # Business logic services
-│           ├── alembic/         # Database migrations
-│           ├── tasks/           # Celery background tasks
-│           ├── metrics/         # Application metrics
-│           └── logging/         # Logging configuration
-├── pyproject.toml              # Project dependencies and configuration
-└── .env                        # Environment variables`}
-</CodeBlock>
+<FileTree
+  title="Backend Directory Structure"
+  data={[
+    {
+      name: "apps/backend",
+      type: "folder",
+      children: [
+        {
+          name: "src",
+          type: "folder",
+          children: [
+            {
+              name: "rhesis",
+              type: "folder",
+              children: [
+                {
+                  name: "backend",
+                  type: "folder",
+                  children: [
+                    { name: "__init__.py", type: "file", description: "Package initialization" },
+                    {
+                      name: "app",
+                      type: "folder",
+                      description: "Main application code",
+                      children: [
+                        { name: "main.py", type: "file", description: "FastAPI application entry point" },
+                        { name: "database.py", type: "file", description: "Database connection and session management" },
+                        { name: "crud.py", type: "file", description: "CRUD operations" },
+                        { name: "models", type: "folder", description: "SQLAlchemy models" },
+                        { name: "schemas", type: "folder", description: "Pydantic schemas" },
+                        { name: "routers", type: "folder", description: "API endpoints" },
+                        { name: "auth", type: "folder", description: "Authentication logic" },
+                        { name: "utils", type: "folder", description: "Utility functions" },
+                        { name: "services", type: "folder", description: "Business logic services" }
+                      ]
+                    },
+                    { name: "alembic", type: "folder", description: "Database migrations" },
+                    { name: "tasks", type: "folder", description: "Celery background tasks" },
+                    { name: "metrics", type: "folder", description: "Application metrics" },
+                    { name: "logging", type: "folder", description: "Logging configuration" }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        { name: "pyproject.toml", type: "file", description: "Project dependencies and configuration" },
+        { name: ".env", type: "file", description: "Environment variables" }
+      ]
+    }
+  ]}
+/>
 
 ## Architectural Patterns
 

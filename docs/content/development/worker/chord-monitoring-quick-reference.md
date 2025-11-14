@@ -1,3 +1,5 @@
+import { CodeBlock } from '@/components/CodeBlock'
+
 # Chord Monitoring Quick Reference
 
 This is a quick reference for chord monitoring commands. For detailed information, see [Chord Management and Monitoring](chord-management.md).
@@ -5,8 +7,8 @@ This is a quick reference for chord monitoring commands. For detailed informatio
 ## Quick Commands
 
 ### 🔍 Check Status
-```bash
-# Quick interactive check and fix
+<CodeBlock filename="Terminal" language="bash">
+{`# Quick interactive check and fix
 python fix_chords.py
 
 # Show current chord status
@@ -14,11 +16,12 @@ python -m rhesis.backend.tasks.execution.chord_monitor status
 
 # Check for stuck chords (>1 hour)
 python -m rhesis.backend.tasks.execution.chord_monitor check --max-hours 1
-```
+`}
+</CodeBlock>
 
 ### 🔧 Fix Issues
-```bash
-# Dry run - see what would be revoked
+<CodeBlock filename="Terminal" language="bash">
+{`# Dry run - see what would be revoked
 python -m rhesis.backend.tasks.execution.chord_monitor revoke --max-hours 1 --dry-run
 
 # Actually revoke stuck chords
@@ -26,27 +29,30 @@ python -m rhesis.backend.tasks.execution.chord_monitor revoke --max-hours 1
 
 # Emergency: purge all tasks (dangerous!)
 python -m rhesis.backend.tasks.execution.chord_monitor clean --force
-```
+`}
+</CodeBlock>
 
 ### 🔍 Inspect Specific Chord
-```bash
-# Get details about a specific chord
+<CodeBlock filename="Terminal" language="bash">
+{`# Get details about a specific chord
 python -m rhesis.backend.tasks.execution.chord_monitor inspect <chord-id>
 
 # Get verbose details with subtasks
 python -m rhesis.backend.tasks.execution.chord_monitor inspect <chord-id> --verbose
-```
+`}
+</CodeBlock>
 
 ## Common Workflows
 
 ### Daily Health Check
-```bash
-python fix_chords.py
-```
+<CodeBlock filename="Terminal" language="bash">
+{`python fix_chords.py
+`}
+</CodeBlock>
 
 ### When Tests are Stuck
-```bash
-# 1. Check status
+<CodeBlock filename="Terminal" language="bash">
+{`# 1. Check status
 python -m rhesis.backend.tasks.execution.chord_monitor status
 
 # 2. Look for stuck chords
@@ -54,11 +60,12 @@ python -m rhesis.backend.tasks.execution.chord_monitor check --max-hours 0.5
 
 # 3. Revoke if needed
 python -m rhesis.backend.tasks.execution.chord_monitor revoke --max-hours 0.5
-```
+`}
+</CodeBlock>
 
 ### Emergency Recovery
-```bash
-# 1. Stop workers
+<CodeBlock filename="Terminal" language="bash">
+{`# 1. Stop workers
 pkill -f celery
 
 # 2. Clean all tasks
@@ -69,17 +76,19 @@ celery -A rhesis.backend.worker.app worker --loglevel=INFO &
 
 # 4. Verify
 python fix_chords.py
-```
+`}
+</CodeBlock>
 
 ## Log Monitoring
 
-```bash
-# Watch for chord issues
+<CodeBlock filename="Terminal" language="bash">
+{`# Watch for chord issues
 tail -f celery_worker.log | grep -E "(chord_unlock|MaxRetries|ERROR)"
 
 # Count stuck chords
 grep "chord_unlock.*retry" celery_worker.log | wc -l
-```
+`}
+</CodeBlock>
 
 ## Return Codes
 

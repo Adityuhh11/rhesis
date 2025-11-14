@@ -1,3 +1,5 @@
+import { CodeBlock } from '@/components/CodeBlock'
+
 # Human Reviews for Test Results
 
 ## Overview
@@ -34,8 +36,8 @@ The `test_reviews` field is stored as a JSON object with two parts:
 
 ## JSON Schema
 
-```json
-{
+<CodeBlock filename="config.json" language="json">
+{`{
   "metadata": {
     "last_updated_at": "2025-10-10T14:15:00Z",
     "last_updated_by": {
@@ -70,7 +72,8 @@ The `test_reviews` field is stored as a JSON object with two parts:
     }
   ]
 }
-```
+`}
+</CodeBlock>
 
 ---
 
@@ -100,10 +103,11 @@ The `test_reviews` field is stored as a JSON object with two parts:
 
 #### Example `target` values
 
-```json
-{ "type": "test", "reference": null }
+<CodeBlock filename="config.json" language="json">
+{`{ "type": "test", "reference": null }
 { "type": "metric", "reference": "Refusal Detection" }
-```
+`}
+</CodeBlock>
 
 ---
 
@@ -120,8 +124,8 @@ The column stores the complete review structure as JSON, providing flexibility f
 
 **File**: `apps/backend/src/rhesis/backend/app/models/test_result.py`
 
-```python
-class TestResult(Base, ...):
+<CodeBlock filename="example.py" language="python">
+{`class TestResult(Base, ...):
     test_reviews = Column(JSONB)
 
     @property
@@ -133,7 +137,8 @@ class TestResult(Base, ...):
     def matches_review(self) -> bool:
         """Check if test result status_id matches latest review status_id"""
         # Returns True/False
-```
+`}
+</CodeBlock>
 
 **Derived Properties:**
 
@@ -144,8 +149,8 @@ class TestResult(Base, ...):
 
 **File**: `apps/backend/src/rhesis/backend/app/schemas/test_result.py`
 
-```python
-# Review schemas
+<CodeBlock filename="example.py" language="python">
+{`# Review schemas
 class ReviewTargetCreate(Base):
     type: str  # "test" or "metric"
     reference: Optional[str] = None  # metric name or null
@@ -168,7 +173,8 @@ class ReviewResponse(Base):
     created_at: str
     updated_at: str
     target: Dict[str, Any]
-```
+`}
+</CodeBlock>
 
 ---
 
@@ -182,8 +188,8 @@ All endpoints follow REST conventions and automatically manage metadata.
 
 **Request Body**:
 
-```json
-{
+<CodeBlock filename="config.json" language="json">
+{`{
   "status_id": "735acfa0-cca2-48a1-bb90-ba10b16f1cdb",
   "comments": "Test review - looks good after manual inspection",
   "target": {
@@ -191,12 +197,13 @@ All endpoints follow REST conventions and automatically manage metadata.
     "reference": null
   }
 }
-```
+`}
+</CodeBlock>
 
 **Response** (201 Created):
 
-```json
-{
+<CodeBlock filename="config.json" language="json">
+{`{
   "review_id": "c370e2d7-f526-41c4-94f0-a6f25735a9b9",
   "status": {
     "status_id": "735acfa0-cca2-48a1-bb90-ba10b16f1cdb",
@@ -214,7 +221,8 @@ All endpoints follow REST conventions and automatically manage metadata.
     "reference": null
   }
 }
-```
+`}
+</CodeBlock>
 
 **Features**:
 
@@ -230,16 +238,17 @@ All endpoints follow REST conventions and automatically manage metadata.
 
 **Request Body** (all fields optional):
 
-```json
-{
+<CodeBlock filename="config.json" language="json">
+{`{
   "comments": "UPDATED: After further review, this test passes all criteria"
 }
-```
+`}
+</CodeBlock>
 
 **Response** (200 OK):
 
-```json
-{
+<CodeBlock filename="config.json" language="json">
+{`{
   "review_id": "c370e2d7-f526-41c4-94f0-a6f25735a9b9",
   "status": {
     "status_id": "735acfa0-cca2-48a1-bb90-ba10b16f1cdb",
@@ -257,7 +266,8 @@ All endpoints follow REST conventions and automatically manage metadata.
     "reference": null
   }
 }
-```
+`}
+</CodeBlock>
 
 **Features**:
 
@@ -272,8 +282,8 @@ All endpoints follow REST conventions and automatically manage metadata.
 
 **Response** (200 OK):
 
-```json
-{
+<CodeBlock filename="config.json" language="json">
+{`{
   "message": "Review deleted successfully",
   "review_id": "c370e2d7-f526-41c4-94f0-a6f25735a9b9",
   "deleted_review": {
@@ -286,7 +296,8 @@ All endpoints follow REST conventions and automatically manage metadata.
     "target": {...}
   }
 }
-```
+`}
+</CodeBlock>
 
 **Features**:
 
@@ -301,8 +312,8 @@ All endpoints follow REST conventions and automatically manage metadata.
 
 **Response** includes:
 
-```json
-{
+<CodeBlock filename="config.json" language="json">
+{`{
   "id": "fe647ace-5364-4158-b634-9bc7c53d7905",
   "status_id": "735acfa0-cca2-48a1-bb90-ba10b16f1cdb",
   "test_reviews": {
@@ -342,7 +353,8 @@ All endpoints follow REST conventions and automatically manage metadata.
   },
   "matches_review": true
 }
-```
+`}
+</CodeBlock>
 
 **Derived Properties**:
 
@@ -389,13 +401,14 @@ The `metadata` section is automatically updated on every review operation:
 
 When modifying reviews, use SQLAlchemy's `flag_modified` to ensure changes are detected:
 
-```python
-from sqlalchemy.orm.attributes import flag_modified
+<CodeBlock filename="example.py" language="python">
+{`from sqlalchemy.orm.attributes import flag_modified
 
 # After modifying test_reviews
 flag_modified(test_result, "test_reviews")
 db.commit()
-```
+`}
+</CodeBlock>
 
 ### Empty State Handling
 

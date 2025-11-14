@@ -1,3 +1,5 @@
+import { CodeBlock } from '@/components/CodeBlock'
+
 # Deployment
 
 ## Overview
@@ -19,20 +21,22 @@ Before deploying, ensure you have:
 
 The application includes a `Dockerfile` that defines the container build:
 
-```bash
-# Build the Docker image
+<CodeBlock filename="Terminal" language="bash">
+{`# Build the Docker image
 docker build -t rhesis-backend:latest ./apps/backend
-```
+`}
+</CodeBlock>
 
 ### Running the Container
 
 Run the container with appropriate environment variables:
 
-```bash
-docker run -p 8000:8000 \
+<CodeBlock filename="Terminal" language="bash">
+{`docker run -p 8000:8000 \
   --env-file ./apps/backend/.env.docker \
   rhesis-backend:latest
-```
+`}
+</CodeBlock>
 
 ## Environment Configuration
 
@@ -40,8 +44,8 @@ docker run -p 8000:8000 \
 
 For production deployments, ensure these environment variables are configured:
 
-```
-# Database
+<CodeBlock filename="code.txt" language="text">
+{`# Database
 SQLALCHEMY_DATABASE_URL=postgresql://user:password@host:port/database
 
 # Authentication
@@ -58,7 +62,8 @@ FRONTEND_URL=https://app.rhesis.ai
 # Celery
 BROKER_URL=sqla+postgresql://celery-user:password@host:port/celery
 CELERY_RESULT_BACKEND=db+postgresql://celery-user:password@host:port/celery
-```
+`}
+</CodeBlock>
 
 ## Deployment Environments
 
@@ -66,10 +71,11 @@ CELERY_RESULT_BACKEND=db+postgresql://celery-user:password@host:port/celery
 
 For local testing of the production build:
 
-```bash
-# Run the Docker container locally
+<CodeBlock filename="Terminal" language="bash">
+{`# Run the Docker container locally
 docker run -p 8000:8000 --env-file ./apps/backend/.env.docker rhesis-backend:latest
-```
+`}
+</CodeBlock>
 
 ### Google Cloud Run
 
@@ -77,27 +83,30 @@ Deploy to Google Cloud Run:
 
 1. Build and push the image to Google Container Registry:
 
-```bash
-gcloud builds submit --tag gcr.io/project-id/rhesis-backend ./apps/backend
-```
+<CodeBlock filename="Terminal" language="bash">
+{`gcloud builds submit --tag gcr.io/project-id/rhesis-backend ./apps/backend
+`}
+</CodeBlock>
 
 2. Deploy to Cloud Run:
 
-```bash
-gcloud run deploy rhesis-backend \
+<CodeBlock filename="Terminal" language="bash">
+{`gcloud run deploy rhesis-backend \
   --image gcr.io/project-id/rhesis-backend \
   --platform managed \
   --region us-central1 \
   --allow-unauthenticated \
   --set-env-vars "SQLALCHEMY_DB_HOST=/cloudsql/project-id:region:instance"
-```
+`}
+</CodeBlock>
 
 3. Set up Cloud SQL connection:
 
-```bash
-gcloud run services update rhesis-backend \
+<CodeBlock filename="Terminal" language="bash">
+{`gcloud run services update rhesis-backend \
   --add-cloudsql-instances project-id:region:instance
-```
+`}
+</CodeBlock>
 
 ### AWS Deployment
 
@@ -105,11 +114,12 @@ Deploy to AWS ECS:
 
 1. Push the image to Amazon ECR:
 
-```bash
-aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin account-id.dkr.ecr.us-east-1.amazonaws.com
+<CodeBlock filename="Terminal" language="bash">
+{`aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin account-id.dkr.ecr.us-east-1.amazonaws.com
 docker tag rhesis-backend:latest account-id.dkr.ecr.us-east-1.amazonaws.com/rhesis-backend:latest
 docker push account-id.dkr.ecr.us-east-1.amazonaws.com/rhesis-backend:latest
-```
+`}
+</CodeBlock>
 
 2. Update the ECS task definition and service
 
@@ -119,10 +129,11 @@ Before deploying a new version:
 
 1. Apply database migrations:
 
-```bash
-# Inside the container or with access to the database
+<CodeBlock filename="Terminal" language="bash">
+{`# Inside the container or with access to the database
 alembic upgrade head
-```
+`}
+</CodeBlock>
 
 For zero-downtime migrations:
 
@@ -145,12 +156,13 @@ The application is designed to scale horizontally:
 
 Deploy Celery workers separately:
 
-```bash
-docker run \
+<CodeBlock filename="Terminal" language="bash">
+{`docker run \
   --env-file ./apps/backend/.env.docker \
   rhesis-backend:latest \
   celery -A rhesis.backend.worker worker --loglevel=info
-```
+`}
+</CodeBlock>
 
 ## Monitoring and Logging
 
@@ -158,18 +170,20 @@ docker run \
 
 The application logs to stdout/stderr, which can be captured by container platforms:
 
-```bash
-# View logs in Docker
+<CodeBlock filename="Terminal" language="bash">
+{`# View logs in Docker
 docker logs container_id
-```
+`}
+</CodeBlock>
 
 ### Health Checks
 
 The application provides a health check endpoint at `/health`:
 
-```bash
-curl http://localhost:8000/health
-```
+<CodeBlock filename="Terminal" language="bash">
+{`curl http://localhost:8000/health
+`}
+</CodeBlock>
 
 ## Rollback Procedure
 
@@ -179,9 +193,10 @@ If deployment issues occur:
 2. Rollback to the previous known-good version by redeploying the previous image
 3. If database migrations need to be reversed:
 
-```bash
-alembic downgrade -1  # Downgrade one version
-```
+<CodeBlock filename="Terminal" language="bash">
+{`alembic downgrade -1  # Downgrade one version
+`}
+</CodeBlock>
 
 ## Security Considerations
 

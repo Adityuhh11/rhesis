@@ -18,8 +18,8 @@ This approach minimizes client-side state management while leveraging Next.js Ap
 
 Server components handle data fetching and initial state:
 
-```tsx
-// app/(protected)/projects/page.tsx
+<CodeBlock filename="code.txt" language="tsx">
+{`// app/(protected)/projects/page.tsx
 import { projectsApi } from "@/utils/api-client/endpoints/projects";
 import ProjectList from "@/components/projects/ProjectList";
 
@@ -53,7 +53,8 @@ export default async function ProjectsPage({
     </div>
   );
 }
-```
+`}
+</CodeBlock>
 
 ## React Context
 
@@ -61,8 +62,8 @@ For global state, the application uses React Context:
 
 ### Context Definition
 
-```tsx
-// src/components/providers/ThemeProvider.tsx
+<CodeBlock filename="code.txt" language="tsx">
+{`// src/components/providers/ThemeProvider.tsx
 "use client";
 
 import { createContext, useContext, useState, useEffect } from "react";
@@ -114,15 +115,16 @@ export function useTheme() {
   }
   return context;
 }
-```
+`}
+</CodeBlock>
 
 ### Context Usage
 
-```tsx
-// src/components/layout/ThemeToggle.tsx
+<CodeBlock filename="code.txt" language="tsx">
+{`// src/components/layout/ThemeToggle.tsx
 "use client";
 
-import { useTheme } from "@/components/providers/ThemeProvider";
+import {CodeBlock,  useTheme } from "@/components/providers/ThemeProvider";
 
 export default function ThemeToggle() {
   const { theme, setTheme } = useTheme();
@@ -145,12 +147,13 @@ export default function ThemeToggle() {
     </button>
   );
 }
-```
+`}
+</CodeBlock>
 
 ### Context Setup
 
-```tsx
-// app/layout.tsx
+<CodeBlock filename="code.txt" language="tsx">
+{`// app/layout.tsx
 import { ThemeProvider } from "@/components/providers/ThemeProvider";
 
 export default function RootLayout({
@@ -166,14 +169,15 @@ export default function RootLayout({
     </html>
   );
 }
-```
+`}
+</CodeBlock>
 
 ## Local Component State
 
 For component-specific state, use React's built-in hooks:
 
-```tsx
-// src/components/projects/ProjectFilter.tsx
+<CodeBlock filename="code.txt" language="tsx">
+{`// src/components/projects/ProjectFilter.tsx
 "use client";
 
 import { useState } from "react";
@@ -197,7 +201,7 @@ export default function ProjectFilter({
       params.set("search", search);
     }
 
-    router.push(`${pathname}?${params.toString()}`);
+    router.push(\`\${pathname}?\${params.toString()}\`);
   };
 
   return (
@@ -212,14 +216,15 @@ export default function ProjectFilter({
     </form>
   );
 }
-```
+`}
+</CodeBlock>
 
 ## Server Actions
 
 For mutations and form submissions, use server actions:
 
-```tsx
-// app/(protected)/projects/actions.ts
+<CodeBlock filename="code.txt" language="tsx">
+{`// app/(protected)/projects/actions.ts
 "use server";
 
 import { revalidatePath } from "next/cache";
@@ -250,12 +255,13 @@ export async function createProject(formData: FormData) {
     };
   }
 }
-```
+`}
+</CodeBlock>
 
 Using server actions in a form:
 
-```tsx
-// src/components/projects/ProjectForm.tsx
+<CodeBlock filename="code.txt" language="tsx">
+{`// src/components/projects/ProjectForm.tsx
 "use client";
 
 import { useFormState } from "react-dom";
@@ -284,14 +290,15 @@ export default function ProjectForm() {
     </form>
   );
 }
-```
+`}
+</CodeBlock>
 
 ## URL State
 
 For preserving state in the URL:
 
-```tsx
-// src/components/common/Pagination.tsx
+<CodeBlock filename="code.txt" language="tsx">
+{`// src/components/common/Pagination.tsx
 "use client";
 
 import Link from "next/link";
@@ -312,7 +319,7 @@ export default function Pagination({ total, page, limit }: PaginationProps) {
   const createPageURL = (pageNumber: number) => {
     const params = new URLSearchParams(searchParams);
     params.set("page", pageNumber.toString());
-    return `${pathname}?${params.toString()}`;
+    return \`\${pathname}?\${params.toString()}\`;
   };
 
   return (
@@ -333,7 +340,8 @@ export default function Pagination({ total, page, limit }: PaginationProps) {
     </div>
   );
 }
-```
+`}
+</CodeBlock>
 
 ## State Management Best Practices
 
@@ -349,8 +357,8 @@ export default function Pagination({ total, page, limit }: PaginationProps) {
 
 For complex state management needs, combine these approaches:
 
-```tsx
-// app/(protected)/projects/[id]/page.tsx
+<CodeBlock filename="code.txt" language="tsx">
+{`// app/(protected)/projects/[id]/page.tsx
 import { projectsApi } from "@/utils/api-client/endpoints/projects";
 import ProjectDetails from "@/components/projects/ProjectDetails";
 import { notFound } from "next/navigation";
@@ -370,10 +378,11 @@ export default async function ProjectPage({
     notFound();
   }
 }
-```
+`}
+</CodeBlock>
 
-```tsx
-// src/components/projects/ProjectDetails.tsx
+<CodeBlock filename="code.txt" language="tsx">
+{`// src/components/projects/ProjectDetails.tsx
 "use client";
 
 import { useState } from "react";
@@ -453,4 +462,5 @@ export default function ProjectDetails({ project }: { project: Project }) {
     </div>
   );
 }
-```
+`}
+</CodeBlock>

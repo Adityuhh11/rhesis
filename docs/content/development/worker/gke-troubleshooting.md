@@ -1,3 +1,5 @@
+import { CodeBlock } from '@/components/CodeBlock'
+
 # GKE Worker Troubleshooting Guide
 
 This guide covers troubleshooting Celery workers running in Google Kubernetes Engine (GKE), including using the built-in debugging tools.
@@ -5,20 +7,23 @@ This guide covers troubleshooting Celery workers running in Google Kubernetes En
 ## Quick Start: Connect to Your Cluster
 
 ### 1. Find Your Cluster
-```bash
-gcloud container clusters list --format="table(name,location,status)"
-```
+<CodeBlock filename="Terminal" language="bash">
+{`gcloud container clusters list --format="table(name,location,status)"
+`}
+</CodeBlock>
 
 ### 2. Get Credentials
-```bash
-gcloud container clusters get-credentials <cluster-name> --region=<region>
-```
+<CodeBlock filename="Terminal" language="bash">
+{`gcloud container clusters get-credentials <cluster-name> --region=<region>
+`}
+</CodeBlock>
 
 ### 3. Install kubectl (if needed)
-```bash
-sudo apt-get update
+<CodeBlock filename="Terminal" language="bash">
+{`sudo apt-get update
 sudo apt-get install -y kubectl google-cloud-cli-gke-gcloud-auth-plugin
-```
+`}
+</CodeBlock>
 
 ## Health Check Endpoints
 
@@ -40,8 +45,8 @@ The worker includes several debugging endpoints:
 
 Create a Python script to check registered Celery workers and Redis connectivity:
 
-```python
-#!/usr/bin/env python3
+<CodeBlock filename="example.py" language="python">
+{`#!/usr/bin/env python3
 """
 Script to check registered Celery workers
 """
@@ -146,18 +151,20 @@ def main():
 
 if __name__ == "__main__":
     main()
-```
+`}
+</CodeBlock>
 
 **Usage:**
-```bash
-# Save as check_workers.py in project root
+<CodeBlock filename="Terminal" language="bash">
+{`# Save as check_workers.py in project root
 chmod +x check_workers.py
 python check_workers.py
-```
+`}
+</CodeBlock>
 
 **Expected Output (with workers running):**
-```
-🚀 CELERY WORKER CHECKER
+<CodeBlock filename="code.txt" language="text">
+{`🚀 CELERY WORKER CHECKER
 ==================================================
 ⏰ Timestamp: 2025-06-14T10:57:41.278363
 🔗 Broker URL: rediss://:***@***
@@ -180,11 +187,12 @@ python check_workers.py
 ==================================================
 ✅ WORKER CHECK COMPLETED - Workers found
 ==================================================
-```
+`}
+</CodeBlock>
 
 **Expected Output (no workers):**
-```
-📋 Active Workers:
+<CodeBlock filename="code.txt" language="text">
+{`📋 Active Workers:
   ❌ No active workers found
 
 📋 Registered Workers:
@@ -192,38 +200,44 @@ python check_workers.py
 
 📊 Worker Statistics:
   ❌ No worker statistics available
-```
+`}
+</CodeBlock>
 
 ### Cluster Management Commands
 
 **Scale workers down (for debugging):**
-```bash
-kubectl scale deployment rhesis-worker --replicas=0 -n <namespace>
-```
+<CodeBlock filename="Terminal" language="bash">
+{`kubectl scale deployment rhesis-worker --replicas=0 -n <namespace>
+`}
+</CodeBlock>
 
 **Scale workers back up:**
-```bash
-kubectl scale deployment rhesis-worker --replicas=2 -n <namespace>
-```
+<CodeBlock filename="Terminal" language="bash">
+{`kubectl scale deployment rhesis-worker --replicas=2 -n <namespace>
+`}
+</CodeBlock>
 
 **Check current replica count:**
-```bash
-kubectl get deployment rhesis-worker -n <namespace>
-```
+<CodeBlock filename="Terminal" language="bash">
+{`kubectl get deployment rhesis-worker -n <namespace>
+`}
+</CodeBlock>
 
 ## Common Troubleshooting Commands
 
 ### Check Pod Status
-```bash
-kubectl get pods -n <namespace>
-```
+<CodeBlock filename="Terminal" language="bash">
+{`kubectl get pods -n <namespace>
+`}
+</CodeBlock>
 
 **Expected Output:**
-```
-NAME                             READY   STATUS    RESTARTS   AGE
+<CodeBlock filename="code.txt" language="text">
+{`NAME                             READY   STATUS    RESTARTS   AGE
 rhesis-worker-6d9bcd9c6f-6bxk8   2/2     Running   0          5m
 rhesis-worker-6d9bcd9c6f-9kqwz   2/2     Running   0          3m
-```
+`}
+</CodeBlock>
 
 **Problem Indicators:**
 - `1/2 Ready`: Worker container failing, cloudsql-proxy working
@@ -232,9 +246,10 @@ rhesis-worker-6d9bcd9c6f-9kqwz   2/2     Running   0          3m
 - High restart count: Ongoing issues
 
 ### Check Pod Events
-```bash
-kubectl describe pod <pod-name> -n <namespace>
-```
+<CodeBlock filename="Terminal" language="bash">
+{`kubectl describe pod <pod-name> -n <namespace>
+`}
+</CodeBlock>
 
 Look for events section at the bottom:
 - `Unhealthy`: Health check failures
@@ -242,9 +257,10 @@ Look for events section at the bottom:
 - `Killing`: Pod being terminated
 
 ### Test Basic Connectivity
-```bash
-kubectl exec -it <pod-name> -n <namespace> -- curl http://localhost:8080/ping
-```
+<CodeBlock filename="Terminal" language="bash">
+{`kubectl exec -it <pod-name> -n <namespace> -- curl http://localhost:8080/ping
+`}
+</CodeBlock>
 
 **Expected:** `pong`
 
@@ -254,17 +270,18 @@ kubectl exec -it <pod-name> -n <namespace> -- curl http://localhost:8080/ping
 - Container networking issues
 
 ### Test Health Endpoints
-```bash
-# Basic health (no dependencies)
+<CodeBlock filename="Terminal" language="bash">
+{`# Basic health (no dependencies)
 kubectl exec -it <pod-name> -n <namespace> -- curl http://localhost:8080/health/basic
 
 # Full health (includes Celery)
 kubectl exec -it <pod-name> -n <namespace> -- curl -m 10 http://localhost:8080/health
-```
+`}
+</CodeBlock>
 
 ### Get Debug Information
-```bash
-# Comprehensive debug info
+<CodeBlock filename="Terminal" language="bash">
+{`# Comprehensive debug info
 kubectl exec -it <pod-name> -n <namespace> -- curl http://localhost:8080/debug | jq
 
 # Redis-specific debugging
@@ -275,35 +292,39 @@ kubectl exec -it <pod-name> -n <namespace> -- curl http://localhost:8080/debug/e
 
 # Detailed health check with worker ping (may be slow)
 kubectl exec -it <pod-name> -n <namespace> -- curl -m 15 http://localhost:8080/debug/detailed | jq
-```
+`}
+</CodeBlock>
 
 ## Common Issues and Solutions
 
 ### 1. Pods Stuck at 1/2 Ready
 
 **Symptoms:**
-```
-NAME                             READY   STATUS    RESTARTS   AGE
+<CodeBlock filename="code.txt" language="text">
+{`NAME                             READY   STATUS    RESTARTS   AGE
 rhesis-worker-586659994f-lldfn   1/2     Running   167        13h
-```
+`}
+</CodeBlock>
 
 **Diagnosis:**
-```bash
-kubectl exec -it <pod-name> -n <namespace> -- curl http://localhost:8080/debug
-```
+<CodeBlock filename="Terminal" language="bash">
+{`kubectl exec -it <pod-name> -n <namespace> -- curl http://localhost:8080/debug
+`}
+</CodeBlock>
 
 **Common Causes:**
 
 #### A. Redis Connection Issues
-```json
-{
+<CodeBlock filename="config.json" language="json">
+{`{
   "redis_connectivity": "connection_failed",
   "environment": {
     "tls_detected": true,
     "broker_url_type": "rediss://"
   }
 }
-```
+`}
+</CodeBlock>
 
 **Solutions:**
 - Check Redis URL format: `rediss://` for TLS, `redis://` for standard
@@ -312,12 +333,13 @@ kubectl exec -it <pod-name> -n <namespace> -- curl http://localhost:8080/debug
 - Verify Redis service is accessible from GKE
 
 #### B. Health Check Timeouts
-```json
-{
+<CodeBlock filename="config.json" language="json">
+{`{
   "celery_status": {"worker_state": "importable"},
   "redis_connectivity": "timeout"
 }
-```
+`}
+</CodeBlock>
 
 **Note:** As of the latest update, the main `/health` endpoint uses a **lightweight check** that doesn't ping workers. If you're still seeing timeouts:
 
@@ -328,9 +350,10 @@ kubectl exec -it <pod-name> -n <namespace> -- curl http://localhost:8080/debug
 - If `/health` is still slow, it's likely a Redis connection issue, not worker startup
 
 #### C. Environment Configuration
-```bash
-kubectl exec -it <pod-name> -n <namespace> -- curl http://localhost:8080/debug/env
-```
+<CodeBlock filename="Terminal" language="bash">
+{`kubectl exec -it <pod-name> -n <namespace> -- curl http://localhost:8080/debug/env
+`}
+</CodeBlock>
 
 Check for:
 - Missing environment variables
@@ -340,16 +363,18 @@ Check for:
 ### 2. CrashLoopBackOff
 
 **Diagnosis:**
-```bash
-kubectl logs <pod-name> -n <namespace> --previous
-```
+<CodeBlock filename="Terminal" language="bash">
+{`kubectl logs <pod-name> -n <namespace> --previous
+`}
+</CodeBlock>
 
 **Common Causes:**
 
 #### A. Import Errors
-```
-❌ Failed to import Celery app: No module named 'rhesis.backend.worker'
-```
+<CodeBlock filename="example.py" language="python">
+{`❌ Failed to import Celery app: No module named 'rhesis.backend.worker'
+`}
+</CodeBlock>
 
 **Solutions:**
 - Check PYTHONPATH in deployment
@@ -357,9 +382,10 @@ kubectl logs <pod-name> -n <namespace> --previous
 - Ensure all dependencies installed
 
 #### B. Connection Failures
-```
-❌ Broker connection failed: [SSL: CERTIFICATE_VERIFY_FAILED]
-```
+<CodeBlock filename="code.txt" language="text">
+{`❌ Broker connection failed: [SSL: CERTIFICATE_VERIFY_FAILED]
+`}
+</CodeBlock>
 
 **Solutions:**
 - Check SSL certificate configuration
@@ -369,10 +395,11 @@ kubectl logs <pod-name> -n <namespace> --previous
 ### 3. High Memory Usage
 
 **Diagnosis:**
-```bash
-kubectl top pods -n <namespace>
+<CodeBlock filename="Terminal" language="bash">
+{`kubectl top pods -n <namespace>
 kubectl exec -it <pod-name> -n <namespace> -- free -h
-```
+`}
+</CodeBlock>
 
 **Solutions:**
 - Adjust `CELERY_WORKER_MAX_TASKS_PER_CHILD`
@@ -382,25 +409,27 @@ kubectl exec -it <pod-name> -n <namespace> -- free -h
 ### 4. Task Processing Issues
 
 **Diagnosis:**
-```bash
-# Check if worker is receiving tasks
+<CodeBlock filename="Terminal" language="bash">
+{`# Check if worker is receiving tasks
 kubectl logs <pod-name> -n <namespace> | grep "Received task"
 
 # Check worker stats
 kubectl exec -it <pod-name> -n <namespace> -- \
   python -c "from rhesis.backend.worker import app; print(app.control.inspect().stats())"
-```
+`}
+</CodeBlock>
 
 ## Advanced Debugging
 
 ### Interactive Shell Access
-```bash
-kubectl exec -it <pod-name> -n <namespace> -- bash
-```
+<CodeBlock filename="Terminal" language="bash">
+{`kubectl exec -it <pod-name> -n <namespace> -- bash
+`}
+</CodeBlock>
 
 From inside the container:
-```bash
-# Test Redis connection manually
+<CodeBlock filename="Terminal" language="bash">
+{`# Test Redis connection manually
 python -c "
 import redis
 import os
@@ -418,20 +447,22 @@ print(f'Broker: {app.conf.broker_url}')
 # Check network connectivity
 nslookup <redis-hostname>
 telnet <redis-hostname> 6378
-```
+`}
+</CodeBlock>
 
 ### Monitor Logs in Real-Time
-```bash
-# Follow logs for all worker pods
+<CodeBlock filename="Terminal" language="bash">
+{`# Follow logs for all worker pods
 kubectl logs -f deployment/rhesis-worker -n <namespace>
 
 # Follow logs for specific container
 kubectl logs -f <pod-name> -c worker -n <namespace>
-```
+`}
+</CodeBlock>
 
 ### Network Debugging
-```bash
-# Check network policies
+<CodeBlock filename="Terminal" language="bash">
+{`# Check network policies
 kubectl get networkpolicies -n <namespace>
 
 # Test external connectivity
@@ -439,13 +470,14 @@ kubectl exec -it <pod-name> -n <namespace> -- nslookup google.com
 
 # Check firewall rules (if applicable)
 gcloud compute firewall-rules list --filter="direction=EGRESS"
-```
+`}
+</CodeBlock>
 
 ## Performance Monitoring
 
 ### Resource Usage
-```bash
-# Pod resource usage
+<CodeBlock filename="Terminal" language="bash">
+{`# Pod resource usage
 kubectl top pods -n <namespace>
 
 # Node resource usage
@@ -453,34 +485,37 @@ kubectl top nodes
 
 # Detailed resource info
 kubectl describe pod <pod-name> -n <namespace> | grep -A 10 "Requests\|Limits"
-```
+`}
+</CodeBlock>
 
 ### Health Check Performance
-```bash
-# Time health check responses
+<CodeBlock filename="Terminal" language="bash">
+{`# Time health check responses
 kubectl exec -it <pod-name> -n <namespace> -- \
   time curl http://localhost:8080/health
 
 # Monitor health check frequency
 kubectl get events -n <namespace> --field-selector involvedObject.name=<pod-name>
-```
+`}
+</CodeBlock>
 
 ## Preventive Measures
 
 ### 1. Proper Resource Limits
-```yaml
-resources:
+<CodeBlock filename="code.txt" language="yaml">
+{`resources:
   requests:
     memory: "1Gi"
     cpu: "500m"
   limits:
     memory: "2Gi"
     cpu: "1000m"
-```
+`}
+</CodeBlock>
 
 ### 2. Appropriate Health Check Timeouts
-```yaml
-livenessProbe:
+<CodeBlock filename="code.txt" language="yaml">
+{`livenessProbe:
   httpGet:
     path: /health
     port: 8080
@@ -497,70 +532,80 @@ readinessProbe:
   timeoutSeconds: 5
   periodSeconds: 10
   failureThreshold: 3
-```
+`}
+</CodeBlock>
 
 ### 3. Monitoring and Alerting
-```bash
-# Set up monitoring for:
+<CodeBlock filename="Terminal" language="bash">
+{`# Set up monitoring for:
 # - Pod restart frequency
 # - Health check failure rates
 # - Redis connection timeouts
 # - Memory usage trends
-```
+`}
+</CodeBlock>
 
 ## Emergency Procedures
 
 ### Force Pod Restart
-```bash
-kubectl delete pod <pod-name> -n <namespace>
-```
+<CodeBlock filename="Terminal" language="bash">
+{`kubectl delete pod <pod-name> -n <namespace>
+`}
+</CodeBlock>
 
 ### Scale Down/Up
-```bash
-kubectl scale deployment rhesis-worker --replicas=0 -n <namespace>
+<CodeBlock filename="Terminal" language="bash">
+{`kubectl scale deployment rhesis-worker --replicas=0 -n <namespace>
 kubectl scale deployment rhesis-worker --replicas=2 -n <namespace>
-```
+`}
+</CodeBlock>
 
 ### Emergency Debugging
-```bash
-# Create debug pod with same network
+<CodeBlock filename="Terminal" language="bash">
+{`# Create debug pod with same network
 kubectl run debug-pod --image=gcr.io/PROJECT_ID/rhesis-worker:latest \
   --namespace=<namespace> --rm -it -- bash
 
 # Test from debug pod
 curl http://rhesis-worker-service:8080/debug
-```
+`}
+</CodeBlock>
 
 ## Getting Help
 
 When reporting issues, include:
 
 1. **Cluster Information:**
-   ```bash
-   kubectl version
+   <CodeBlock filename="Terminal" language="bash">
+{`   kubectl version
    kubectl get nodes
-   ```
+   `}
+</CodeBlock>
 
 2. **Pod Status:**
-   ```bash
-   kubectl get pods -n <namespace> -o wide
+   <CodeBlock filename="Terminal" language="bash">
+{`   kubectl get pods -n <namespace> -o wide
    kubectl describe pod <pod-name> -n <namespace>
-   ```
+   `}
+</CodeBlock>
 
 3. **Debug Output:**
-   ```bash
-   kubectl exec -it <pod-name> -n <namespace> -- \
+   <CodeBlock filename="Terminal" language="bash">
+{`   kubectl exec -it <pod-name> -n <namespace> -- \
      curl http://localhost:8080/debug | jq
-   ```
+   `}
+</CodeBlock>
 
 4. **Recent Logs:**
-   ```bash
-   kubectl logs <pod-name> -n <namespace> --tail=100
-   ```
+   <CodeBlock filename="Terminal" language="bash">
+{`   kubectl logs <pod-name> -n <namespace> --tail=100
+   `}
+</CodeBlock>
 
 5. **Configuration:**
-   ```bash
-   kubectl get deployment rhesis-worker -n <namespace> -o yaml
-   ```
+   <CodeBlock filename="Terminal" language="bash">
+{`   kubectl get deployment rhesis-worker -n <namespace> -o yaml
+   `}
+</CodeBlock>
 
 This comprehensive information will help quickly identify and resolve issues.

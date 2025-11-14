@@ -1,3 +1,5 @@
+import { CodeBlock } from '@/components/CodeBlock'
+
 # Email Notification System
 
 ## Overview
@@ -19,8 +21,8 @@ The Rhesis backend includes an automated email notification system that sends no
 
 The following environment variables must be configured in the worker deployment:
 
-```bash
-# SMTP Configuration (e.g., SendGrid)
+<CodeBlock filename="Terminal" language="bash">
+{`# SMTP Configuration (e.g., SendGrid)
 SMTP_HOST=smtp.sendgrid.net
 SMTP_PORT=587
 SMTP_USER=apikey
@@ -28,7 +30,8 @@ SMTP_PASSWORD=your_sendgrid_api_key
 
 # Frontend URL for generating links
 FRONTEND_URL=https://app.rhesis.ai
-```
+`}
+</CodeBlock>
 
 ### SendGrid Setup
 
@@ -46,8 +49,8 @@ For SendGrid specifically:
 
 The system works with any SMTP provider. Common configurations:
 
-```bash
-# Gmail SMTP
+<CodeBlock filename="Terminal" language="bash">
+{`# Gmail SMTP
 SMTP_HOST=smtp.gmail.com
 SMTP_PORT=587
 SMTP_USER=your-email@gmail.com
@@ -64,7 +67,8 @@ SMTP_HOST=smtp.mailgun.org
 SMTP_PORT=587
 SMTP_USER=your-mailgun-smtp-login
 SMTP_PASSWORD=your-mailgun-smtp-password
-```
+`}
+</CodeBlock>
 
 ## How It Works
 
@@ -78,8 +82,8 @@ SMTP_PASSWORD=your-mailgun-smtp-password
 
 The new decorator approach provides fine-grained control over email notifications:
 
-```python
-from rhesis.backend.tasks.base import BaseTask, with_tenant_context, email_notification
+<CodeBlock filename="example.py" language="python">
+{`from rhesis.backend.tasks.base import BaseTask, with_tenant_context, email_notification
 from rhesis.backend.notifications.email.template_service import EmailTemplate
 from rhesis.backend.worker import app
 
@@ -93,30 +97,33 @@ def user_facing_task(self, params, db=None):
     """This task will send email notifications using the specified template."""
     # Your task logic here
     return {"result": "success", "test_run_id": "optional-for-links"}
-```
+`}
+</CodeBlock>
 
 #### Available Email Templates
 
-```python
-from rhesis.backend.notifications.email.template_service import EmailTemplate
+<CodeBlock filename="example.py" language="python">
+{`from rhesis.backend.notifications.email.template_service import EmailTemplate
 
 # For general task completion
 @email_notification(template=EmailTemplate.TASK_COMPLETION)
 
 # For test execution summaries with detailed results
 @email_notification(template=EmailTemplate.TEST_EXECUTION_SUMMARY)
-```
+`}
+</CodeBlock>
 
 #### Custom Subject Templates
 
 You can customize the email subject using template variables:
 
-```python
-@email_notification(
+<CodeBlock filename="example.py" language="python">
+{`@email_notification(
     template=EmailTemplate.TEST_EXECUTION_SUMMARY,
     subject_template="Test Execution Complete: {test_set_name} - {status.title()}"
 )
-```
+`}
+</CodeBlock>
 
 ### Task Types
 
@@ -124,8 +131,8 @@ You can customize the email subject using template variables:
 
 Use the decorator for tasks that users directly submit and want to be notified about:
 
-```python
-from rhesis.backend.tasks.base import BaseTask, with_tenant_context, email_notification
+<CodeBlock filename="example.py" language="python">
+{`from rhesis.backend.tasks.base import BaseTask, with_tenant_context, email_notification
 from rhesis.backend.notifications.email.template_service import EmailTemplate
 from rhesis.backend.worker import app
 
@@ -139,14 +146,15 @@ def user_facing_task(self, params, db=None):
     """This task will send email notifications on completion."""
     # Your task logic here
     return {"result": "success", "test_run_id": "optional-for-links"}
-```
+`}
+</CodeBlock>
 
 #### 2. **Silent Tasks** - No Decorator
 
 Tasks without the decorator will not send email notifications:
 
-```python
-from rhesis.backend.tasks.base import BaseTask, with_tenant_context
+<CodeBlock filename="example.py" language="python">
+{`from rhesis.backend.tasks.base import BaseTask, with_tenant_context
 from rhesis.backend.worker import app
 
 @app.task(base=BaseTask, name="your.background.task", bind=True)
@@ -155,14 +163,15 @@ def background_task(self, params, db=None):
     """This task will NOT send email notifications."""
     # Your parallel task logic here
     return {"result": "success"}
-```
+`}
+</CodeBlock>
 
 #### 3. **Legacy EmailEnabledTask** - Still Supported
 
 The old `EmailEnabledTask` is still supported for backward compatibility:
 
-```python
-from rhesis.backend.tasks.base import EmailEnabledTask, with_tenant_context
+<CodeBlock filename="example.py" language="python">
+{`from rhesis.backend.tasks.base import EmailEnabledTask, with_tenant_context
 from rhesis.backend.worker import app
 
 @app.task(base=EmailEnabledTask, name="your.legacy.task", bind=True)
@@ -171,14 +180,15 @@ def legacy_task(self, params, db=None):
     """This task will send basic task completion emails."""
     # Your task logic here
     return {"result": "success"}
-```
+`}
+</CodeBlock>
 
 ### Chord Example
 
 When running tasks in parallel with chords, use the decorator appropriately:
 
-```python
-from celery import chord
+<CodeBlock filename="example.py" language="python">
+{`from celery import chord
 
 # These run in parallel - no emails needed (no decorator)
 parallel_tasks = [
@@ -198,7 +208,8 @@ callback = collect_results_task.s()
 
 # Execute: parallel tasks run silently, only callback sends email
 result = chord(parallel_tasks)(callback)
-```
+`}
+</CodeBlock>
 
 ### Current Task Configuration
 
@@ -234,8 +245,8 @@ The decorator automatically provides these variables to templates:
 
 Additional variables can be provided by returning them from the task:
 
-```python
-@email_notification(template=EmailTemplate.TEST_EXECUTION_SUMMARY)
+<CodeBlock filename="example.py" language="python">
+{`@email_notification(template=EmailTemplate.TEST_EXECUTION_SUMMARY)
 @app.task(base=BaseTask, bind=True)
 def test_task(self):
     # Task logic here
@@ -246,12 +257,13 @@ def test_task(self):
         'test_set_name': 'API Tests',
         'project_name': 'My Project'
     }
-```
+`}
+</CodeBlock>
 
 ### Task Integration
 
-```python
-from rhesis.backend.tasks.base import BaseTask, with_tenant_context, email_notification
+<CodeBlock filename="example.py" language="python">
+{`from rhesis.backend.tasks.base import BaseTask, with_tenant_context, email_notification
 from rhesis.backend.notifications.email.template_service import EmailTemplate
 from rhesis.backend.worker import app
 
@@ -265,7 +277,8 @@ def your_task(self, your_params, db=None):
     """Your task automatically gets email notifications."""
     # Your task logic here
     return {"result": "success", "test_run_id": "optional-for-links"}
-```
+`}
+</CodeBlock>
 
 ## Email Service Architecture
 
@@ -273,8 +286,8 @@ def your_task(self, your_params, db=None):
 
 The core `EmailService` class in `tasks/email_service.py` handles:
 
-```python
-class EmailService:
+<CodeBlock filename="example.py" language="python">
+{`class EmailService:
     def __init__(self):
         # Loads SMTP configuration from environment
         # Validates configuration completeness
@@ -293,7 +306,8 @@ class EmailService:
     ) -> bool:
         # Sends HTML and plain text email
         # Returns success/failure status
-```
+`}
+</CodeBlock>
 
 ### BaseTask Integration
 
@@ -321,8 +335,8 @@ When users submit tasks through the API (e.g., test configurations), they automa
 
 #### Success Email
 
-```
-Subject: Task Completed: Execute Test Configuration - Success
+<CodeBlock filename="code.txt" language="text">
+{`Subject: Task Completed: Execute Test Configuration - Success
 
 ✅ Task Completed
 
@@ -342,7 +356,8 @@ Task Details:
 
 Best regards,
 Rhesis AI Team
-```
+`}
+</CodeBlock>
 
 ## Testing
 
@@ -350,20 +365,21 @@ Rhesis AI Team
 
 Use the test endpoint to verify email functionality:
 
-```bash
-POST /api/tasks/email-notification-test
+<CodeBlock filename="Terminal" language="bash">
+{`POST /api/tasks/email-notification-test
 Authorization: Bearer <your-token>
 Content-Type: application/json
 
 {
   "message": "Testing email notifications"
 }
-```
+`}
+</CodeBlock>
 
 ### Manual Testing
 
-```python
-# In your development environment
+<CodeBlock filename="example.py" language="python">
+{`# In your development environment
 from rhesis.backend.tasks.email_service import email_service
 
 success = email_service.send_task_completion_email(
@@ -375,7 +391,8 @@ success = email_service.send_task_completion_email(
     frontend_url="https://app.rhesis.ai"
 )
 print(f"Email sent: {success}")
-```
+`}
+</CodeBlock>
 
 ## Troubleshooting
 
@@ -385,16 +402,18 @@ print(f"Email sent: {success}")
 
 1. **Check SMTP configuration**:
 
-   ```bash
-   # In worker logs, look for:
+   <CodeBlock filename="Terminal" language="bash">
+{`   # In worker logs, look for:
    "SMTP configuration incomplete. Email notifications will be disabled."
-   ```
+   `}
+</CodeBlock>
 
 2. **Verify environment variables**:
 
-   ```bash
-   kubectl exec -it deployment/rhesis-worker -- env | grep SMTP
-   ```
+   <CodeBlock filename="Terminal" language="bash">
+{`   kubectl exec -it deployment/rhesis-worker -- env | grep SMTP
+   `}
+</CodeBlock>
 
 3. **Check user emails**:
    - Ensure users have valid email addresses
@@ -426,20 +445,23 @@ Monitor email notifications through:
 
 1. **Worker logs**:
 
-   ```bash
-   kubectl logs deployment/rhesis-worker | grep "email"
-   ```
+   <CodeBlock filename="Terminal" language="bash">
+{`   kubectl logs deployment/rhesis-worker | grep "email"
+   `}
+</CodeBlock>
 
 2. **Success indicators**:
 
-   ```
-   Task completion email sent successfully to user@example.com for task 12345
-   ```
+   <CodeBlock filename="code.txt" language="text">
+{`   Task completion email sent successfully to user@example.com for task 12345
+   `}
+</CodeBlock>
 
 3. **Error indicators**:
-   ```
-   Failed to send task completion email to user@example.com: SMTP error
-   ```
+   <CodeBlock filename="code.txt" language="text">
+{`   Failed to send task completion email to user@example.com: SMTP error
+   `}
+</CodeBlock>
 
 ## Security Considerations
 
@@ -477,8 +499,8 @@ Potential improvements to consider:
 
 Ensure your worker deployment includes the SMTP environment variables:
 
-```yaml
-# apps/worker/k8s/deployment.yaml
+<CodeBlock filename="code.txt" language="yaml">
+{`# apps/worker/k8s/deployment.yaml
 env:
   - name: SMTP_HOST
     valueFrom:
@@ -505,19 +527,21 @@ env:
       secretKeyRef:
         name: rhesis-worker-secrets
         key: FRONTEND_URL
-```
+`}
+</CodeBlock>
 
 ### CI/CD Pipeline
 
 The GitHub Actions workflow automatically includes SMTP secrets:
 
-```yaml
-# .github/workflows/worker.yml
---from-literal=SMTP_HOST="${{ secrets.SMTP_HOST }}" \
---from-literal=SMTP_PORT="${{ secrets.SMTP_PORT }}" \
---from-literal=SMTP_USER="${{ secrets.SMTP_USER }}" \
---from-literal=SMTP_PASSWORD="${{ secrets.SMTP_PASSWORD }}" \
---from-literal=FRONTEND_URL="${{ secrets.FRONTEND_URL }}" \
-```
+<CodeBlock filename="code.txt" language="yaml">
+{`# .github/workflows/worker.yml
+--from-literal=SMTP_HOST="\${{ secrets.SMTP_HOST }}" \
+--from-literal=SMTP_PORT="\${{ secrets.SMTP_PORT }}" \
+--from-literal=SMTP_USER="\${{ secrets.SMTP_USER }}" \
+--from-literal=SMTP_PASSWORD="\${{ secrets.SMTP_PASSWORD }}" \
+--from-literal=FRONTEND_URL="\${{ secrets.FRONTEND_URL }}" \
+`}
+</CodeBlock>
 
 Remember to set these secrets in your GitHub repository settings for each environment (dev, stg, prd).

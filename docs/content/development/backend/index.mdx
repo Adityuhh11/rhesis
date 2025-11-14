@@ -1,3 +1,5 @@
+import { CodeBlock } from '@/components/CodeBlock'
+
 # Backend Documentation
 
 Welcome to the Rhesis Backend documentation. This section covers the FastAPI-based backend service that powers the Rhesis platform.
@@ -400,8 +402,8 @@ uv run pytest tests/services/`}
 
 ### Health Checks
 
-```bash
-# Health check endpoint
+<CodeBlock filename="Terminal" language="bash">
+{`# Health check endpoint
 GET /health
 
 # Response
@@ -411,18 +413,20 @@ GET /health
   "redis": "connected",
   "timestamp": "2024-01-01T00:00:00Z"
 }
-```
+`}
+</CodeBlock>
 
 ### Logging
 
 Structured logging with configurable levels:
 
-```python
-import logging
+<CodeBlock filename="example.py" language="python">
+{`import logging
 
 logger = logging.getLogger(__name__)
 logger.info("User authenticated", extra={"user_id": user.id})
-```
+`}
+</CodeBlock>
 
 ---
 

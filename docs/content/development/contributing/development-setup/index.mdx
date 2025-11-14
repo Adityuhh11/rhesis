@@ -1,3 +1,5 @@
+import { CodeBlock } from '@/components/CodeBlock'
+
 # Development Setup
 
 This guide will walk you through setting up your development environment for Rhesis, ensuring you have everything needed to contribute effectively.
@@ -26,20 +28,21 @@ Before you begin, ensure you have the following installed on your system:
 
 We use [uv](https://docs.astral.sh/uv/) as our Python package manager for faster, more reliable dependency management.
 
-```bash
-# Install uv
+<CodeBlock filename="Terminal" language="bash">
+{`# Install uv
 curl -LsSf https://astral.sh/uv/install.sh | sh
 
 # Verify installation
 uv --version
-```
+`}
+</CodeBlock>
 
 #### Node.js Setup
 
 We recommend using [nvm](https://github.com/nvm-sh/nvm) for Node.js version management:
 
-```bash
-# Install nvm
+<CodeBlock filename="Terminal" language="bash">
+{`# Install nvm
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.0/install.sh | bash
 
 # Restart your terminal or run
@@ -52,14 +55,15 @@ nvm use 18
 # Verify installation
 node --version
 npm --version
-```
+`}
+</CodeBlock>
 
 #### Database Setup
 
 **PostgreSQL:**
 
-```bash
-# macOS (using Homebrew)
+<CodeBlock filename="Terminal" language="bash">
+{`# macOS (using Homebrew)
 brew install postgresql
 brew services start postgresql
 
@@ -70,37 +74,40 @@ sudo systemctl start postgresql
 
 # Create database
 createdb rhesis_dev
-```
+`}
+</CodeBlock>
 
 **Redis:**
 
-```bash
-# macOS (using Homebrew)
+<CodeBlock filename="Terminal" language="bash">
+{`# macOS (using Homebrew)
 brew install redis
 brew services start redis
 
 # Ubuntu/Debian
 sudo apt install redis-server
 sudo systemctl start redis-server
-```
+`}
+</CodeBlock>
 
 ## Environment Setup
 
 ### 1. Clone the Repository
 
-```bash
-# Fork the repository on GitHub first, then clone your fork
+<CodeBlock filename="Terminal" language="bash">
+{`# Fork the repository on GitHub first, then clone your fork
 git clone https://github.com/YOUR_USERNAME/rhesis.git
 cd rhesis
 
 # Add the upstream repository
 git remote add upstream https://github.com/rhesis-ai/rhesis.git
-```
+`}
+</CodeBlock>
 
 ### 2. Install Dependencies
 
-```bash
-# Install Python dependencies
+<CodeBlock filename="Terminal" language="bash">
+{`# Install Python dependencies
 uv sync
 
 # Install frontend dependencies
@@ -113,22 +120,24 @@ npm install
 
 # Return to root
 cd ../..
-```
+`}
+</CodeBlock>
 
 ### 3. Environment Configuration
 
-```bash
-# Copy the example environment file
+<CodeBlock filename="Terminal" language="bash">
+{`# Copy the example environment file
 cp .env.example .env
 
 # Edit the environment file with your configuration
 # You'll need to set up database URLs, API keys, etc.
-```
+`}
+</CodeBlock>
 
 **Key Environment Variables:**
 
-```bash
-# Database Configuration
+<CodeBlock filename="Terminal" language="bash">
+{`# Database Configuration
 DATABASE_URL=postgresql://username:password@localhost/rhesis_dev
 TEST_DATABASE_URL=postgresql://username:password@localhost/rhesis_test
 
@@ -148,12 +157,13 @@ GITHUB_CLIENT_SECRET=your-github-client-secret
 # Development Settings
 DEBUG=true
 ENVIRONMENT=development
-```
+`}
+</CodeBlock>
 
 ### 4. Database Setup
 
-```bash
-# Navigate to backend directory
+<CodeBlock filename="Terminal" language="bash">
+{`# Navigate to backend directory
 cd apps/backend
 
 # Run database migrations
@@ -164,7 +174,8 @@ uv run python -m rhesis.backend.scripts.create_initial_data
 
 # Return to root
 cd ../..
-```
+`}
+</CodeBlock>
 
 ## Starting Development Servers
 
@@ -172,22 +183,23 @@ cd ../..
 
 We provide a convenient CLI tool for managing services:
 
-```bash
-# Start all services
+<CodeBlock filename="Terminal" language="bash">
+{`# Start all services
 ./rh backend start
 ./rh frontend start
 ./rh docs start
 
 # Or start them all at once (if configured)
 ./rh start all
-```
+`}
+</CodeBlock>
 
 ### Manual Startup
 
 If you prefer to start services manually:
 
-```bash
-# Backend (FastAPI)
+<CodeBlock filename="Terminal" language="bash">
+{`# Backend (FastAPI)
 cd apps/backend
 uv run uvicorn rhesis.backend.app.main:app --reload --port 8080
 
@@ -202,7 +214,8 @@ npm run dev
 # Worker (Celery)
 cd apps/worker
 uv run celery -A rhesis.worker worker --loglevel=info
-```
+`}
+</CodeBlock>
 
 ## Verification
 
@@ -239,8 +252,8 @@ Once all services are running, verify they're working correctly:
 
 ### Quick Health Check
 
-```bash
-# Test backend health
+<CodeBlock filename="Terminal" language="bash">
+{`# Test backend health
 curl http://localhost:8080/health
 
 # Test database connection
@@ -249,7 +262,8 @@ uv run python -c "from rhesis.backend.database import get_db; print('Database OK
 
 # Test Redis connection
 uv run python -c "import redis; r = redis.Redis(); print('Redis OK')"
-```
+`}
+</CodeBlock>
 
 ## Development Tools
 
@@ -278,13 +292,14 @@ We use several tools to maintain code quality:
 
 ### Setting Up Pre-commit Hooks
 
-```bash
-# Install pre-commit hooks
+<CodeBlock filename="Terminal" language="bash">
+{`# Install pre-commit hooks
 uvx pre-commit install
 
 # Run pre-commit on all files
 uvx pre-commit run --all-files
-```
+`}
+</CodeBlock>
 
 ### IDE Configuration
 
@@ -299,8 +314,8 @@ uvx pre-commit run --all-files
 
 **VS Code Settings:**
 
-```json
-{
+<CodeBlock filename="config.json" language="json">
+{`{
   "python.defaultInterpreter": "./.venv/bin/python",
   "python.formatting.provider": "ruff",
   "editor.formatOnSave": true,
@@ -308,14 +323,15 @@ uvx pre-commit run --all-files
     "source.fixAll.eslint": true
   }
 }
-```
+`}
+</CodeBlock>
 
 ## Testing Your Setup
 
 ### Run the Test Suite
 
-```bash
-# Backend tests
+<CodeBlock filename="Terminal" language="bash">
+{`# Backend tests
 cd apps/backend
 uv run pytest
 
@@ -325,18 +341,20 @@ npm test
 
 # All tests from root
 uv run pytest tests/
-```
+`}
+</CodeBlock>
 
 ### Create Your First Test
 
-```python
-# apps/backend/tests/test_example.py
+<CodeBlock filename="example.py" language="python">
+{`# apps/backend/tests/test_example.py
 def test_health_endpoint(client):
     """Test the health check endpoint."""
     response = client.get("/health")
     assert response.status_code == 200
     assert response.json()["status"] == "healthy"
-```
+`}
+</CodeBlock>
 
 ## Troubleshooting
 
@@ -350,8 +368,8 @@ def test_health_endpoint(client):
 
 **Database Connection Issues:**
 
-```bash
-# Check if PostgreSQL is running
+<CodeBlock filename="Terminal" language="bash">
+{`# Check if PostgreSQL is running
 sudo systemctl status postgresql
 
 # Check if Redis is running
@@ -359,29 +377,32 @@ sudo systemctl status redis-server
 
 # Test database connection
 psql -h localhost -U your_username -d rhesis_dev
-```
+`}
+</CodeBlock>
 
 **Python Environment Issues:**
 
-```bash
-# Recreate virtual environment
+<CodeBlock filename="Terminal" language="bash">
+{`# Recreate virtual environment
 rm -rf .venv
 uv sync
 
 # Check Python version
 python --version
-```
+`}
+</CodeBlock>
 
 **Node.js Issues:**
 
-```bash
-# Clear npm cache
+<CodeBlock filename="Terminal" language="bash">
+{`# Clear npm cache
 npm cache clean --force
 
 # Reinstall dependencies
 rm -rf node_modules package-lock.json
 npm install
-```
+`}
+</CodeBlock>
 
 ### Getting Help
 

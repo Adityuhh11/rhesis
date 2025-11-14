@@ -1,3 +1,5 @@
+import { CodeBlock } from '@/components/CodeBlock'
+
 # Execution Modes
 
 ## Overview
@@ -12,14 +14,15 @@ Tests are executed simultaneously using multiple Celery workers. This is the def
 
 ### How It Works
 
-```
-Test Configuration
+<CodeBlock filename="code.txt" language="text">
+{`Test Configuration
     ↓
 Celery Chord (parallel dispatch)
     ├─→ Worker 1: Test A ─┐
     ├─→ Worker 2: Test B ─┼─→ Collect Results
     └─→ Worker 3: Test C ─┘
-```
+`}
+</CodeBlock>
 
 - Tests are dispatched to available workers
 - Multiple tests run concurrently
@@ -48,26 +51,28 @@ Celery Chord (parallel dispatch)
 
 Parallel is the default mode. No configuration needed:
 
-```python
-# Implicitly uses parallel mode
+<CodeBlock filename="example.py" language="python">
+{`# Implicitly uses parallel mode
 test_config = TestConfiguration(
     endpoint_id=endpoint.id,
     test_set_id=test_set.id,
     # attributes is empty or doesn't specify execution_mode
 )
-```
+`}
+</CodeBlock>
 
 Or explicitly set:
 
-```python
-test_config = TestConfiguration(
+<CodeBlock filename="example.py" language="python">
+{`test_config = TestConfiguration(
     endpoint_id=endpoint.id,
     test_set_id=test_set.id,
     attributes={
         "execution_mode": "Parallel"
     }
 )
-```
+`}
+</CodeBlock>
 
 ---
 
@@ -79,8 +84,8 @@ Tests are executed one after another in sequence. Each test must complete before
 
 ### How It Works
 
-```
-Test Configuration
+<CodeBlock filename="code.txt" language="text">
+{`Test Configuration
     ↓
 Test 1
     ↓
@@ -89,7 +94,8 @@ Test 2
 Test 3
     ↓
 Collect Results
-```
+`}
+</CodeBlock>
 
 - Tests execute in order
 - One test at a time
@@ -117,20 +123,21 @@ Collect Results
 
 Set in test configuration attributes:
 
-```python
-test_config = TestConfiguration(
+<CodeBlock filename="example.py" language="python">
+{`test_config = TestConfiguration(
     endpoint_id=endpoint.id,
     test_set_id=test_set.id,
     attributes={
         "execution_mode": "Sequential"
     }
 )
-```
+`}
+</CodeBlock>
 
 Or programmatically:
 
-```python
-from rhesis.backend.tasks.execution.modes import set_execution_mode
+<CodeBlock filename="example.py" language="python">
+{`from rhesis.backend.tasks.execution.modes import set_execution_mode
 from rhesis.backend.tasks.enums import ExecutionMode
 
 success = set_execution_mode(
@@ -139,7 +146,8 @@ success = set_execution_mode(
     execution_mode=ExecutionMode.SEQUENTIAL,
     organization_id=org_id
 )
-```
+`}
+</CodeBlock>
 
 ---
 
@@ -149,8 +157,8 @@ success = set_execution_mode(
 
 Both modes produce identical result structures:
 
-```python
-{
+<CodeBlock filename="example.py" language="python">
+{`{
     "status": "completed",
     "total_tests": 10,
     "tests_passed": 8,
@@ -159,7 +167,8 @@ Both modes produce identical result structures:
     "execution_time": "2m 15s",
     "completed_at": "2024-01-15 10:30:00"
 }
-```
+`}
+</CodeBlock>
 
 ### Result Processing
 
@@ -176,8 +185,8 @@ Both modes use the same `collect_results` task for consistency:
 
 Uses Celery's chord primitive:
 
-```python
-from celery import chord
+<CodeBlock filename="example.py" language="python">
+{`from celery import chord
 
 # Create task group
 test_tasks = [
@@ -189,14 +198,15 @@ test_tasks = [
 chord(test_tasks)(
     collect_results.signature(...)
 )
-```
+`}
+</CodeBlock>
 
 #### Sequential Mode (`sequential.py`)
 
 Uses Celery's chain primitive:
 
-```python
-from celery import chain
+<CodeBlock filename="example.py" language="python">
+{`from celery import chain
 
 # Create sequential chain
 tasks = []
@@ -206,7 +216,8 @@ tasks.append(collect_results.signature(...))
 
 # Execute sequentially
 chain(*tasks)()
-```
+`}
+</CodeBlock>
 
 ---
 
@@ -240,26 +251,28 @@ Example with 20 tests, 5s average test time:
 
 ### Get Current Mode
 
-```python
-from rhesis.backend.tasks.execution.modes import get_execution_mode
+<CodeBlock filename="example.py" language="python">
+{`from rhesis.backend.tasks.execution.modes import get_execution_mode
 
 mode = get_execution_mode(test_config)
 # Returns: ExecutionMode.PARALLEL or ExecutionMode.SEQUENTIAL
-```
+`}
+</CodeBlock>
 
 ### Get Mode Description
 
-```python
-from rhesis.backend.tasks.execution.modes import get_mode_description
+<CodeBlock filename="example.py" language="python">
+{`from rhesis.backend.tasks.execution.modes import get_mode_description
 
 description = get_mode_description(ExecutionMode.PARALLEL)
 # Returns: "Tests are executed simultaneously using multiple workers..."
-```
+`}
+</CodeBlock>
 
 ### Get Recommendations
 
-```python
-from rhesis.backend.tasks.execution.modes import get_mode_recommendations
+<CodeBlock filename="example.py" language="python">
+{`from rhesis.backend.tasks.execution.modes import get_mode_recommendations
 
 recommendations = get_mode_recommendations()
 # Returns: {
@@ -270,7 +283,8 @@ recommendations = get_mode_recommendations()
 #   },
 #   ...
 # }
-```
+`}
+</CodeBlock>
 
 ---
 
@@ -278,20 +292,22 @@ recommendations = get_mode_recommendations()
 
 ### Parallel Mode
 
-```bash
-# Check worker status
+<CodeBlock filename="Terminal" language="bash">
+{`# Check worker status
 celery -A rhesis.backend.worker inspect active
 
 # Monitor task progress
 celery -A rhesis.backend.worker events
-```
+`}
+</CodeBlock>
 
 ### Sequential Mode
 
-```bash
-# Follow sequential execution
+<CodeBlock filename="Terminal" language="bash">
+{`# Follow sequential execution
 tail -f celery.log | grep "execute_test"
-```
+`}
+</CodeBlock>
 
 ### Common Issues
 

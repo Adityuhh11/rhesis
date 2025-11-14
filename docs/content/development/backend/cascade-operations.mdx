@@ -1,3 +1,5 @@
+import { CodeBlock } from '@/components/CodeBlock'
+
 # Cascade Deletion and Restoration
 
 **Date:** October 2025  
@@ -19,8 +21,8 @@ In a relational database with complex parent-child relationships, soft deleting 
 
 Before the cascade system, each CRUD function needed manual cascade logic:
 
-```python
-def delete_test_run(db, test_run_id, org_id, user_id):
+<CodeBlock filename="example.py" language="python">
+{`def delete_test_run(db, test_run_id, org_id, user_id):
     # Get the test run
     test_run = get_item(db, models.TestRun, test_run_id, org_id, user_id)
 
@@ -36,7 +38,8 @@ def delete_test_run(db, test_run_id, org_id, user_id):
     test_run.soft_delete()
     db.commit()
     return test_run
-```
+`}
+</CodeBlock>
 
 **Problems:**
 
@@ -49,8 +52,8 @@ def delete_test_run(db, test_run_id, org_id, user_id):
 
 With the cascade system, the same operation is now automatic:
 
-```python
-# Configuration (defined once in config/cascade_config.py)
+<CodeBlock filename="example.py" language="python">
+{`# Configuration (defined once in config/cascade_config.py)
 CASCADE_RELATIONSHIPS = {
     models.TestRun: [
         CascadeRelationship(
@@ -63,7 +66,8 @@ CASCADE_RELATIONSHIPS = {
 # Implementation (automatically handles cascades)
 def delete_test_run(db, test_run_id, org_id, user_id):
     return delete_item(db, models.TestRun, test_run_id, org_id, user_id)
-```
+`}
+</CodeBlock>
 
 **Benefits:**
 
@@ -81,8 +85,8 @@ The cascade system consists of three main components:
 
 Centralized registry that defines all parent-child relationships:
 
-```python
-from dataclasses import dataclass
+<CodeBlock filename="example.py" language="python">
+{`from dataclasses import dataclass
 from typing import Type, Dict, List
 from rhesis.backend.app import models
 
@@ -105,14 +109,15 @@ CASCADE_RELATIONSHIPS: Dict[Type, List[CascadeRelationship]] = {
     ],
     # Add more relationships here...
 }
-```
+`}
+</CodeBlock>
 
 ### 2. Cascade Service (`services/cascade.py`)
 
 Generic service that reads the configuration and performs bulk cascade operations:
 
-```python
-def cascade_soft_delete(
+<CodeBlock filename="example.py" language="python">
+{`def cascade_soft_delete(
     db: Session,
     parent_model: Type,
     parent_id: UUID,
@@ -143,14 +148,15 @@ def cascade_soft_delete(
         total_deleted += count
 
     return total_deleted
-```
+`}
+</CodeBlock>
 
 ### 3. Automatic Integration (`utils/crud_utils.py`)
 
 The generic `delete_item()` and `restore_item()` functions automatically call the cascade service:
 
-```python
-def delete_item(
+<CodeBlock filename="example.py" language="python">
+{`def delete_item(
     db: Session,
     model: Type[T],
     item_id: uuid.UUID,
@@ -177,7 +183,8 @@ def delete_item(
     except Exception as e:
         db.rollback()
         raise
-```
+`}
+</CodeBlock>
 
 ## How to Add New Cascade Relationships
 
@@ -195,8 +202,8 @@ Determine:
 
 Add a new entry or append to an existing entry in `CASCADE_RELATIONSHIPS`:
 
-```python
-CASCADE_RELATIONSHIPS: Dict[Type, List[CascadeRelationship]] = {
+<CodeBlock filename="example.py" language="python">
+{`CASCADE_RELATIONSHIPS: Dict[Type, List[CascadeRelationship]] = {
     # Existing relationships
     models.TestRun: [
         CascadeRelationship(
@@ -231,14 +238,15 @@ CASCADE_RELATIONSHIPS: Dict[Type, List[CascadeRelationship]] = {
         )
     ],
 }
-```
+`}
+</CodeBlock>
 
 ### Step 3: Test the Cascade
 
 That's it! No code changes needed. The cascade will work automatically. Test it:
 
-```python
-def test_delete_project_cascades_to_test_sets(test_db, db_project, db_test_sets):
+<CodeBlock filename="example.py" language="python">
+{`def test_delete_project_cascades_to_test_sets(test_db, db_project, db_test_sets):
     """Verify that deleting a project cascades to test sets"""
     project_id = db_project.id
     test_set_ids = [ts.id for ts in db_test_sets]
@@ -256,7 +264,8 @@ def test_delete_project_cascades_to_test_sets(test_db, db_project, db_test_sets)
                 models.TestSet.id == test_set_id
             ).first()
             assert test_set.deleted_at is not None
-```
+`}
+</CodeBlock>
 
 ## Advanced Configuration
 
@@ -264,22 +273,23 @@ def test_delete_project_cascades_to_test_sets(test_db, db_project, db_test_sets)
 
 You can selectively disable cascade operations:
 
-```python
-CascadeRelationship(
+<CodeBlock filename="example.py" language="python">
+{`CascadeRelationship(
     child_model=models.AuditLog,
     foreign_key='entity_id',
     cascade_delete=False,    # Don't cascade delete (preserve audit trail)
     cascade_restore=False,   # Don't cascade restore (audit is immutable)
     description="Audit logs should never be deleted"
 )
-```
+`}
+</CodeBlock>
 
 ### Complex Multi-Level Cascades
 
 The system automatically handles multi-level cascades:
 
-```python
-# Level 1: Project -> TestSet
+<CodeBlock filename="example.py" language="python">
+{`# Level 1: Project -> TestSet
 models.Project: [
     CascadeRelationship(child_model=models.TestSet, foreign_key='project_id')
 ],
@@ -293,7 +303,8 @@ models.TestSet: [
 models.Test: [
     CascadeRelationship(child_model=models.TestResult, foreign_key='test_id')
 ]
-```
+`}
+</CodeBlock>
 
 When you delete a `Project`:
 
@@ -309,14 +320,15 @@ When you delete a `Project`:
 
 The cascade service uses efficient bulk UPDATE queries instead of loading objects:
 
-```python
-# EFFICIENT: Bulk UPDATE (single query)
+<CodeBlock filename="example.py" language="python">
+{`# EFFICIENT: Bulk UPDATE (single query)
 query.update({"deleted_at": datetime.utcnow()}, synchronize_session=False)
 
 # INEFFICIENT: Load and update each object
 for obj in query.all():
     obj.soft_delete()
-```
+`}
+</CodeBlock>
 
 **Benefits:**
 
@@ -328,10 +340,11 @@ for obj in query.all():
 
 The cascade service automatically applies organization filters when available:
 
-```python
-if organization_id and hasattr(rel.child_model, 'organization_id'):
+<CodeBlock filename="example.py" language="python">
+{`if organization_id and hasattr(rel.child_model, 'organization_id'):
     query = query.filter(rel.child_model.organization_id == organization_id)
-```
+`}
+</CodeBlock>
 
 This ensures:
 
@@ -343,8 +356,8 @@ This ensures:
 
 All cascade operations are fully transactional:
 
-```python
-try:
+<CodeBlock filename="example.py" language="python">
+{`try:
     # Cascade to children (bulk UPDATE)
     cascade_service.cascade_soft_delete(db, model, item_id, org_id)
 
@@ -358,7 +371,8 @@ except Exception as e:
     # Rollback EVERYTHING on error
     db.rollback()
     raise
-```
+`}
+</CodeBlock>
 
 **Guarantees:**
 
@@ -373,8 +387,8 @@ except Exception as e:
 
 Test cascade relationships in isolation:
 
-```python
-@pytest.mark.unit
+<CodeBlock filename="example.py" language="python">
+{`@pytest.mark.unit
 @pytest.mark.crud
 def test_cascade_soft_delete(test_db, db_parent, db_children):
     """Test that soft deleting parent cascades to children"""
@@ -392,14 +406,15 @@ def test_cascade_soft_delete(test_db, db_parent, db_children):
                 models.Child.id == child_id
             ).first()
             assert child.deleted_at is not None
-```
+`}
+</CodeBlock>
 
 ### Integration Tests
 
 Test end-to-end cascade behavior:
 
-```python
-@pytest.mark.integration
+<CodeBlock filename="example.py" language="python">
+{`@pytest.mark.integration
 def test_delete_test_run_api_cascades(client, db_test_run, db_test_results):
     """Test that API delete endpoint properly cascades"""
     response = client.delete(f"/test-runs/{db_test_run.id}")
@@ -409,14 +424,15 @@ def test_delete_test_run_api_cascades(client, db_test_run, db_test_results):
     with without_soft_delete_filter():
         for result in db_test_results:
             assert result.deleted_at is not None
-```
+`}
+</CodeBlock>
 
 ### Test Data Factories
 
 Use fixtures to create parent-child test data:
 
-```python
-@pytest.fixture
+<CodeBlock filename="example.py" language="python">
+{`@pytest.fixture
 def db_test_run_with_results(test_db, test_organization, db_user):
     """Create a test run with associated test results"""
     test_run = models.TestRun(
@@ -440,7 +456,8 @@ def db_test_run_with_results(test_db, test_organization, db_user):
 
     test_db.commit()
     return test_run, test_results
-```
+`}
+</CodeBlock>
 
 ## Best Practices
 
@@ -448,20 +465,21 @@ def db_test_run_with_results(test_db, test_organization, db_user):
 
 Always add a `description` to cascade relationships:
 
-```python
-CascadeRelationship(
+<CodeBlock filename="example.py" language="python">
+{`CascadeRelationship(
     child_model=models.TestResult,
     foreign_key='test_run_id',
     description="Test results belong to a test run and should cascade with it"
 )
-```
+`}
+</CodeBlock>
 
 ### 2. Consider Data Preservation
 
 Some relationships should **NOT** cascade:
 
-```python
-# DON'T: cascade delete audit logs
+<CodeBlock filename="example.py" language="python">
+{`# DON'T: cascade delete audit logs
 models.User: [
     CascadeRelationship(
         child_model=models.AuditLog,
@@ -480,41 +498,45 @@ models.User: [
         description="User sessions should be removed when user is deleted"
     )
 ]
-```
+`}
+</CodeBlock>
 
 ### 3. Test Cascade Behavior
 
 Always add tests when adding new cascade relationships:
 
-```python
-# tests/backend/crud/test_project_cascade_delete.py
+<CodeBlock filename="example.py" language="python">
+{`# tests/backend/crud/test_project_cascade_delete.py
 def test_delete_project_cascades_to_test_sets(test_db, db_project):
     # ... test implementation ...
-```
+`}
+</CodeBlock>
 
 ### 4. Monitor Performance
 
 For entities with many children (>1000), monitor cascade performance:
 
-```python
-# Log cascade operations in production
+<CodeBlock filename="example.py" language="python">
+{`# Log cascade operations in production
 logger.info(
     f"Cascade soft delete: {count} {child_model.__name__} "
     f"records for {parent_model.__name__} {parent_id}"
 )
-```
+`}
+</CodeBlock>
 
 ### 5. Keep Cascade Chains Short
 
 Avoid deep cascade chains (>3 levels) as they can be hard to reason about:
 
-```python
-# RECOMMENDED: 2-level cascade
+<CodeBlock filename="example.py" language="python">
+{`# RECOMMENDED: 2-level cascade
 Project -> TestSet -> Test
 
 # CAUTION: 4-level cascade (consider carefully)
 Organization -> Project -> TestSet -> Test -> TestResult
-```
+`}
+</CodeBlock>
 
 ## Common Patterns
 
@@ -522,21 +544,22 @@ Organization -> Project -> TestSet -> Test -> TestResult
 
 The most common pattern:
 
-```python
-models.TestRun: [
+<CodeBlock filename="example.py" language="python">
+{`models.TestRun: [
     CascadeRelationship(
         child_model=models.TestResult,
         foreign_key='test_run_id'
     )
 ]
-```
+`}
+</CodeBlock>
 
 ### Pattern 2: Multiple Children
 
 A parent with multiple child types:
 
-```python
-models.Test: [
+<CodeBlock filename="example.py" language="python">
+{`models.Test: [
     CascadeRelationship(
         child_model=models.TestResult,
         foreign_key='test_id'
@@ -550,14 +573,15 @@ models.Test: [
         foreign_key='test_id'
     )
 ]
-```
+`}
+</CodeBlock>
 
 ### Pattern 3: Conditional Cascade
 
 Different behavior for delete vs. restore:
 
-```python
-models.Organization: [
+<CodeBlock filename="example.py" language="python">
+{`models.Organization: [
     CascadeRelationship(
         child_model=models.Project,
         foreign_key='organization_id',
@@ -565,7 +589,8 @@ models.Organization: [
         cascade_restore=False  # Don't auto-restore (manual review needed)
     )
 ]
-```
+`}
+</CodeBlock>
 
 ## Troubleshooting
 
@@ -611,21 +636,22 @@ If you have existing manual cascade logic, follow these steps:
 
 Add the relationship to `CASCADE_RELATIONSHIPS`:
 
-```python
-models.YourParent: [
+<CodeBlock filename="example.py" language="python">
+{`models.YourParent: [
     CascadeRelationship(
         child_model=models.YourChild,
         foreign_key='your_parent_id'
     )
 ]
-```
+`}
+</CodeBlock>
 
 #### Step 2: Remove Manual Logic
 
 Replace manual cascade code:
 
-```python
-# BEFORE: Manual cascade (remove this)
+<CodeBlock filename="example.py" language="python">
+{`# BEFORE: Manual cascade (remove this)
 def delete_your_parent(db, parent_id, org_id, user_id):
     parent = get_item(db, models.YourParent, parent_id, org_id, user_id)
 
@@ -640,14 +666,15 @@ def delete_your_parent(db, parent_id, org_id, user_id):
 # AFTER: Automatic cascade (use this)
 def delete_your_parent(db, parent_id, org_id, user_id):
     return delete_item(db, models.YourParent, parent_id, org_id, user_id)
-```
+`}
+</CodeBlock>
 
 #### Step 3: Update Tests
 
 Update tests to use the new pattern:
 
-```python
-# Update test assertions if needed
+<CodeBlock filename="example.py" language="python">
+{`# Update test assertions if needed
 def test_delete_parent_cascades(test_db, db_parent, db_children):
     # Delete now happens automatically
     deleted = crud.delete_your_parent(test_db, parent_id, org_id, user_id)
@@ -656,7 +683,8 @@ def test_delete_parent_cascades(test_db, db_parent, db_children):
     with without_soft_delete_filter():
         for child in db_children:
             assert child.deleted_at is not None
-```
+`}
+</CodeBlock>
 
 ## Related Documentation
 

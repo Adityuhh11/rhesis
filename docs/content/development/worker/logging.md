@@ -1,3 +1,5 @@
+import { CodeBlock } from '@/components/CodeBlock'
+
 # Worker Logging Guide
 
 This guide covers everything about logging in the Rhesis worker system, from configuration to analysis and troubleshooting.
@@ -16,8 +18,8 @@ The worker system generates logs from multiple sources:
 
 Control logging behavior with these environment variables:
 
-```bash
-# Primary log level (affects all components)
+<CodeBlock filename="Terminal" language="bash">
+{`# Primary log level (affects all components)
 LOG_LEVEL=INFO
 
 # Celery-specific log level
@@ -25,7 +27,8 @@ CELERY_WORKER_LOGLEVEL=INFO
 
 # Python logging configuration
 PYTHONUNBUFFERED=1  # Ensures immediate log output
-```
+`}
+</CodeBlock>
 
 **Available Log Levels:**
 - `DEBUG`: Detailed debugging information
@@ -38,12 +41,13 @@ PYTHONUNBUFFERED=1  # Ensures immediate log output
 
 In the worker startup, Celery is configured with:
 
-```bash
-celery -A rhesis.backend.worker.app worker \
-    --loglevel=${CELERY_WORKER_LOGLEVEL:-INFO} \
-    --concurrency=${CELERY_WORKER_CONCURRENCY:-8} \
+<CodeBlock filename="Terminal" language="bash">
+{`celery -A rhesis.backend.worker.app worker \
+    --loglevel=\${CELERY_WORKER_LOGLEVEL:-INFO} \
+    --concurrency=\${CELERY_WORKER_CONCURRENCY:-8} \
     # ... other options
-```
+`}
+</CodeBlock>
 
 ## Log Sources and Formats
 
@@ -52,8 +56,8 @@ celery -A rhesis.backend.worker.app worker \
 **Location**: Container stdout during initialization
 **Format**: Structured with emoji indicators and timestamps
 
-```bash
-# Successful operations
+<CodeBlock filename="Terminal" language="bash">
+{`# Successful operations
 ✅ Health server starting on port 8080
 ✅ Successfully imported Celery app from rhesis.backend.worker
 ✅ Redis connectivity: connected
@@ -64,15 +68,16 @@ celery -A rhesis.backend.worker.app worker \
 # Errors
 ❌ Failed to import Celery app: No module named 'rhesis.backend.worker'
 ❌ Redis connectivity test failed: connection timeout
-```
+`}
+</CodeBlock>
 
 ### 2. Health Server Logs
 
 **Location**: Container stdout from health server process
 **Format**: HTTP access logs with endpoint information
 
-```bash
-# Successful health checks
+<CodeBlock filename="Terminal" language="bash">
+{`# Successful health checks
 INFO:     127.0.0.1:35492 - "GET /health/basic HTTP/1.1" 200 OK
 INFO:     127.0.0.1:35494 - "GET /health HTTP/1.1" 200 OK
 
@@ -83,15 +88,16 @@ ERROR:    Health check failed: Redis connection timeout
 # Debug endpoint usage
 INFO:     127.0.0.1:35498 - "GET /debug HTTP/1.1" 200 OK
 INFO:     127.0.0.1:35500 - "GET /debug/redis HTTP/1.1" 200 OK
-```
+`}
+</CodeBlock>
 
 ### 3. Celery Worker Logs
 
 **Location**: Container stdout from Celery process
 **Format**: Celery's standard logging format with task information
 
-```bash
-# Worker startup
+<CodeBlock filename="Terminal" language="bash">
+{`# Worker startup
 [2024-01-15 10:30:00,123: INFO/MainProcess] Connected to redis://redis-host:6379/0
 [2024-01-15 10:30:00,456: INFO/MainProcess] mingle: searching for available workers
 [2024-01-15 10:30:01,789: INFO/MainProcess] celery@worker-pod ready.
@@ -104,15 +110,16 @@ INFO:     127.0.0.1:35500 - "GET /debug/redis HTTP/1.1" 200 OK
 # Errors
 [2024-01-15 10:30:20,123: ERROR/ForkPoolWorker-2] Task rhesis.backend.tasks.execute_test[task-id-789] raised unexpected: ConnectionError('Redis connection failed')
 [2024-01-15 10:30:25,456: WARNING/MainProcess] Chord unlock task chord_unlock[chord-id-456] retry: Retry in 1.0s
-```
+`}
+</CodeBlock>
 
 ### 4. Application Task Logs
 
 **Location**: Container stdout from your task code
 **Format**: Python logging format as configured in your tasks
 
-```python
-# In your task code
+<CodeBlock filename="example.py" language="python">
+{`# In your task code
 import logging
 
 logger = logging.getLogger(__name__)
@@ -128,14 +135,15 @@ def my_task(self):
     except Exception as e:
         logger.error(f"Task failed: {str(e)}")
         raise
-```
+`}
+</CodeBlock>
 
 ## Accessing Logs
 
 ### Local Development
 
-```bash
-# Using Docker Compose
+<CodeBlock filename="Terminal" language="bash">
+{`# Using Docker Compose
 docker-compose logs worker
 
 # Follow logs in real-time
@@ -143,13 +151,14 @@ docker-compose logs -f worker
 
 # Get last N lines
 docker-compose logs --tail=100 worker
-```
+`}
+</CodeBlock>
 
 ### GKE Deployment
 
 #### Basic Log Access
-```bash
-# Get logs from worker container
+<CodeBlock filename="Terminal" language="bash">
+{`# Get logs from worker container
 kubectl logs <pod-name> -c worker -n <namespace>
 
 # Get recent logs (last 100 lines)
@@ -157,11 +166,12 @@ kubectl logs <pod-name> -c worker -n <namespace> --tail=100
 
 # Get logs from last hour
 kubectl logs <pod-name> -c worker -n <namespace> --since=1h
-```
+`}
+</CodeBlock>
 
 #### Real-Time Monitoring
-```bash
-# Follow logs as they're generated
+<CodeBlock filename="Terminal" language="bash">
+{`# Follow logs as they're generated
 kubectl logs -f <pod-name> -c worker -n <namespace>
 
 # Follow logs from all worker pods
@@ -169,34 +179,37 @@ kubectl logs -f deployment/rhesis-worker -n <namespace>
 
 # Follow logs from all containers in pod
 kubectl logs -f <pod-name> -n <namespace> --all-containers=true
-```
+`}
+</CodeBlock>
 
 #### Historical Logs
-```bash
-# Get logs from previous container restart (if crashed)
+<CodeBlock filename="Terminal" language="bash">
+{`# Get logs from previous container restart (if crashed)
 kubectl logs <pod-name> -c worker -n <namespace> --previous
 
 # Get logs with timestamps
 kubectl logs <pod-name> -c worker -n <namespace> --timestamps=true
-```
+`}
+</CodeBlock>
 
 ## Log Analysis Techniques
 
 ### 1. Finding Your Pods
 
-```bash
-# List all worker pods
+<CodeBlock filename="Terminal" language="bash">
+{`# List all worker pods
 kubectl get pods -n <namespace> -l app=rhesis-worker
 
 # Get pod details including restart count
 kubectl get pods -n <namespace> -o wide
-```
+`}
+</CodeBlock>
 
 ### 2. Filtering Logs
 
 #### Search for Errors
-```bash
-# Find all errors
+<CodeBlock filename="Terminal" language="bash">
+{`# Find all errors
 kubectl logs <pod-name> -c worker -n <namespace> | grep -i error
 
 # Find Redis connection issues
@@ -204,11 +217,12 @@ kubectl logs <pod-name> -c worker -n <namespace> | grep -i "redis\|connection\|t
 
 # Find task failures
 kubectl logs <pod-name> -c worker -n <namespace> | grep -E "(failed|exception|error)"
-```
+`}
+</CodeBlock>
 
 #### Search for Task Activity
-```bash
-# Find task executions
+<CodeBlock filename="Terminal" language="bash">
+{`# Find task executions
 kubectl logs <pod-name> -c worker -n <namespace> | grep "Received task"
 
 # Find task completions
@@ -216,22 +230,24 @@ kubectl logs <pod-name> -c worker -n <namespace> | grep "succeeded in"
 
 # Find chord activity
 kubectl logs <pod-name> -c worker -n <namespace> | grep -i chord
-```
+`}
+</CodeBlock>
 
 #### Search for Health Check Activity
-```bash
-# Find health check requests
+<CodeBlock filename="Terminal" language="bash">
+{`# Find health check requests
 kubectl logs <pod-name> -c worker -n <namespace> | grep -E "(GET /health|GET /ping)"
 
 # Find health check failures
 kubectl logs <pod-name> -c worker -n <namespace> | grep -E "(500|timeout|failed)"
-```
+`}
+</CodeBlock>
 
 ### 3. Advanced Log Analysis
 
 #### Export Logs for Analysis
-```bash
-# Save logs to file
+<CodeBlock filename="Terminal" language="bash">
+{`# Save logs to file
 kubectl logs <pod-name> -c worker -n <namespace> --tail=1000 > worker-logs.txt
 
 # Save logs with timestamps
@@ -239,34 +255,37 @@ kubectl logs <pod-name> -c worker -n <namespace> --timestamps=true --tail=1000 >
 
 # Save logs from specific time period
 kubectl logs <pod-name> -c worker -n <namespace> --since=2h > recent-worker-logs.txt
-```
+`}
+</CodeBlock>
 
 #### Multi-Pod Log Aggregation
-```bash
-# Get logs from all worker pods
+<CodeBlock filename="Terminal" language="bash">
+{`# Get logs from all worker pods
 for pod in $(kubectl get pods -n <namespace> -l app=rhesis-worker -o jsonpath='{.items[*].metadata.name}'); do
   echo "=== Logs from $pod ===" >> all-worker-logs.txt
   kubectl logs $pod -c worker -n <namespace> --tail=100 >> all-worker-logs.txt
   echo "" >> all-worker-logs.txt
 done
-```
+`}
+</CodeBlock>
 
 ## Log Patterns and What They Mean
 
 ### Healthy Worker Startup
-```bash
-✅ Health server starting on port 8080
+<CodeBlock filename="Terminal" language="bash">
+{`✅ Health server starting on port 8080
 ✅ Environment validation completed
 ✅ Successfully imported Celery app
 ✅ Redis connectivity: connected
 ✅ Health server ready, all endpoints responding
 [INFO/MainProcess] Connected to rediss://...
 [INFO/MainProcess] celery@worker-pod ready.
-```
+`}
+</CodeBlock>
 
 ### Common Warning Patterns
-```bash
-# TLS connection delay (normal for Redis TLS)
+<CodeBlock filename="Terminal" language="bash">
+{`# TLS connection delay (normal for Redis TLS)
 ⚠️  TLS detected in broker URL, adjusting timeouts to 10 seconds
 
 # Chord retries (may indicate failed subtasks)
@@ -274,34 +293,39 @@ done
 
 # Health check timeouts (may indicate Redis delays)
 WARNING: Health check took 8.5 seconds (timeout: 10)
-```
+`}
+</CodeBlock>
 
 ### Error Patterns to Investigate
 
 #### Connection Errors
-```bash
-❌ Redis connectivity test failed: connection timeout
+<CodeBlock filename="Terminal" language="bash">
+{`❌ Redis connectivity test failed: connection timeout
 [ERROR/MainProcess] consumer: Cannot connect to rediss://...: Error connecting
-```
+`}
+</CodeBlock>
 **Action**: Check Redis connectivity, network policies, firewall rules
 
 #### Import Errors
-```bash
-❌ Failed to import Celery app: No module named 'rhesis.backend.worker'
-```
+<CodeBlock filename="Terminal" language="bash">
+{`❌ Failed to import Celery app: No module named 'rhesis.backend.worker'
+`}
+</CodeBlock>
 **Action**: Check Docker image build, PYTHONPATH configuration
 
 #### Task Errors
-```bash
-[ERROR/ForkPoolWorker-1] Task rhesis.backend.tasks.execute_test[...] raised unexpected: Exception('Task failed')
-```
+<CodeBlock filename="Terminal" language="bash">
+{`[ERROR/ForkPoolWorker-1] Task rhesis.backend.tasks.execute_test[...] raised unexpected: Exception('Task failed')
+`}
+</CodeBlock>
 **Action**: Check task code, input parameters, database connectivity
 
 #### Health Check Errors
-```bash
-ERROR: Health check failed: Celery ping timeout after 10 seconds
+<CodeBlock filename="Terminal" language="bash">
+{`ERROR: Health check failed: Celery ping timeout after 10 seconds
 INFO: 127.0.0.1:42756 - "GET /health HTTP/1.1" 500 Internal Server Error
-```
+`}
+</CodeBlock>
 **Action**: Check Celery worker status, Redis connectivity
 
 ## Log Monitoring and Alerting
@@ -317,8 +341,8 @@ INFO: 127.0.0.1:42756 - "GET /health HTTP/1.1" 500 Internal Server Error
 ### Sample Monitoring Queries
 
 #### Using kubectl and basic tools
-```bash
-# Count errors in last 100 log lines
+<CodeBlock filename="Terminal" language="bash">
+{`# Count errors in last 100 log lines
 kubectl logs <pod-name> -c worker -n <namespace> --tail=100 | grep -c ERROR
 
 # Check for recent connection issues
@@ -326,11 +350,12 @@ kubectl logs <pod-name> -c worker -n <namespace> --since=10m | grep -i "connecti
 
 # Monitor health check success rate
 kubectl logs <pod-name> -c worker -n <namespace> --since=1h | grep "GET /health" | grep -c "200 OK"
-```
+`}
+</CodeBlock>
 
 #### Log-based Health Check
-```bash
-#!/bin/bash
+<CodeBlock filename="Terminal" language="bash">
+{`#!/bin/bash
 # Simple health check based on logs
 NAMESPACE="rhesis-worker-dev"
 POD=$(kubectl get pods -n $NAMESPACE -l app=rhesis-worker -o jsonpath='{.items[0].metadata.name}')
@@ -346,68 +371,75 @@ REDIS_ERRORS=$(kubectl logs $POD -c worker -n $NAMESPACE --since=5m | grep -c "R
 if [ $REDIS_ERRORS -gt 0 ]; then
     echo "WARNING: Redis connection issues detected"
 fi
-```
+`}
+</CodeBlock>
 
 ## Debugging with Logs
 
 ### Step-by-Step Debugging Process
 
 1. **Identify the Problem**
-   ```bash
-   # Check pod status
+   <CodeBlock filename="Terminal" language="bash">
+{`   # Check pod status
    kubectl get pods -n <namespace>
 
    # Look for restart indicators
    kubectl describe pod <pod-name> -n <namespace>
-   ```
+   `}
+</CodeBlock>
 
 2. **Get Recent Logs**
-   ```bash
-   # Get current logs
+   <CodeBlock filename="Terminal" language="bash">
+{`   # Get current logs
    kubectl logs <pod-name> -c worker -n <namespace> --tail=100
 
    # Get crash logs if restarted
    kubectl logs <pod-name> -c worker -n <namespace> --previous
-   ```
+   `}
+</CodeBlock>
 
 3. **Search for Specific Issues**
-   ```bash
-   # Connection problems
+   <CodeBlock filename="Terminal" language="bash">
+{`   # Connection problems
    kubectl logs <pod-name> -c worker -n <namespace> | grep -i "connection\|redis\|timeout"
 
    # Task problems
    kubectl logs <pod-name> -c worker -n <namespace> | grep -i "task\|error\|failed"
-   ```
+   `}
+</CodeBlock>
 
 4. **Correlate with Health Endpoints**
-   ```bash
-   # Check current system state
+   <CodeBlock filename="Terminal" language="bash">
+{`   # Check current system state
    kubectl exec -it <pod-name> -n <namespace> -- curl localhost:8080/debug | jq
-   ```
+   `}
+</CodeBlock>
 
 ### Common Debugging Scenarios
 
 #### Scenario 1: Pod Won't Start
-```bash
-# Check startup logs
+<CodeBlock filename="Terminal" language="bash">
+{`# Check startup logs
 kubectl logs <pod-name> -c worker -n <namespace>
 
 # Look for import errors, connection failures, configuration issues
 kubectl logs <pod-name> -c worker -n <namespace> | grep -E "(❌|ERROR|Failed)"
-```
+`}
+</CodeBlock>
 
 #### Scenario 2: Health Checks Failing
-```bash
-# Check health endpoint logs
+<CodeBlock filename="Terminal" language="bash">
+{`# Check health endpoint logs
 kubectl logs <pod-name> -c worker -n <namespace> | grep -E "(GET /health|500|timeout)"
 
 # Test health endpoint directly
 kubectl exec -it <pod-name> -n <namespace> -- curl -w "%{time_total}" localhost:8080/health
-```
+`}
+</CodeBlock>
 
 #### Scenario 3: Tasks Not Processing
-```bash
-# Check for task reception
+<CodeBlock filename="Terminal" language="bash">
+{`# Check for task reception
 kubectl logs <pod-name> -c worker -n <namespace> | grep "Received task"
 
 # Check for task failures
@@ -415,7 +447,8 @@ kubectl logs <pod-name> -c worker -n <namespace> | grep -E "(failed|exception|er
 
 # Check worker status
 kubectl exec -it <pod-name> -n <namespace> -- curl localhost:8080/debug | jq '.celery_status'
-```
+`}
+</CodeBlock>
 
 ## Best Practices
 

@@ -1,3 +1,5 @@
+import { CodeBlock } from '@/components/CodeBlock'
+
 # Endpoint Configuration Guide
 
 This guide explains how to configure endpoints in the system for both REST and WebSocket protocols, including authentication methods.
@@ -44,8 +46,8 @@ The system uses special placeholders that are automatically replaced with actual
 
 #### REST Example
 
-```json
-// request_body_template
+<CodeBlock filename="config.json" language="json">
+{`// request_body_template
 {
   "query": "{{ input }}"
 }
@@ -55,12 +57,13 @@ The system uses special placeholders that are automatically replaced with actual
   "Content-Type": "application/json",
   "Authorization": "Bearer {{ auth_token }}"
 }
-```
+`}
+</CodeBlock>
 
 #### WebSocket Example
 
-```json
-// request_body_template
+<CodeBlock filename="config.json" language="json">
+{`// request_body_template
 {
   "auth_token": "{{ auth_token }}",
   "session_id": "{{ session_id }}",
@@ -73,7 +76,8 @@ The system uses special placeholders that are automatically replaced with actual
   "Connection": "Upgrade",
   "Sec-WebSocket-Version": "13"
 }
-```
+`}
+</CodeBlock>
 
 ### Response Configuration Fields
 
@@ -82,23 +86,25 @@ The system uses special placeholders that are automatically replaced with actual
 
 #### REST Example
 
-```json
-// response_mappings
+<CodeBlock filename="config.json" language="json">
+{`// response_mappings
 {
   "output": "$.data.response"
 }
-```
+`}
+</CodeBlock>
 
 #### WebSocket Example
 
-```json
-// response_mappings
+<CodeBlock filename="config.json" language="json">
+{`// response_mappings
 {
   "conversation_id": "$.conversation_id",
   "error": "$.error",
   "status": "$.message"
 }
-```
+`}
+</CodeBlock>
 
 ### Authentication Fields
 
@@ -120,8 +126,8 @@ The system uses special placeholders that are automatically replaced with actual
 
 ### REST Endpoint
 
-```json
-{
+<CodeBlock filename="config.json" language="json">
+{`{
   "name": "Data Query API",
   "description": "Endpoint for querying data using natural language",
   "url": "https://api.example.com/query",
@@ -134,12 +140,13 @@ The system uses special placeholders that are automatically replaced with actual
   "response_mappings": "{\"result\": \"$.data.result\"}",
   "auth_type": "bearer"
 }
-```
+`}
+</CodeBlock>
 
 ### WebSocket Endpoint
 
-```json
-{
+<CodeBlock filename="config.json" language="json">
+{`{
   "name": "Real-time Chat API",
   "description": "WebSocket endpoint for real-time chat interactions",
   "url": "wss://api.example.com/chat",
@@ -157,7 +164,8 @@ The system uses special placeholders that are automatically replaced with actual
   "scopes": ["chat:write"],
   "audience": "https://api.example.com"
 }
-```
+`}
+</CodeBlock>
 
 ## Best Practices
 
@@ -201,8 +209,8 @@ The system uses special placeholders that are automatically replaced with actual
 
 You can specify validation rules for the endpoint using the `validation_rules` field:
 
-```json
-{
+<CodeBlock filename="config.json" language="json">
+{`{
   "validation_rules": {
     "required_fields": ["input", "session_id"],
     "max_length": {
@@ -213,7 +221,8 @@ You can specify validation rules for the endpoint using the `validation_rules` f
     }
   }
 }
-```
+`}
+</CodeBlock>
 
 ## Troubleshooting
 
