@@ -370,33 +370,29 @@ SELECT 'feature_usage', COUNT(*) FROM feature_usage;
 
 1. **Check telemetry is enabled:**
 
-   <CodeBlock filename="Terminal" language="bash">
-{`   # In your .env file
-   TELEMETRY_ENABLED=true
-   DEPLOYMENT_TYPE=self-hosted  # or "cloud"
-   `}
+<CodeBlock filename="Terminal" language="bash">
+{`# In your .env file
+TELEMETRY_ENABLED=true
+DEPLOYMENT_TYPE=self-hosted  # or "cloud"`}
 </CodeBlock>
 
 2. **Verify OTel Collector is receiving data:**
 
-   <CodeBlock filename="Terminal" language="bash">
-{`   docker-compose logs otel-collector
-   # Look for "Traces received" messages
-   `}
+<CodeBlock filename="Terminal" language="bash">
+{`docker-compose logs otel-collector
+# Look for "Traces received" messages`}
 </CodeBlock>
 
 3. **Check Telemetry Processor logs:**
 
-   <CodeBlock filename="Terminal" language="bash">
-{`   docker-compose logs telemetry-processor
-   # Look for "Processing span" messages
-   `}
+<CodeBlock filename="Terminal" language="bash">
+{`docker-compose logs telemetry-processor
+# Look for "Processing span" messages`}
 </CodeBlock>
 
 4. **Test database connection:**
-   <CodeBlock filename="Terminal" language="bash">
-{`   docker-compose exec postgres-analytics psql -U user -d dbname -c "SELECT 1;"
-   `}
+<CodeBlock filename="Terminal" language="bash">
+{`docker-compose exec postgres-analytics psql -U user -d dbname -c "SELECT 1;"`}
 </CodeBlock>
 
 ### Connection Issues
@@ -427,27 +423,24 @@ docker-compose logs postgres-analytics
 
 1. **Check database indexes:**
 
-   <CodeBlock filename="code.txt" language="sql">
-{`   SELECT tablename, indexname
-   FROM pg_indexes
-   WHERE tablename IN ('user_activity', 'endpoint_usage', 'feature_usage');
-   `}
+<CodeBlock filename="code.txt" language="sql">
+{`SELECT tablename, indexname
+FROM pg_indexes
+WHERE tablename IN ('user_activity', 'endpoint_usage', 'feature_usage');`}
 </CodeBlock>
 
 2. **Monitor active connections:**
 
-   <CodeBlock filename="code.txt" language="sql">
-{`   SELECT COUNT(*), state
-   FROM pg_stat_activity
-   WHERE datname = 'rhesis_analytics'
-   GROUP BY state;
-   `}
+<CodeBlock filename="code.txt" language="sql">
+{`SELECT COUNT(*), state
+FROM pg_stat_activity
+WHERE datname = 'rhesis_analytics'
+GROUP BY state;`}
 </CodeBlock>
 
 3. **Review collector memory usage:**
-   <CodeBlock filename="Terminal" language="bash">
-{`   docker stats otel-collector telemetry-processor
-   `}
+<CodeBlock filename="Terminal" language="bash">
+{`docker stats otel-collector telemetry-processor`}
 </CodeBlock>
 
 ## Deployment
@@ -541,36 +534,32 @@ docker run -p 4317:4317 \
 
 1. **Add model** to `models/analytics.py`:
 
-   <CodeBlock filename="example.py" language="python">
-{`   class NewFeatureAnalytics(AnalyticsBase):
-       __tablename__ = "new_feature_analytics"
-       custom_field = Column(String(100))
-   `}
+<CodeBlock filename="example.py" language="python">
+{`class NewFeatureAnalytics(AnalyticsBase):
+__tablename__ = "new_feature_analytics"
+custom_field = Column(String(100))`}
 </CodeBlock>
 
 2. **Create migration**:
 
-   <CodeBlock filename="Terminal" language="bash">
-{`   cd apps/telemetry-processor
-   alembic revision -m "add new feature analytics"
-   `}
+<CodeBlock filename="Terminal" language="bash">
+{`cd apps/telemetry-processor
+alembic revision -m "add new feature analytics"`}
 </CodeBlock>
 
 3. **Add processor service** in `services/`:
 
-   <CodeBlock filename="example.py" language="python">
-{`   class NewFeatureProcessor(BaseSpanProcessor):
-       def process_span(self, span, resource, session):
-           # Processing logic
-   `}
+<CodeBlock filename="example.py" language="python">
+{`class NewFeatureProcessor(BaseSpanProcessor):
+def process_span(self, span, resource, session):
+# Processing logic`}
 </CodeBlock>
 
 4. **Update router** in `services/span_router.py`
 
 5. **Run migration**:
-   <CodeBlock filename="Terminal" language="bash">
-{`   alembic upgrade head
-   `}
+<CodeBlock filename="Terminal" language="bash">
+{`alembic upgrade head`}
 </CodeBlock>
 
 ## Why Separate Analytics Database?

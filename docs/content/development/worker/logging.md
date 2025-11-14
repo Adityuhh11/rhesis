@@ -379,40 +379,36 @@ fi
 ### Step-by-Step Debugging Process
 
 1. **Identify the Problem**
-   <CodeBlock filename="Terminal" language="bash">
-{`   # Check pod status
-   kubectl get pods -n <namespace>
+<CodeBlock filename="Terminal" language="bash">
+{`# Check pod status
+kubectl get pods -n <namespace>
 
-   # Look for restart indicators
-   kubectl describe pod <pod-name> -n <namespace>
-   `}
+# Look for restart indicators
+kubectl describe pod <pod-name> -n <namespace>`}
 </CodeBlock>
 
 2. **Get Recent Logs**
-   <CodeBlock filename="Terminal" language="bash">
-{`   # Get current logs
-   kubectl logs <pod-name> -c worker -n <namespace> --tail=100
+<CodeBlock filename="Terminal" language="bash">
+{`# Get current logs
+kubectl logs <pod-name> -c worker -n <namespace> --tail=100
 
-   # Get crash logs if restarted
-   kubectl logs <pod-name> -c worker -n <namespace> --previous
-   `}
+# Get crash logs if restarted
+kubectl logs <pod-name> -c worker -n <namespace> --previous`}
 </CodeBlock>
 
 3. **Search for Specific Issues**
-   <CodeBlock filename="Terminal" language="bash">
-{`   # Connection problems
-   kubectl logs <pod-name> -c worker -n <namespace> | grep -i "connection\|redis\|timeout"
+<CodeBlock filename="Terminal" language="bash">
+{`# Connection problems
+kubectl logs <pod-name> -c worker -n <namespace> | grep -i "connection\|redis\|timeout"
 
-   # Task problems
-   kubectl logs <pod-name> -c worker -n <namespace> | grep -i "task\|error\|failed"
-   `}
+# Task problems
+kubectl logs <pod-name> -c worker -n <namespace> | grep -i "task\|error\|failed"`}
 </CodeBlock>
 
 4. **Correlate with Health Endpoints**
-   <CodeBlock filename="Terminal" language="bash">
-{`   # Check current system state
-   kubectl exec -it <pod-name> -n <namespace> -- curl localhost:8080/debug | jq
-   `}
+<CodeBlock filename="Terminal" language="bash">
+{`# Check current system state
+kubectl exec -it <pod-name> -n <namespace> -- curl localhost:8080/debug | jq`}
 </CodeBlock>
 
 ### Common Debugging Scenarios

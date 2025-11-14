@@ -338,38 +338,33 @@ def collect_results(self, results, ...):
 ### When You Encounter Chord Issues
 
 1. **Immediate Assessment**
-   <CodeBlock filename="Terminal" language="bash">
-{`   python fix_chords.py
-   `}
+<CodeBlock filename="Terminal" language="bash">
+{`python fix_chords.py`}
 </CodeBlock>
 
 2. **Check Active Tasks**
-   <CodeBlock filename="Terminal" language="bash">
-{`   python -m rhesis.backend.tasks.execution.chord_monitor status
-   `}
+<CodeBlock filename="Terminal" language="bash">
+{`python -m rhesis.backend.tasks.execution.chord_monitor status`}
 </CodeBlock>
 
 3. **Look for Stuck Chords**
-   <CodeBlock filename="Terminal" language="bash">
-{`   python -m rhesis.backend.tasks.execution.chord_monitor check --max-hours 1
-   `}
+<CodeBlock filename="Terminal" language="bash">
+{`python -m rhesis.backend.tasks.execution.chord_monitor check --max-hours 1`}
 </CodeBlock>
 
 4. **Review Logs**
-   <CodeBlock filename="Terminal" language="bash">
-{`   tail -50 celery_worker.log | grep -E "(chord_unlock|MaxRetries|ERROR)"
-   `}
+<CodeBlock filename="Terminal" language="bash">
+{`tail -50 celery_worker.log | grep -E "(chord_unlock|MaxRetries|ERROR)"`}
 </CodeBlock>
 
 5. **Clean Up if Necessary**
-   <CodeBlock filename="Terminal" language="bash">
-{`   # Revoke stuck chords
-   python -m rhesis.backend.tasks.execution.chord_monitor revoke --max-hours 0.5
+<CodeBlock filename="Terminal" language="bash">
+{`# Revoke stuck chords
+python -m rhesis.backend.tasks.execution.chord_monitor revoke --max-hours 0.5
 
-   # Restart workers to pick up new configuration
-   pkill -f celery
-   celery -A rhesis.backend.worker.app worker --loglevel=INFO &
-   `}
+# Restart workers to pick up new configuration
+pkill -f celery
+celery -A rhesis.backend.worker.app worker --loglevel=INFO &`}
 </CodeBlock>
 
 ### Emergency Recovery
@@ -377,27 +372,23 @@ def collect_results(self, results, ...):
 If the system is completely stuck with many chord_unlock tasks:
 
 1. **Stop All Workers**
-   <CodeBlock filename="Terminal" language="bash">
-{`   pkill -f celery
-   `}
+<CodeBlock filename="Terminal" language="bash">
+{`pkill -f celery`}
 </CodeBlock>
 
 2. **Purge All Tasks** (use with caution)
-   <CodeBlock filename="Terminal" language="bash">
-{`   python -m rhesis.backend.tasks.execution.chord_monitor clean --force
-   `}
+<CodeBlock filename="Terminal" language="bash">
+{`python -m rhesis.backend.tasks.execution.chord_monitor clean --force`}
 </CodeBlock>
 
 3. **Restart Workers**
-   <CodeBlock filename="Terminal" language="bash">
-{`   celery -A rhesis.backend.worker.app worker --loglevel=INFO &
-   `}
+<CodeBlock filename="Terminal" language="bash">
+{`celery -A rhesis.backend.worker.app worker --loglevel=INFO &`}
 </CodeBlock>
 
 4. **Monitor Recovery**
-   <CodeBlock filename="Terminal" language="bash">
-{`   python fix_chords.py
-   `}
+<CodeBlock filename="Terminal" language="bash">
+{`python fix_chords.py`}
 </CodeBlock>
 
 ## Monitoring Script Reference

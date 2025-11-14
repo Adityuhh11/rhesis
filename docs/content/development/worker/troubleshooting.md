@@ -327,37 +327,34 @@ python -c "from rhesis.backend.worker import app; registered = app.control.inspe
 If no workers are found:
 
 1. **Check broker connectivity:**
-   <CodeBlock filename="Terminal" language="bash">
-{`   python -c "
-   import os
-   import redis
-   from urllib.parse import urlparse
+<CodeBlock filename="Terminal" language="bash">
+{`python -c "
+import os
+import redis
+from urllib.parse import urlparse
 
-   broker_url = os.getenv('BROKER_URL')
-   parsed = urlparse(broker_url)
-   r = redis.Redis(host=parsed.hostname, port=parsed.port, password=parsed.password, ssl=(parsed.scheme=='rediss'))
-   print('Redis ping:', r.ping())
-   "
-   `}
+broker_url = os.getenv('BROKER_URL')
+parsed = urlparse(broker_url)
+r = redis.Redis(host=parsed.hostname, port=parsed.port, password=parsed.password, ssl=(parsed.scheme=='rediss'))
+print('Redis ping:', r.ping())
+"`}
 </CodeBlock>
 
 2. **Verify worker processes are running:**
-   <CodeBlock filename="Terminal" language="bash">
-{`   # For local development
-   ps aux | grep celery
+<CodeBlock filename="Terminal" language="bash">
+{`# For local development
+ps aux | grep celery
 
-   # For Docker/Kubernetes
-   kubectl get pods -n <namespace>
-   kubectl logs <pod-name> -n <namespace>
-   `}
+# For Docker/Kubernetes
+kubectl get pods -n <namespace>
+kubectl logs <pod-name> -n <namespace>`}
 </CodeBlock>
 
 3. **Check worker startup logs:**
-   <CodeBlock filename="Terminal" language="bash">
-{`   # Look for successful worker registration
-   grep -i "ready" /path/to/worker/logs
-   grep -i "connected" /path/to/worker/logs
-   `}
+<CodeBlock filename="Terminal" language="bash">
+{`# Look for successful worker registration
+grep -i "ready" /path/to/worker/logs
+grep -i "connected" /path/to/worker/logs`}
 </CodeBlock>
 
 ## Monitoring and Prevention

@@ -576,36 +576,31 @@ curl http://rhesis-worker-service:8080/debug
 When reporting issues, include:
 
 1. **Cluster Information:**
-   <CodeBlock filename="Terminal" language="bash">
-{`   kubectl version
-   kubectl get nodes
-   `}
+<CodeBlock filename="Terminal" language="bash">
+{`kubectl version
+kubectl get nodes`}
 </CodeBlock>
 
 2. **Pod Status:**
-   <CodeBlock filename="Terminal" language="bash">
-{`   kubectl get pods -n <namespace> -o wide
-   kubectl describe pod <pod-name> -n <namespace>
-   `}
+<CodeBlock filename="Terminal" language="bash">
+{`kubectl get pods -n <namespace> -o wide
+kubectl describe pod <pod-name> -n <namespace>`}
 </CodeBlock>
 
 3. **Debug Output:**
-   <CodeBlock filename="Terminal" language="bash">
-{`   kubectl exec -it <pod-name> -n <namespace> -- \
-     curl http://localhost:8080/debug | jq
-   `}
+<CodeBlock filename="Terminal" language="bash">
+{`kubectl exec -it <pod-name> -n <namespace> -- \
+curl http://localhost:8080/debug | jq`}
 </CodeBlock>
 
 4. **Recent Logs:**
-   <CodeBlock filename="Terminal" language="bash">
-{`   kubectl logs <pod-name> -n <namespace> --tail=100
-   `}
+<CodeBlock filename="Terminal" language="bash">
+{`kubectl logs <pod-name> -n <namespace> --tail=100`}
 </CodeBlock>
 
 5. **Configuration:**
-   <CodeBlock filename="Terminal" language="bash">
-{`   kubectl get deployment rhesis-worker -n <namespace> -o yaml
-   `}
+<CodeBlock filename="Terminal" language="bash">
+{`kubectl get deployment rhesis-worker -n <namespace> -o yaml`}
 </CodeBlock>
 
 This comprehensive information will help quickly identify and resolve issues.

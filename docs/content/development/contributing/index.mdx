@@ -28,38 +28,34 @@ Before contributing, make sure you have:
 
 1. **Fork and clone the repository:**
 
-   <CodeBlock filename="Terminal" language="bash">
-{`   git clone https://github.com/your-username/rhesis.git
-   cd rhesis
-   `}
+<CodeBlock filename="Terminal" language="bash">
+{`git clone https://github.com/your-username/rhesis.git
+cd rhesis`}
 </CodeBlock>
 
 2. **Set up your development environment:**
 
-   <CodeBlock filename="Terminal" language="bash">
-{`   # Install Python dependencies
-   uv sync
+<CodeBlock filename="Terminal" language="bash">
+{`# Install Python dependencies
+uv sync
 
-   # Install Node.js dependencies
-   cd apps/frontend && npm install
-   cd ../docs && npm install
-   `}
+# Install Node.js dependencies
+cd apps/frontend && npm install
+cd ../docs && npm install`}
 </CodeBlock>
 
 3. **Configure environment:**
 
-   <CodeBlock filename="Terminal" language="bash">
-{`   cp .env.example .env
-   # Edit .env with your local configuration
-   `}
+<CodeBlock filename="Terminal" language="bash">
+{`cp .env.example .env
+# Edit .env with your local configuration`}
 </CodeBlock>
 
 4. **Start the development servers:**
-   <CodeBlock filename="Terminal" language="bash">
-{`   ./rh backend start
-   ./rh frontend start
-   ./rh docs start
-   `}
+<CodeBlock filename="Terminal" language="bash">
+{`./rh backend start
+./rh frontend start
+./rh docs start`}
 </CodeBlock>
 
 ## Project Structure

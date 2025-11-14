@@ -402,17 +402,15 @@ print(f"Email sent: {success}")
 
 1. **Check SMTP configuration**:
 
-   <CodeBlock filename="Terminal" language="bash">
-{`   # In worker logs, look for:
-   "SMTP configuration incomplete. Email notifications will be disabled."
-   `}
+<CodeBlock filename="Terminal" language="bash">
+{`# In worker logs, look for:
+"SMTP configuration incomplete. Email notifications will be disabled."`}
 </CodeBlock>
 
 2. **Verify environment variables**:
 
-   <CodeBlock filename="Terminal" language="bash">
-{`   kubectl exec -it deployment/rhesis-worker -- env | grep SMTP
-   `}
+<CodeBlock filename="Terminal" language="bash">
+{`kubectl exec -it deployment/rhesis-worker -- env | grep SMTP`}
 </CodeBlock>
 
 3. **Check user emails**:
@@ -445,22 +443,20 @@ Monitor email notifications through:
 
 1. **Worker logs**:
 
-   <CodeBlock filename="Terminal" language="bash">
-{`   kubectl logs deployment/rhesis-worker | grep "email"
-   `}
+<CodeBlock filename="Terminal" language="bash">
+{`kubectl logs deployment/rhesis-worker | grep "email"`}
 </CodeBlock>
 
 2. **Success indicators**:
 
-   <CodeBlock filename="code.txt" language="text">
-{`   Task completion email sent successfully to user@example.com for task 12345
-   `}
+<CodeBlock filename="code.txt" language="text">
+{`Task completion email sent successfully to user@example.com for task 12345`}
 </CodeBlock>
 
 3. **Error indicators**:
-   <CodeBlock filename="code.txt" language="text">
-{`   Failed to send task completion email to user@example.com: SMTP error
-   `}
+
+<CodeBlock filename="code.txt" language="text">
+{`Failed to send task completion email to user@example.com: SMTP error`}
 </CodeBlock>
 
 ## Security Considerations
