@@ -328,12 +328,46 @@ def generate_test_set_stats(
 @check_resource_permission(TestSet, ResourceAction.READ)
 async def read_test_set(
     test_set_identifier: str,
+    response: Response,
+    include_tests: bool = Query(False, description="Include tests in response"),
+    skip: int = 0,
+    limit: int = 10,
+    order_by: str = "created_at",
+    order: str = "desc",
+    filter: str | None = Query(None, alias="$filter", description="OData filter expression"),
     db: Session = Depends(get_tenant_db_session),
     tenant_context=Depends(get_tenant_context),
     current_user: User = Depends(require_current_user_or_token),
 ):
+    """Return a test set. Optionally include its tests with pagination.
+
+    - `include_tests=true` will include full test objects under the `tests` relationship.
+    - `skip`/`limit`/`order_by`/`order`/`$filter` apply when `include_tests` is true.
+    """
     organization_id, user_id = tenant_context
-    return resolve_test_set_or_raise(test_set_identifier, db, organization_id)
+    db_test_set = resolve_test_set_or_raise(test_set_identifier, db, organization_id)
+
+    # If requested, load tests with pagination via the existing CRUD helper
+    if include_tests:
+        items, count = crud.get_test_set_tests(
+            db=db,
+            test_set_id=db_test_set.id,
+            skip=skip,
+            limit=limit,
+            sort_by=order_by,
+            sort_order=order,
+            filter=filter,
+        )
+        # Attach tests to the SQLAlchemy object so the response_model serializes them
+        try:
+            db_test_set.tests = items
+        except Exception:
+            # Fallback: set attribute dynamically
+            setattr(db_test_set, "tests", items)
+
+        response.headers["X-Total-Count"] = str(count)
+
+    return db_test_set
 
 
 @router.delete("/{test_set_id}", response_model=schemas.TestSet)
